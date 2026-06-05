@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepLakshya - Track. Practice. Achieve.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --primary: #1a56db;
+          --primary-light: #3b82f6;
+          --primary-dark: #1e3a8a;
+          --accent: #06b6d4;
+          --bg: #f0f4ff;
+          --white: #ffffff;
+          --text-dark: #0f172a;
+          --text-mid: #334155;
+          --text-light: #64748b;
+          --card-bg: rgba(255,255,255,0.85);
+          --shadow: 0 8px 32px rgba(26,86,219,0.10);
+          --shadow-lg: 0 20px 60px rgba(26,86,219,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+          font-family: 'Inter', sans-serif;
+          background: var(--bg);
+          color: var(--text-dark);
+          min-height: 100vh;
+          overflow-x: hidden;
+        }
+
+        /* Background waves */
+        .bg-wrapper {
+          position: fixed;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+        }
+        .wave-top {
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 320px;
+          background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 40%, #e0f2fe 100%);
+          border-radius: 0 0 60% 60% / 0 0 80px 80px;
+          opacity: 0.7;
+        }
+        .wave-bottom {
+          position: absolute;
+          bottom: 0; left: 0; right: 0;
+          height: 220px;
+          background: linear-gradient(135deg, #1a56db 0%, #1e40af 60%, #0369a1 100%);
+          border-radius: 60% 60% 0 0 / 80px 80px 0 0;
+        }
+        .dot-grid {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle, #1a56db18 1px, transparent 1px);
+          background-size: 32px 32px;
+        }
+
+        /* Navbar */
+        nav {
+          position: relative;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 20px 60px;
+        }
+        .logo {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          text-decoration: none;
+        }
+        .logo-icon {
+          width: 44px; height: 44px;
+          background: linear-gradient(135deg, var(--primary), var(--accent));
+          border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 22px;
+          box-shadow: 0 4px 16px rgba(26,86,219,0.3);
+        }
+        .logo-text {
+          font-family: 'Sora', sans-serif;
+          font-weight: 800;
+          font-size: 22px;
+          color: var(--primary-dark);
+          letter-spacing: -0.5px;
+        }
+        .logo-tagline {
+          font-size: 10px;
+          font-weight: 500;
+          color: var(--text-light);
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          margin-top: -2px;
+        }
+        .nav-links {
+          display: flex;
+          gap: 8px;
+          align-items: center;
+        }
+        .nav-btn {
+          padding: 10px 22px;
+          border-radius: 10px;
+          font-family: 'Sora', sans-serif;
+          font-weight: 600;
+          font-size: 14px;
+          cursor: pointer;
+          border: none;
+          transition: all 0.2s;
+          text-decoration: none;
+        }
+        .nav-btn.outline {
+          background: transparent;
+          border: 2px solid var(--primary);
+          color: var(--primary);
+        }
+        .nav-btn.outline:hover { background: var(--primary); color: white; }
+        .nav-btn.filled {
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          color: white;
+          box-shadow: 0 4px 16px rgba(26,86,219,0.3);
+        }
+        .nav-btn.filled:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,86,219,0.4); }
+
+        /* Hero */
+        .hero {
+          position: relative;
+          z-index: 5;
+          text-align: center;
+          padding: 60px 20px 40px;
+        }
+        .hero-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: rgba(26,86,219,0.08);
+          border: 1px solid rgba(26,86,219,0.2);
+          border-radius: 100px;
+          padding: 6px 16px;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--primary);
+          margin-bottom: 24px;
+          backdrop-filter: blur(8px);
+        }
+        .hero h1 {
+          font-family: 'Sora', sans-serif;
+          font-size: clamp(36px, 5vw, 64px);
+          font-weight: 800;
+          line-height: 1.1;
+          color: var(--text-dark);
+          letter-spacing: -2px;
+          margin-bottom: 16px;
+        }
+        .hero h1 span {
+          background: linear-gradient(135deg, var(--primary), var(--accent));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .hero p {
+          font-size: 18px;
+          color: var(--text-mid);
+          max-width: 520px;
+          margin: 0 auto 36px;
+          line-height: 1.7;
+          font-weight: 400;
+        }
+
+        /* Search bar */
+        .search-wrapper {
+          max-width: 600px;
+          margin: 0 auto 48px;
+          position: relative;
+        }
+        .search-bar {
+          width: 100%;
+          padding: 18px 60px 18px 52px;
+          border-radius: 16px;
+          border: 2px solid rgba(26,86,219,0.15);
+          background: var(--white);
+          font-size: 16px;
+          font-family: 'Inter', sans-serif;
+          color: var(--text-dark);
+          box-shadow: var(--shadow-lg);
+          outline: none;
+          transition: all 0.2s;
+        }
+        .search-bar:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(26,86,219,0.1), var(--shadow-lg); }
+        .search-bar::placeholder { color: var(--text-light); }
+        .search-icon {
+          position: absolute;
+          left: 18px; top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-light);
+          font-size: 20px;
+        }
+        .search-btn {
+          position: absolute;
+          right: 8px; top: 50%;
+          transform: translateY(-50%);
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          color: white;
+          border: none;
+          border-radius: 10px;
+          width: 42px; height: 42px;
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer;
+          font-size: 18px;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(26,86,219,0.3);
+        }
+        .search-btn:hover { transform: translateY(-50%) scale(1.05); }
+
+        /* Platform cards */
+        .platforms {
+          display: flex;
+          justify-content: center;
+          gap: 16px;
+          flex-wrap: wrap;
+          padding: 0 20px;
+          margin-bottom: 60px;
+        }
+        .platform-card {
+          background: var(--card-bg);
+          border: 1.5px solid rgba(26,86,219,0.10);
+          border-radius: 16px;
+          padding: 18px 28px;
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          cursor: pointer;
+          transition: all 0.25s;
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(12px);
+          min-width: 200px;
+          text-decoration: none;
+        }
+        .platform-card:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--primary-light);
+        }
+        .platform-logo {
+          width: 40px; height: 40px;
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 22px;
+          font-weight: 800;
+        }
+        .lc-logo { background: #FFF7ED; color: #f89c24; }
+        .hr-logo { background: #F0FDF4; color: #22c55e; }
+        .cc-logo { background: #FFF8F0; color: #e67e22; }
+        .platform-info { text-align: left; }
+        .platform-name {
+          font-family: 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: 15px;
+          color: var(--text-dark);
+        }
+        .platform-sub {
+          font-size: 12px;
+          color: var(--text-light);
+          margin-top: 2px;
+        }
+        .platform-arrow {
+          margin-left: auto;
+          width: 32px; height: 32px;
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          border-radius: 8px;
+          display: flex; align-items: center; justify-content: center;
+          color: white;
+          font-size: 16px;
+          flex-shrink: 0;
+        }
+
+        /* Stats section */
+        .stats {
+          position: relative;
+          z-index: 5;
+          display: flex;
+          justify-content: center;
+          gap: 32px;
+          flex-wrap: wrap;
+          padding: 0 20px 80px;
+        }
+        .stat-card {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 28px 36px;
+          text-align: center;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.08);
+          backdrop-filter: blur(12px);
+          min-width: 160px;
+          transition: all 0.25s;
+        }
+        .stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .stat-num {
+          font-family: 'Sora', sans-serif;
+          font-size: 36px;
+          font-weight: 800;
+          background: linear-gradient(135deg, var(--primary), var(--accent));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .stat-label {
+          font-size: 13px;
+          color: var(--text-light);
+          font-weight: 500;
+          margin-top: 4px;
+        }
+
+        /* Features */
+        .features {
+          position: relative;
+          z-index: 5;
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 0 24px 80px;
+        }
+        .section-title {
+          font-family: 'Sora', sans-serif;
+          font-size: 32px;
+          font-weight: 800;
+          text-align: center;
+          color: var(--text-dark);
+          margin-bottom: 40px;
+          letter-spacing: -1px;
+        }
+        .section-title span {
+          background: linear-gradient(135deg, var(--primary), var(--accent));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+        .features-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+          gap: 20px;
+        }
+        .feature-card {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 28px 24px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.08);
+          backdrop-filter: blur(12px);
+          transition: all 0.25s;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
+        .feature-icon {
+          width: 52px; height: 52px;
+          border-radius: 14px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 26px;
+          margin-bottom: 16px;
+        }
+        .fi-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .fi-cyan { background: linear-gradient(135deg, #cffafe, #a5f3fc); }
+        .fi-indigo { background: linear-gradient(135deg, #e0e7ff, #c7d2fe); }
+        .fi-green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+        .feature-title {
+          font-family: 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: 17px;
+          color: var(--text-dark);
+          margin-bottom: 8px;
+        }
+        .feature-desc {
+          font-size: 14px;
+          color: var(--text-light);
+          line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta {
+          position: relative;
+          z-index: 5;
+          text-align: center;
+          padding: 60px 24px 120px;
+        }
+        .cta h2 {
+          font-family: 'Sora', sans-serif;
+          font-size: 36px;
+          font-weight: 800;
+          color: white;
+          margin-bottom: 12px;
+          letter-spacing: -1px;
+        }
+        .cta p { color: rgba(255,255,255,0.75); font-size: 16px; margin-bottom: 28px; }
+        .cta-btn {
+          display: inline-block;
+          background: white;
+          color: var(--primary);
+          font-family: 'Sora', sans-serif;
+          font-weight: 700;
+          font-size: 16px;
+          padding: 16px 40px;
+          border-radius: 14px;
+          text-decoration: none;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+          transition: all 0.2s;
+          border: none;
+          cursor: pointer;
+        }
+        .cta-btn:hover { transform: translateY(-3px); box-shadow: 0 16px 40px rgba(0,0,0,0.25); }
+
+        /* Animations */
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .hero, .platforms, .stats, .features, .cta {
+          animation: fadeUp 0.7s ease forwards;
+        }
+        .platforms { animation-delay: 0.1s; opacity: 0; }
+        .stats { animation-delay: 0.2s; opacity: 0; }
+        .features { animation-delay: 0.3s; opacity: 0; }
+        .cta { animation-delay: 0.4s; opacity: 0; }
+
+        @media (max-width: 600px) {
+          nav { padding: 16px 20px; }
+          .nav-links .nav-btn.outline { display: none; }
+          .hero h1 { font-size: 32px; }
+          .platform-card { min-width: 160px; padding: 14px 18px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-wrapper">
+    <div class="dot-grid"></div>
+    <div class="wave-top"></div>
+    <div class="wave-bottom"></div>
+</div>
+
+<!-- Navbar -->
+<nav>
+    <a href="#" class="logo">
+        <div class="logo-icon">🎯</div>
+        <div>
+            <div class="logo-text">PrepLakshya</div>
+            <div class="logo-tagline">Track. Practice. Achieve.</div>
+        </div>
+    </a>
+    <div class="nav-links">
+        <a href="#" class="nav-btn outline">Login</a>
+        <a href="#" class="nav-btn filled">Get Started →</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+    <h1>Track Your Progress.<br>Achieve Your <span>Lakshya.</span></h1>
+    <p>Your all-in-one placement preparation tracker. Set your target company, track topics, and land your dream job.</p>
+</div>
+
+<!-- Search -->
+<div class="search-wrapper" style="position:relative;z-index:5;max-width:600px;margin:0 auto 48px;padding:0 20px;">
+    <span class="search-icon">🔍</span>
+    <input class="search-bar" type="text" placeholder="Search companies, topics, questions...">
+    <button class="search-btn">→</button>
+</div>
+
+<!-- Platform Cards -->
+<div class="platforms">
+    <a href="#" class="platform-card">
+        <div class="platform-logo lc-logo">LC</div>
+        <div class="platform-info">
+            <div class="platform-name">LeetCode Profile</div>
+            <div class="platform-sub">Track DSA progress</div>
+        </div>
+        <div class="platform-arrow">→</div>
+    </a>
+    <a href="#" class="platform-card">
+        <div class="platform-logo hr-logo">HR</div>
+        <div class="platform-info">
+            <div class="platform-name">HackerRank Profile</div>
+            <div class="platform-sub">View certifications</div>
+        </div>
+        <div class="platform-arrow">→</div>
+    </a>
+    <a href="#" class="platform-card">
+        <div class="platform-logo cc-logo">CC</div>
+        <div class="platform-info">
+            <div class="platform-name">CodeChef Profile</div>
+            <div class="platform-sub">Contest ratings</div>
+        </div>
+        <div class="platform-arrow">→</div>
+    </a>
+</div>
+
+<!-- Stats -->
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Target Companies</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Interview Questions</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">AI</div>
+        <div class="stat-label">Powered Roadmap</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Free to Use</div>
+    </div>
+</div>
+
+<!-- Features -->
+<div class="features">
+    <div class="section-title">Everything you need to <span>crack placements</span></div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon fi-blue">🤖</div>
+            <div class="feature-title">AI Study Roadmap</div>
+            <div class="feature-desc">Get a personalized week-by-week study plan generated by Gemini AI based on your target company.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon fi-cyan">🏢</div>
+            <div class="feature-title">Company Questions</div>
+            <div class="feature-desc">Access previously asked interview questions from TCS, Infosys, Google, Amazon and 15+ more companies.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon fi-indigo">📊</div>
+            <div class="feature-title">Topic Tracker</div>
+            <div class="feature-desc">Track your DSA, aptitude and technical topics. See your strong and weak areas clearly.</div>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon fi-green">📈</div>
+            <div class="feature-title">Progress Dashboard</div>
+            <div class="feature-desc">Visual dashboard showing your preparation percentage, streaks and daily progress.</div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA -->
+<div class="cta">
+    <h2>Ready to crack your placement? 🚀</h2>
+    <p>Join Now to lead the World 🌍</p>
+    <button class="cta-btn">Start Preparing for Free →</button>
+</div>
+
+</body>
+</html>

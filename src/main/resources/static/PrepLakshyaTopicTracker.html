@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepLakshya - Topic Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --primary: #1a56db;
+          --primary-light: #3b82f6;
+          --primary-dark: #1e3a8a;
+          --accent: #06b6d4;
+          --bg: #f0f4ff;
+          --white: #ffffff;
+          --text-dark: #0f172a;
+          --text-mid: #334155;
+          --text-light: #64748b;
+          --card-bg: rgba(255,255,255,0.92);
+          --shadow: 0 4px 24px rgba(26,86,219,0.08);
+          --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
+          --green: #22c55e;
+          --orange: #f97316;
+          --red: #ef4444;
+          --sidebar-w: 240px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: 'Inter', sans-serif;
+          background: var(--bg);
+          color: var(--text-dark);
+          min-height: 100vh;
+          display: flex;
+        }
+        .sidebar {
+    width: var(--sidebar-w);
+    background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 28px 16px;
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    z-index: 20;
+    box-shadow: 4px 0 24px rgba(26,86,219,0.18);
+  }
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 36px;
+    padding: 0 8px;
+  }
+  .sidebar-logo-icon {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+  }
+  .sidebar-logo-text {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800; font-size: 17px; color: white;
+  }
+  .sidebar-logo-sub {
+    font-size: 9px; color: rgba(255,255,255,0.6);
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  .nav-section {
+    font-size: 10px; font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 0 12px; margin-bottom: 8px; margin-top: 16px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 14px; border-radius: 12px;
+    color: rgba(255,255,255,0.75);
+    font-size: 14px; font-weight: 500;
+    cursor: pointer; transition: all 0.2s;
+    margin-bottom: 4px; text-decoration: none;
+  }
+  .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
+  .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
+  .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
+  .sidebar-bottom {
+    margin-top: auto; padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .user-avatar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 12px;
+    background: rgba(255,255,255,0.1);
+  }
+  .avatar-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4, #3b82f6);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: white; font-size: 14px;
+  }
+  .user-name { font-size: 13px; font-weight: 600; color: white; }
+  .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
+        .main {
+    margin-left: var(--sidebar-w);
+    flex: 1; padding: 28px 32px;
+    overflow-x: hidden;
+  }
+
+  /* Topbar */
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 28px;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 14px; }
+  .mini-logo {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--card-bg);
+    border: 1.5px solid rgba(26,86,219,0.12);
+    border-radius: 12px;
+    padding: 7px 12px;
+    box-shadow: var(--shadow);
+    text-decoration: none;
+  }
+  .mini-logo-icon {
+    width: 28px; height: 28px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px;
+  }
+  .mini-logo-text {
+    font-family: 'Sora', sans-serif;
+    font-weight: 800; font-size: 14px;
+    color: var(--primary-dark);
+  }
+  .topbar-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 22px; font-weight: 800; color: var(--text-dark);
+  }
+  .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+        .grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(26,86,219,0.07);
+    transition: all 0.25s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .card-title {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: 16px;
+    color: var(--text-dark); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Progress circle */
+  .circle-wrap {
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 10px 0;
+  }
+  .progress-circle {
+    position: relative;
+    width: 140px; height: 140px;
+  }
+  .progress-circle svg {
+    transform: rotate(-90deg);
+    width: 140px; height: 140px;
+  }
+  .progress-circle .bg-circle {
+    fill: none; stroke: #e8f0fe; stroke-width: 10;
+  }
+  .progress-circle .fg-circle {
+    fill: none;
+    stroke: url(#circleGrad);
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 377;
+    stroke-dashoffset: 113;
+    transition: stroke-dashoffset 1s ease;
+  }
+  .circle-text {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .circle-pct {
+    font-family: 'Sora', sans-serif;
+    font-size: 28px; font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .circle-lbl { font-size: 11px; color: var(--text-light); font-weight: 500; }
+  .circle-stats {
+    display: flex; gap: 20px; margin-top: 16px;
+  }
+  .cs-item { text-align: center; }
+  .cs-val { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-dark); }
+  .cs-lbl { font-size: 11px; color: var(--text-light); }
+        .streak-val {
+    font-family: 'Sora', sans-serif;
+    font-size: 48px; font-weight: 800;
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+  }
+  .streak-lbl { font-size: 14px; color: var(--text-light); margin-top: 6px; }
+  .streak-days {
+    display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap;
+  }
+  .day-dot {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+  }
+  .day-dot.done { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; }
+  .day-dot.today { background: linear-gradient(135deg, #f97316, #ef4444); color: white; }
+  .day-dot.pending { background: #f1f5f9; color: var(--text-light); }
+
+  /* Target company card */
+  .target-company {
+    display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-radius: 14px; padding: 16px;
+    margin-bottom: 14px;
+    border: 1.5px solid rgba(26,86,219,0.15);
+  }
+  .tc-logo {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    box-shadow: var(--shadow);
+    font-weight: 900; color: var(--primary);
+    flex-shrink: 0;
+  }
+  .tc-name { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px; color: var(--text-dark); }
+  .tc-days { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 3px; }
+        .area-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .area-item:last-child { border-bottom: none; }
+  .area-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .ai-green { background: #d1fae5; }
+  .ai-red { background: #fee2e2; }
+  .ai-orange { background: #ffedd5; }
+  .area-name { font-size: 14px; font-weight: 600; color: var(--text-dark); flex: 1; }
+  .area-pct {
+    font-size: 13px; font-weight: 700;
+    padding: 3px 10px; border-radius: 8px;
+  }
+  .pct-green { background: #d1fae5; color: #065f46; }
+  .pct-red { background: #fee2e2; color: #991b1b; }
+  .pct-orange { background: #ffedd5; color: #92400e; }
+
+  /* Topic checklist */
+  .topic-checklist { margin-bottom: 24px; }
+  .checklist-tabs {
+    display: flex; gap: 8px; margin-bottom: 16px;
+  }
+  .tab-btn {
+    padding: 8px 18px;
+    border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; border: none;
+    transition: all 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    box-shadow: 0 4px 12px rgba(26,86,219,0.25);
+  }
+  .tab-btn:not(.active) {
+    background: var(--white);
+    color: var(--text-light);
+    border: 1.5px solid rgba(26,86,219,0.12);
+  }
+  .tab-btn:not(.active):hover { border-color: var(--primary); color: var(--primary); }
+
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .topic-item {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 12px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(26,86,219,0.07);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .topic-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .topic-item.completed { border-color: #bbf7d0; background: #f0fdf4; }
+  .topic-item.weak { border-color: #fecaca; background: #fff5f5; }
+  .topic-check {
+    width: 24px; height: 24px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+    border: 2px solid #e2e8f0;
+  }
+  .topic-item.completed .topic-check {
+    background: var(--green); border-color: var(--green); color: white;
+  }
+  .topic-item.weak .topic-check {
+    background: #fee2e2; border-color: #fca5a5; color: #ef4444;
+  }
+  .topic-info { flex: 1; }
+  .topic-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+  .topic-sub { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+  .topic-pct-bar {
+    width: 40px; height: 4px;
+    background: #e2e8f0; border-radius: 100px; overflow: hidden;
+  }
+  .topic-pct-fill { height: 100%; border-radius: 100px; }
+        .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  @media (max-width: 900px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 16px; }
+    .grid-3 { grid-template-columns: 1fr; }
+    .grid-2 { grid-template-columns: 1fr; }
+  }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🎯</div>
+        <div>
+            <div class="sidebar-logo-text">PrepLakshya</div>
+            <div class="sidebar-logo-sub">Track. Practice. Achieve.</div>
+        </div>
+    </div>
+    <div class="nav-section">Main</div>
+    <a href="#" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Companies</a>
+    <a href="#" class="nav-item active"><span class="nav-icon">📚</span> Topic Tracker</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🤖</span> AI Roadmap</a>
+    <div class="nav-section">Practice</div>
+    <a href="#" class="nav-item"><span class="nav-icon">💻</span> DSA Problems</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🧠</span> Aptitude</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🎤</span> HR Questions</a>
+    <div class="sidebar-bottom">
+        <div class="user-avatar">
+            <div class="avatar-circle">SK</div>
+            <div>
+                <div class="user-name">Sudheer Kumar</div>
+                <div class="user-role">B.Tech IT • Final Year</div>
+            </div>
+        </div>
+    </div>
+</aside>
+<main class="main">
+
+    <!-- Topbar with mini logo -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <a href="#" class="mini-logo">
+                <div class="mini-logo-icon">🎯</div>
+                <div class="mini-logo-text">PrepLakshya</div>
+            </a>
+            <div>
+                <div class="topbar-title">Topic Tracker 📚</div>
+                <div class="topbar-sub">Track your preparation — know your strong & weak areas</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top 3 cards -->
+    <div class="grid-3">
+
+        <!-- Overall Progress Circle -->
+        <div class="card">
+            <div class="card-title">📈 Overall Progress</div>
+            <div class="circle-wrap">
+                <div class="progress-circle">
+                    <svg viewBox="0 0 140 140">
+                        <defs>
+                            <linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" style="stop-color:#1a56db"/>
+                                <stop offset="100%" style="stop-color:#06b6d4"/>
+                            </linearGradient>
+                        </defs>
+                        <circle class="bg-circle" cx="70" cy="70" r="60"/>
+                        <circle class="fg-circle" cx="70" cy="70" r="60"/>
+                    </svg>
+                    <div class="circle-text">
+                        <div class="circle-pct">70%</div>
+                        <div class="circle-lbl">Complete</div>
+                    </div>
+                </div>
+                <div class="circle-stats">
+                    <div class="cs-item">
+                        <div class="cs-val" style="color:#22c55e;">35</div>
+                        <div class="cs-lbl">Done ✅</div>
+                    </div>
+                    <div class="cs-item">
+                        <div class="cs-val" style="color:#f97316;">10</div>
+                        <div class="cs-lbl">Weak ⚠️</div>
+                    </div>
+                    <div class="cs-item">
+                        <div class="cs-val" style="color:#94a3b8;">5</div>
+                        <div class="cs-lbl">Left ⏳</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Streak -->
+        <div class="card">
+            <div class="card-title">🔥 Study Streak</div>
+            <div class="streak-val">12</div>
+            <div class="streak-lbl">days in a row — keep it up!</div>
+            <div class="streak-days">
+                <div class="day-dot done">M</div>
+                <div class="day-dot done">T</div>
+                <div class="day-dot done">W</div>
+                <div class="day-dot done">T</div>
+                <div class="day-dot done">F</div>
+                <div class="day-dot today">S</div>
+                <div class="day-dot pending">S</div>
+            </div>
+            <div style="margin-top:16px;background:#fff7ed;border-radius:10px;padding:10px 12px;border:1px solid #fed7aa;">
+                <div style="font-size:12px;font-weight:700;color:#c2410c;">⚡ Today's Goal</div>
+                <div style="font-size:13px;color:#92400e;margin-top:3px;">Complete Trees + Graphs topics</div>
+            </div>
+        </div>
+
+        <!-- Target Company -->
+        <div class="card">
+            <div class="card-title">🎯 Target Companies</div>
+            <div class="target-company">
+                <div class="tc-logo">TCS</div>
+                <div>
+                    <div class="tc-name">TCS</div>
+                    <div class="tc-days">🗓️ 24 days to drive</div>
+                </div>
+            </div>
+            <div class="target-company" style="background:linear-gradient(135deg,#f0fdf4,#dcfce7);border-color:rgba(34,197,94,0.2);">
+                <div class="tc-logo" style="color:#15803d;">INFY</div>
+                <div>
+                    <div class="tc-name">Infosys</div>
+                    <div class="tc-days" style="color:#15803d;">🗓️ 30 days to drive</div>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:8px;">
+                <a href="#" style="font-size:13px;color:var(--primary);font-weight:600;">+ Add Company →</a>
+            </div>
+        </div>
+    </div>
+    <div class="grid-2">
+
+        <!-- Strong Areas -->
+        <div class="card">
+            <div class="card-title">💪 Strong Areas</div>
+            <div class="area-item">
+                <div class="area-icon ai-green">📐</div>
+                <div class="area-name">Arrays & Strings</div>
+                <span class="area-pct pct-green">92%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-green">🔗</div>
+                <div class="area-name">Linked Lists</div>
+                <span class="area-pct pct-green">88%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-green">🗄️</div>
+                <div class="area-name">SQL & Databases</div>
+                <span class="area-pct pct-green">85%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-green">☕</div>
+                <div class="area-name">Core Java (OOP)</div>
+                <span class="area-pct pct-green">90%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-green">🔍</div>
+                <div class="area-name">Searching & Sorting</div>
+                <span class="area-pct pct-green">82%</span>
+            </div>
+        </div>
+
+        <!-- Weak Areas -->
+        <div class="card">
+            <div class="card-title">⚠️ Weak Areas — Focus Here!</div>
+            <div class="area-item">
+                <div class="area-icon ai-red">🌐</div>
+                <div class="area-name">Graphs (BFS/DFS)</div>
+                <span class="area-pct pct-red">35%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-red">⚡</div>
+                <div class="area-name">Dynamic Programming</div>
+                <span class="area-pct pct-red">28%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-orange">🌳</div>
+                <div class="area-name">Trees & BST</div>
+                <span class="area-pct pct-orange">55%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-orange">🔢</div>
+                <div class="area-name">Bit Manipulation</div>
+                <span class="area-pct pct-orange">45%</span>
+            </div>
+            <div class="area-item">
+                <div class="area-icon ai-red">🧮</div>
+                <div class="area-name">Aptitude & Reasoning</div>
+                <span class="area-pct pct-red">40%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topic Checklist -->
+    <div class="card topic-checklist">
+        <div class="card-title">📋 Topic Checklist</div>
+        <div class="checklist-tabs">
+            <button class="tab-btn active" onclick="switchTab('dsa')">💻 DSA</button>
+            <button class="tab-btn" onclick="switchTab('java')">☕ Java</button>
+            <button class="tab-btn" onclick="switchTab('dbms')">🗄️ DBMS</button>
+            <button class="tab-btn" onclick="switchTab('aptitude')">🧠 Aptitude</button>
+            <button class="tab-btn" onclick="switchTab('hr')">🎤 HR</button>
+        </div>
+        <div class="tab-content active" id="tab-dsa">
+            <div class="topics-grid">
+                <div class="topic-item completed">
+                    <div class="topic-check">✓</div>
+                    <div class="topic-info">
+                        <div class="topic-name">Arrays</div>
+                        <div class="topic-sub">25 problems solved</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:92%;background:#22c55e;"></div></div></div>
+                </div>
+                <div class="topic-item completed">
+                    <div class="topic-check">✓</div>
+                    <div class="topic-info">
+                        <div class="topic-name">Linked Lists</div>
+                        <div class="topic-sub">18 problems solved</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:88%;background:#22c55e;"></div></div></div>
+                </div>
+                <div class="topic-item completed">
+                    <div class="topic-check">✓</div>
+                    <div class="topic-info">
+                        <div class="topic-name">Stack & Queue</div>
+                        <div class="topic-sub">12 problems solved</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:80%;background:#22c55e;"></div></div></div>
+                </div>
+                <div class="topic-item completed">
+                    <div class="topic-check">✓</div>
+                    <div class="topic-info">
+                        <div class="topic-name">Searching & Sorting</div>
+                        <div class="topic-sub">15 problems solved</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:82%;background:#22c55e;"></div></div></div>
+                </div>
+                <div class="topic-item">
+                    <div class="topic-check"></div>
+                    <div class="topic-info">
+                        <div class="topic-name">Trees & BST</div>
+                        <div class="topic-sub">8/20 problems done</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:55%;background:#f97316;"></div></div></div>
+                </div>
+                <div class="topic-item weak">
+                    <div class="topic-check">!</div>
+                    <div class="topic-info">
+                        <div class="topic-name">Graphs (BFS/DFS)</div>
+                        <div class="topic-sub">4/20 problems done</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:35%;background:#ef4444;"></div></div></div>
+                </div>
+                <div class="topic-item weak">
+                    <div class="topic-check">!</div>
+                    <div class="topic-info">
+                        <div class="topic-name">Dynamic Programming</div>
+                        <div class="topic-sub">3/20 problems done</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:28%;background:#ef4444;"></div></div></div>
+                </div>
+                <div class="topic-item">
+                    <div class="topic-check"></div>
+                    <div class="topic-info">
+                        <div class="topic-name">Recursion</div>
+                        <div class="topic-sub">6/15 problems done</div>
+                    </div>
+                    <div><div class="topic-pct-bar"><div class="topic-pct-fill" style="width:50%;background:#f97316;"></div></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Java -->
+        <div class="tab-content" id="tab-java">
+            <div class="topics-grid">
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">OOP Concepts</div><div class="topic-sub">Completed</div></div></div>
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Collections Framework</div><div class="topic-sub">Completed</div></div></div>
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Exception Handling</div><div class="topic-sub">Completed</div></div></div>
+                <div class="topic-item"><div class="topic-check"></div><div class="topic-info"><div class="topic-name">Multithreading</div><div class="topic-sub">In Progress</div></div></div>
+                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Java 8 Features</div><div class="topic-sub">Needs Attention</div></div></div>
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Spring Boot Basics</div><div class="topic-sub">Completed</div></div></div>
+            </div>
+        </div>
+
+        <!-- DBMS -->
+        <div class="tab-content" id="tab-dbms">
+            <div class="topics-grid">
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">SQL Queries</div><div class="topic-sub">Completed</div></div></div>
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Normalization</div><div class="topic-sub">Completed</div></div></div>
+                <div class="topic-item"><div class="topic-check"></div><div class="topic-info"><div class="topic-name">Transactions & ACID</div><div class="topic-sub">In Progress</div></div></div>
+                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Indexing & Optimization</div><div class="topic-sub">Needs Attention</div></div></div>
+            </div>
+        </div>
+
+        <!-- Aptitude -->
+        <div class="tab-content" id="tab-aptitude">
+            <div class="topics-grid">
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Number System</div><div class="topic-sub">Completed</div></div></div>
+                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Time & Work</div><div class="topic-sub">Needs Attention</div></div></div>
+                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Logical Reasoning</div><div class="topic-sub">Needs Attention</div></div></div>
+                <div class="topic-item"><div class="topic-check"></div><div class="topic-info"><div class="topic-name">Data Interpretation</div><div class="topic-sub">In Progress</div></div></div>
+            </div>
+        </div>
+        <div class="tab-content" id="tab-hr">
+            <div class="topics-grid">
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Tell Me About Yourself</div><div class="topic-sub">Prepared</div></div></div>
+                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Strengths & Weaknesses</div><div class="topic-sub">Prepared</div></div></div>
+                <div class="topic-item"><div class="topic-check"></div><div class="topic-info"><div class="topic-name">Why This Company?</div><div class="topic-sub">In Progress</div></div></div>
+                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Salary Negotiation</div><div class="topic-sub">Needs Attention</div></div></div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tab).classList.add('active');
+      event.target.classList.add('active');
+    }
+</script>
+</body>
+</html>
