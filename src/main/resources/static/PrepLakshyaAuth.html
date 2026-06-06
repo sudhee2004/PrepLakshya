@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepLakshya - Login / Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --primary: #1a56db;
+          --primary-light: #3b82f6;
+          --primary-dark: #1e3a8a;
+          --accent: #06b6d4;
+          --bg: #f0f4ff;
+          --white: #ffffff;
+          --text-dark: #0f172a;
+          --text-mid: #334155;
+          --text-light: #64748b;
+          --shadow: 0 8px 32px rgba(26,86,219,0.12);
+          --shadow-lg: 0 20px 60px rgba(26,86,219,0.18);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: 'Inter', sans-serif;
+          background: var(--bg);
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow: hidden;
+        }
+
+        /* Background */
+        .bg-left {
+          position: fixed;
+          left: 0; top: 0; bottom: 0;
+          width: 45%;
+          background: linear-gradient(160deg, #1e3a8a 0%, #1a56db 50%, #0369a1 100%);
+          z-index: 0;
+        }
+        .bg-dots {
+          position: fixed;
+          inset: 0;
+          background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+          background-size: 28px 28px;
+          z-index: 1;
+        }
+        .bg-right {
+          position: fixed;
+          right: 0; top: 0; bottom: 0;
+          width: 55%;
+          background: var(--bg);
+          z-index: 0;
+        }
+
+        /* Left panel */
+        .left-panel {
+          position: fixed;
+          left: 0; top: 0; bottom: 0;
+          width: 45%;
+          z-index: 5;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 40px;
+          text-align: center;
+        }
+        .brand-logo {
+          width: 72px; height: 72px;
+          background: rgba(255,255,255,0.15);
+          border-radius: 20px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 36px;
+          margin-bottom: 20px;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255,255,255,0.2);
+        }
+        .brand-name {
+          font-family: 'Sora', sans-serif;
+          font-size: 32px; font-weight: 800;
+          color: white;
+          letter-spacing: -1px;
+          margin-bottom: 8px;
+        }
+        .brand-tagline {
+          font-size: 13px; font-weight: 500;
+          color: rgba(255,255,255,0.65);
+          letter-spacing: 2px;
+          text-transform: uppercase;
+          margin-bottom: 48px;
+        }
+        .features-list { text-align: left; width: 100%; max-width: 300px; }
+        .feature-row {
+          display: flex; align-items: center; gap: 14px;
+          margin-bottom: 20px;
+        }
+        .feature-dot {
+          width: 40px; height: 40px;
+          background: rgba(255,255,255,0.12);
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px;
+          flex-shrink: 0;
+          border: 1px solid rgba(255,255,255,0.15);
+        }
+        .feature-text { color: rgba(255,255,255,0.85); font-size: 14px; font-weight: 500; line-height: 1.4; }
+        .feature-text strong { color: white; display: block; font-size: 15px; }
+        .right-panel {
+    position: fixed;
+    right: 0; top: 0; bottom: 0;
+    width: 55%;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+  .auth-card {
+    background: white;
+    border-radius: 24px;
+    padding: 40px 44px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: var(--shadow-lg);
+    border: 1.5px solid rgba(26,86,219,0.08);
+  }
+
+  /* Tabs */
+  .auth-tabs {
+    display: flex;
+    background: #f1f5f9;
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 32px;
+  }
+  .auth-tab {
+    flex: 1; padding: 10px;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Sora', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--text-light);
+    background: transparent;
+  }
+  .auth-tab.active {
+    background: white;
+    color: var(--primary);
+    box-shadow: 0 2px 8px rgba(26,86,219,0.12);
+  }
+
+  .auth-title {
+    font-family: 'Sora', sans-serif;
+    font-size: 24px; font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .auth-sub {
+    font-size: 14px; color: var(--text-light);
+    margin-bottom: 28px;
+  }
+
+  /* Form */
+  .form-group { margin-bottom: 18px; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .form-label {
+    display: block;
+    font-size: 13px; font-weight: 600;
+    color: var(--text-mid);
+    margin-bottom: 7px;
+  }
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    background: #f8faff;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .form-input:focus {
+    border-color: var(--primary);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(26,86,219,0.08);
+  }
+  .form-input::placeholder { color: #94a3b8; }
+
+  .submit-btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    font-family: 'Sora', sans-serif;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(26,86,219,0.3);
+    margin-top: 8px;
+  }
+  .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,86,219,0.4); }
+  .submit-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
+
+  /* Alert messages */
+  .alert {
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px; font-weight: 600;
+    margin-bottom: 16px;
+    display: none;
+  }
+  .alert.success { background: #d1fae5; color: #065f46; border: 1px solid #a7f3d0; }
+  .alert.error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+  .alert.visible { display: block; }
+
+  /* Form sections */
+  .form-section { display: none; }
+  .form-section.active { display: block; }
+        .spinner {
+    display: inline-block;
+    width: 16px; height: 16px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @media (max-width: 768px) {
+    .left-panel { display: none; }
+    .bg-left { display: none; }
+    .right-panel { width: 100%; position: relative; }
+    .bg-right { width: 100%; }
+    .auth-card { padding: 28px 24px; }
+  }
+    </style>
+</head>
+<body>
+
+<div class="bg-left"></div>
+<div class="bg-dots"></div>
+<div class="bg-right"></div>
+
+<!-- Left Panel -->
+<div class="left-panel">
+    <div class="brand-logo">🎯</div>
+    <div class="brand-name">PrepLakshya</div>
+    <div class="brand-tagline">Track. Practice. Achieve.</div>
+
+    <div class="features-list">
+        <div class="feature-row">
+            <div class="feature-dot">🤖</div>
+            <div class="feature-text">
+                <strong>AI Study Roadmap</strong>
+                Personalized plan for your target company
+            </div>
+        </div>
+        <div class="feature-row">
+            <div class="feature-dot">🏢</div>
+            <div class="feature-text">
+                <strong>16+ Companies</strong>
+                TCS, Google, Amazon & more interview questions
+            </div>
+        </div>
+        <div class="feature-row">
+            <div class="feature-dot">📊</div>
+            <div class="feature-text">
+                <strong>Smart Tracker</strong>
+                Know your strong & weak areas instantly
+            </div>
+        </div>
+        <div class="feature-row">
+            <div class="feature-dot">🔥</div>
+            <div class="feature-text">
+                <strong>Daily Streaks</strong>
+                Stay consistent with study reminders
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Right Panel - Auth Form -->
+<div class="right-panel">
+    <div class="auth-card">
+
+        <!-- Tabs -->
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchTab('login')">Login</button>
+            <button class="auth-tab" onclick="switchTab('register')">Register</button>
+        </div>
+
+        <!-- Alert -->
+        <div class="alert" id="alertBox"></div>
+
+        <!-- LOGIN FORM -->
+        <div class="form-section active" id="loginSection">
+            <div class="auth-title">Welcome back! 👋</div>
+            <div class="auth-sub">Login to continue your preparation</div>
+
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" type="email" id="loginEmail" placeholder="sudheer@gmail.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input class="form-input" type="password" id="loginPassword" placeholder="Enter your password">
+            </div>
+            <button class="submit-btn" onclick="handleLogin()" id="loginBtn">
+                Login to PrepLakshya →
+            </button>
+        </div>
+
+        <!-- REGISTER FORM -->
+        <div class="form-section" id="registerSection">
+            <div class="auth-title">Join PrepLakshya! 🚀</div>
+            <div class="auth-sub">Create your account and start preparing</div>
+
+            <div class="form-group">
+                <label class="form-label">Full Name</label>
+                <input class="form-input" type="text" id="regName" placeholder="Sudheer Kumar">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email Address</label>
+                <input class="form-input" type="email" id="regEmail" placeholder="sudheer@gmail.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Password</label>
+                <input class="form-input" type="password" id="regPassword" placeholder="Create a password">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Target Company</label>
+                    <input class="form-input" type="text" id="regCompany" placeholder="TCS, Google...">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Your Skills</label>
+                    <input class="form-input" type="text" id="regSkills" placeholder="Java, MySQL...">
+                </div>
+            </div>
+            <button class="submit-btn" onclick="handleRegister()" id="registerBtn">
+                Create Account →
+            </button>
+        </div>
+
+    </div>
+</div>
+<script>
+    const API_BASE = 'http://localhost:8080';
+
+    function switchTab(tab) {
+      document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.form-section').forEach(s => s.classList.remove('active'));
+      event.target.classList.add('active');
+      document.getElementById(tab + 'Section').classList.add('active');
+      hideAlert();
+    }
+
+    function showAlert(message, type) {
+      const box = document.getElementById('alertBox');
+      box.textContent = message;
+      box.className = 'alert ' + type + ' visible';
+    }
+
+    function hideAlert() {
+      document.getElementById('alertBox').className = 'alert';
+    }
+
+    function setLoading(btnId, loading) {
+      const btn = document.getElementById(btnId);
+      if (loading) {
+        btn.innerHTML = '<span class="spinner"></span>Please wait...';
+        btn.disabled = true;
+      } else {
+        btn.disabled = false;
+      }
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!email || !password) {
+        showAlert('⚠️ Please enter email and password!', 'error');
+        return;
+      }
+
+      setLoading('loginBtn', true);
+      hideAlert();
+
+      try {
+        const response = await fetch(`${API_BASE}/api/users/login?email=${email}&password=${password}`, {
+          method: 'POST'
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showAlert('✅ Login successful! Redirecting...', 'success');
+          localStorage.setItem('userId', data.id);
+          localStorage.setItem('userName', data.name);
+          setTimeout(() => {
+            window.location.href = 'PrepLakshya-Dashboard.html';
+          }, 1500);
+        } else {
+          showAlert('❌ ' + (data || 'Invalid email or password!'), 'error');
+          document.getElementById('loginBtn').innerHTML = 'Login to PrepLakshya →';
+          document.getElementById('loginBtn').disabled = false;
+        }
+      } catch (error) {
+        showAlert('❌ Cannot connect to server. Make sure Spring Boot is running!', 'error');
+        document.getElementById('loginBtn').innerHTML = 'Login to PrepLakshya →';
+        document.getElementById('loginBtn').disabled = false;
+      }
+    }
+
+    async function handleRegister() {
+      const name = document.getElementById('regName').value.trim();
+      const email = document.getElementById('regEmail').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+      const targetCompany = document.getElementById('regCompany').value.trim();
+      const skills = document.getElementById('regSkills').value.trim();
+
+      if (!name || !email || !password) {
+        showAlert('⚠️ Please fill name, email and password!', 'error');
+        return;
+      }
+
+      setLoading('registerBtn', true);
+      hideAlert();
+
+      try {
+        const response = await fetch(`${API_BASE}/api/users/register`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password, targetCompany, skills })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          showAlert('🎉 Account created successfully! Please login now.', 'success');
+          setTimeout(() => {
+            switchTab('login');
+            document.getElementById('loginEmail').value = email;
+          }, 1500);
+          document.getElementById('registerBtn').innerHTML = 'Create Account →';
+          document.getElementById('registerBtn').disabled = false;
+        } else {
+          showAlert('❌ ' + (data || 'Registration failed!'), 'error');
+          document.getElementById('registerBtn').innerHTML = 'Create Account →';
+          document.getElementById('registerBtn').disabled = false;
+        }
+      } catch (error) {
+        showAlert('❌ Cannot connect to server. Make sure Spring Boot is running!', 'error');
+        document.getElementById('registerBtn').innerHTML = 'Create Account →';
+        document.getElementById('registerBtn').disabled = false;
+      }
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        const loginActive = document.getElementById('loginSection').classList.contains('active');
+        if (loginActive) handleLogin();
+        else handleRegister();
+      }
+    });
+</script>
+</body>
+</html>
