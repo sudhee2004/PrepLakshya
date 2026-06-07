@@ -28,16 +28,13 @@
           overflow: hidden;
         }
 
-        /* ── MAIN LAYOUT ── */
         .layout {
           display: flex;
           height: 100vh;
           width: 100vw;
         }
 
-        /* ══════════════════════════════
-           LEFT PANEL – blue branding
-        ══════════════════════════════ */
+        /* ═══ LEFT PANEL ═══ */
         .left {
           width: 42%;
           background: linear-gradient(160deg, #1e4db7 0%, #2563eb 45%, #1a3a6e 100%);
@@ -47,8 +44,6 @@
           position: relative;
           overflow: hidden;
         }
-
-        /* decorative circles */
         .left::before {
           content: '';
           position: absolute; top: -80px; right: -80px;
@@ -62,7 +57,6 @@
           background: rgba(255,255,255,0.05);
         }
 
-        /* brand */
         .brand {
           display: flex; align-items: center; gap: 14px;
           margin-bottom: 36px; position: relative; z-index: 1;
@@ -73,22 +67,20 @@
           display: flex; align-items: center; justify-content: center;
           font-size: 26px;
           box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-          backdrop-filter: blur(8px);
         }
         .brand-words h2 {
           font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 800;
-          color: #fff; letter-spacing: -0.01em;
+          color: #fff;
         }
         .brand-words p {
           font-size: 10px; font-weight: 600; letter-spacing: 0.14em;
           color: rgba(255,255,255,0.55); text-transform: uppercase; margin-top: 2px;
         }
 
-        /* hero text */
         .hero { position: relative; z-index: 1; margin-bottom: 40px; }
         .hero h1 {
           font-family: 'Syne', sans-serif;
-          font-size: clamp(26px, 3vw, 36px);
+          font-size: clamp(24px, 2.8vw, 34px);
           font-weight: 800; line-height: 1.18;
           color: #fff; letter-spacing: -0.02em;
         }
@@ -98,17 +90,18 @@
           color: rgba(255,255,255,0.65); line-height: 1.7;
         }
 
-        /* feature cards */
-        .features { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: flex-end; }
+        .features {
+          position: relative; z-index: 1;
+          display: flex; flex-direction: column; gap: 12px;
+          flex: 1; justify-content: flex-end;
+        }
         .feat {
           display: flex; align-items: center; gap: 14px;
           background: rgba(255,255,255,0.1);
           border: 1px solid rgba(255,255,255,0.15);
           border-radius: 16px; padding: 14px 18px;
           backdrop-filter: blur(8px);
-          transition: background 0.2s;
         }
-        .feat:hover { background: rgba(255,255,255,0.16); }
         .feat-icon {
           width: 40px; height: 40px; border-radius: 12px;
           background: rgba(255,255,255,0.12);
@@ -118,9 +111,7 @@
         .feat-text h4 { font-size: 14px; font-weight: 700; color: #fff; }
         .feat-text p  { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 2px; }
 
-        /* ══════════════════════════════
-           RIGHT PANEL – auth form
-        ══════════════════════════════ */
+        /* ═══ RIGHT PANEL ═══ */
         .right {
           flex: 1;
           background: #fff;
@@ -134,7 +125,6 @@
 
         .auth-box { width: 100%; max-width: 400px; }
 
-        /* tabs */
         .tabs {
           display: flex;
           background: var(--off-white);
@@ -152,96 +142,105 @@
           background: #fff; color: var(--blue-main); font-weight: 700;
           box-shadow: 0 2px 12px rgba(37,99,235,0.12);
         }
+
         .form-view { display: none; }
-    .form-view.active { display: block; animation: fadeIn 0.3s ease; }
-    @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
+        .form-view.active { display: block; animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:none;} }
 
-    .form-title {
-      font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800;
-      color: #0f172a; margin-bottom: 4px;
-    }
-    .form-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+        .form-title {
+          font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 800;
+          color: #0f172a; margin-bottom: 4px;
+        }
+        .form-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
 
-    .field { margin-bottom: 16px; }
-    .field label {
-      display: block; font-size: 11px; font-weight: 700;
-      color: #64748b; margin-bottom: 6px;
-      letter-spacing: 0.06em; text-transform: uppercase;
-    }
-    .input-wrap { position: relative; }
-    .input-wrap .ico {
-      position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-      font-size: 14px; pointer-events: none;
-    }
-    .input-wrap input {
-      width: 100%;
-      background: #f8faff;
-      border: 1.5px solid #e2eaf6;
-      border-radius: 12px;
-      padding: 12px 14px 12px 40px;
-      color: #0f172a; font-family: 'DM Sans', sans-serif; font-size: 14px;
-      outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-    }
-    .input-wrap input:focus {
-      border-color: var(--blue-main);
-      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
-      background: #fff;
-    }
-    .input-wrap input::placeholder { color: #b0c4de; }
+        .field { margin-bottom: 16px; }
+        .field label {
+          display: block; font-size: 11px; font-weight: 700;
+          color: #64748b; margin-bottom: 6px;
+          letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        .input-wrap { position: relative; }
+        .input-wrap .ico {
+          position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
+          font-size: 14px; pointer-events: none;
+        }
+        .input-wrap input {
+          width: 100%;
+          background: #f8faff;
+          border: 1.5px solid #e2eaf6;
+          border-radius: 12px;
+          padding: 12px 14px 12px 40px;
+          color: #0f172a; font-family: 'DM Sans', sans-serif; font-size: 14px;
+          outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .input-wrap input:focus {
+          border-color: var(--blue-main);
+          box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+          background: #fff;
+        }
+        .input-wrap input::placeholder { color: #b0c4de; }
 
-    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
-    .forgot { text-align: right; margin-top: -8px; margin-bottom: 16px; }
-    .forgot a { font-size: 12px; color: var(--blue-main); text-decoration: none; font-weight: 500; }
+        .forgot { text-align: right; margin-top: -8px; margin-bottom: 16px; }
+        .forgot a { font-size: 12px; color: var(--blue-main); text-decoration: none; font-weight: 500; }
 
-    .btn-submit {
-      width: 100%; padding: 14px;
-      background: linear-gradient(135deg, var(--blue-main), var(--blue-dark));
-      color: #fff; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
-      border: none; border-radius: 12px; cursor: pointer;
-      box-shadow: 0 6px 24px rgba(37,99,235,0.3);
-      transition: transform 0.15s, box-shadow 0.15s;
-      letter-spacing: 0.01em;
-    }
-    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,99,235,0.4); }
-    .btn-submit:active { transform: scale(0.98); }
+        .btn-submit {
+          width: 100%; padding: 14px;
+          background: linear-gradient(135deg, var(--blue-main), var(--blue-dark));
+          color: #fff; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+          border: none; border-radius: 12px; cursor: pointer;
+          box-shadow: 0 6px 24px rgba(37,99,235,0.3);
+          transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(37,99,235,0.4); }
+        .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
 
-    .divider {
-      display: flex; align-items: center; gap: 12px;
-      margin: 18px 0; color: var(--muted); font-size: 12px;
-    }
-    .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e2eaf6; }
+        .divider {
+          display: flex; align-items: center; gap: 12px;
+          margin: 18px 0; color: var(--muted); font-size: 12px;
+        }
+        .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #e2eaf6; }
 
-    .social-btn {
-      width: 100%; padding: 12px;
-      background: #fff; border: 1.5px solid #e2eaf6;
-      border-radius: 12px; color: #1e293b;
-      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-    }
-    .social-btn:hover { background: var(--off-white); border-color: var(--blue-main); box-shadow: 0 2px 12px rgba(37,99,235,0.1); }
+        .social-btn {
+          width: 100%; padding: 12px;
+          background: #fff; border: 1.5px solid #e2eaf6;
+          border-radius: 12px; color: #1e293b;
+          font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+          cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+          transition: background 0.2s, border-color 0.2s;
+        }
+        .social-btn:hover { background: var(--off-white); border-color: var(--blue-main); }
 
-    .terms { font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center; }
-    .terms a { color: var(--blue-main); text-decoration: none; font-weight: 500; }
+        .terms { font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center; }
+        .terms a { color: var(--blue-main); text-decoration: none; font-weight: 500; }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      html, body { overflow: auto; }
-      .layout { flex-direction: column; height: auto; }
-      .left { width: 100%; padding: 32px 28px; }
-      .features { flex-direction: row; flex-wrap: wrap; margin-top: 24px; }
-      .feat { flex: 1 1 calc(50% - 6px); }
-      .right { padding: 32px 24px; }
-      .row2 { grid-template-columns: 1fr; }
-    }
+        /* toast */
+        .toast {
+          position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+          background: #0f172a; color: #fff; padding: 12px 24px;
+          border-radius: 12px; font-size: 14px; font-weight: 500;
+          opacity: 0; transition: all 0.3s; z-index: 999; white-space: nowrap;
+        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .toast.error { background: #dc2626; }
+        .toast.success { background: #16a34a; }
+
+        @media (max-width: 768px) {
+          html, body { overflow: auto; }
+          .layout { flex-direction: column; height: auto; }
+          .left { width: 100%; padding: 32px 28px; }
+          .right { padding: 32px 24px; }
+          .row2 { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-<div class="layout">
+<div class="toast" id="toast"></div>
 
-    <!-- ═══ LEFT PANEL ═══ -->
+<div class="layout">
     <div class="left">
         <div class="brand">
             <div class="logo-box">🎯</div>
@@ -297,7 +296,7 @@
                 <button class="tab-btn" onclick="switchTab('register')">Register</button>
             </div>
 
-            <!-- Login -->
+            <!-- ── LOGIN ── -->
             <div class="form-view active" id="login">
                 <div class="form-title">Welcome back 👋</div>
                 <div class="form-sub">Sign in to continue your prep journey</div>
@@ -306,7 +305,7 @@
                     <label>Email Address</label>
                     <div class="input-wrap">
                         <span class="ico">✉️</span>
-                        <input type="email" placeholder="you@example.com" />
+                        <input id="loginEmail" type="email" placeholder="you@example.com" />
                     </div>
                 </div>
 
@@ -314,13 +313,13 @@
                     <label>Password</label>
                     <div class="input-wrap">
                         <span class="ico">🔒</span>
-                        <input type="password" placeholder="Enter your password" />
+                        <input id="loginPassword" type="password" placeholder="Enter your password" />
                     </div>
                 </div>
 
                 <div class="forgot"><a href="#">Forgot password?</a></div>
 
-                <button class="btn-submit">Sign In →</button>
+                <button class="btn-submit" id="loginBtn" onclick="handleLogin()">Sign In →</button>
 
                 <div class="divider">or continue with</div>
 
@@ -330,7 +329,7 @@
                 </button>
             </div>
 
-            <!-- Register -->
+            <!-- ── REGISTER ── -->
             <div class="form-view" id="register">
                 <div class="form-title">Join PrepLakshya 🚀</div>
                 <div class="form-sub">Start tracking your placement prep today</div>
@@ -340,14 +339,14 @@
                         <label>First Name</label>
                         <div class="input-wrap">
                             <span class="ico">👤</span>
-                            <input type="text" placeholder="First name" />
+                            <input id="firstName" type="text" placeholder="First name" />
                         </div>
                     </div>
                     <div class="field">
                         <label>Last Name</label>
                         <div class="input-wrap">
                             <span class="ico">👤</span>
-                            <input type="text" placeholder="Last name" />
+                            <input id="lastName" type="text" placeholder="Last name" />
                         </div>
                     </div>
                 </div>
@@ -356,7 +355,7 @@
                     <label>Email Address</label>
                     <div class="input-wrap">
                         <span class="ico">✉️</span>
-                        <input type="email" placeholder="you@example.com" />
+                        <input id="regEmail" type="email" placeholder="you@example.com" />
                     </div>
                 </div>
 
@@ -364,7 +363,7 @@
                     <label>College / University</label>
                     <div class="input-wrap">
                         <span class="ico">🎓</span>
-                        <input type="text" placeholder="Your college name" />
+                        <input id="college" type="text" placeholder="Your college name" />
                     </div>
                 </div>
 
@@ -372,11 +371,11 @@
                     <label>Password</label>
                     <div class="input-wrap">
                         <span class="ico">🔒</span>
-                        <input type="password" placeholder="Create a strong password" />
+                        <input id="regPassword" type="password" placeholder="Create a strong password" />
                     </div>
                 </div>
 
-                <button class="btn-submit">Create Account →</button>
+                <button class="btn-submit" id="registerBtn" onclick="handleRegister()">Create Account →</button>
 
                 <div class="terms">
                     By registering you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a>
@@ -385,10 +384,10 @@
 
         </div>
     </div>
-
 </div>
 
 <script>
+    // ── Tab switch ──
     function switchTab(tab) {
       document.querySelectorAll('.tab-btn').forEach((b, i) => {
         b.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
@@ -396,6 +395,97 @@
       document.querySelectorAll('.form-view').forEach(f => f.classList.remove('active'));
       document.getElementById(tab).classList.add('active');
     }
+
+    // ── Toast ──
+    function showToast(msg, type = '') {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.className = 'toast ' + type;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    // ── LOGIN ──
+    async function handleLogin() {
+      const email    = document.getElementById('loginEmail').value.trim();
+      const password = document.getElementById('loginPassword').value.trim();
+
+      if (!email || !password) {
+        showToast('Please fill in all fields', 'error'); return;
+      }
+
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
+      btn.textContent = 'Signing in...';
+
+      try {
+        const response = await fetch('/api/users/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: `email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+        });
+
+        if (response.ok) {
+          showToast('Login successful! Redirecting...', 'success');
+          setTimeout(() => window.location.href = '/dashboard', 1200);
+        } else {
+          const msg = await response.text();
+          showToast(msg || 'Invalid email or password!', 'error');
+        }
+      } catch (err) {
+        showToast('Server error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign In →';
+      }
+    }
+
+    // ── REGISTER ──
+    async function handleRegister() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName  = document.getElementById('lastName').value.trim();
+      const email     = document.getElementById('regEmail').value.trim();
+      const college   = document.getElementById('college').value.trim();
+      const password  = document.getElementById('regPassword').value.trim();
+
+      if (!firstName || !lastName || !email || !password) {
+        showToast('Please fill in all required fields', 'error'); return;
+      }
+
+      const btn = document.getElementById('registerBtn');
+      btn.disabled = true;
+      btn.textContent = 'Creating account...';
+
+      try {
+        const response = await fetch('/api/users/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firstName, lastName, email, password, college })
+        });
+
+        if (response.ok) {
+          showToast('Account created! Please sign in.', 'success');
+          setTimeout(() => switchTab('login'), 1500);
+        } else {
+          const msg = await response.text();
+          showToast(msg || 'Registration failed. Try again.', 'error');
+        }
+      } catch (err) {
+        showToast('Server error. Please try again.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Create Account →';
+      }
+    }
+
+    // Allow Enter key to submit
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        const activeForm = document.querySelector('.form-view.active').id;
+        if (activeForm === 'login') handleLogin();
+        else handleRegister();
+      }
+    });
 </script>
 </body>
 </html>
