@@ -38,17 +38,22 @@ public class ProfileController {
         try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://www.hackerrank.com/rest/hackers/" + username + "/scores_elo"))
-                    .header("Content-Type", "application/json")
+                    .uri(URI.create("https://www.hackerrank.com/rest/hackers/" + username + "/badges"))
+                    .header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36")
+                    .header("Accept", "application/json")
                     .GET()
                     .build();
 
             HttpResponse<String> response = client.send(request,
                     HttpResponse.BodyHandlers.ofString());
 
-            return ResponseEntity.ok(response.body());
+            if (response.statusCode() == 200) {
+                return ResponseEntity.ok(response.body());
+            } else {
+                return ResponseEntity.ok("{\"profile_url\": \"https://www.hackerrank.com/profile/" + username + "\", \"username\": \"" + username + "\"}");
+            }
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+            return ResponseEntity.ok("{\"profile_url\": \"https://www.hackerrank.com/profile/" + username + "\", \"username\": \"" + username + "\"}");
         }
     }
 }

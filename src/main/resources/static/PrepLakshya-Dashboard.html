@@ -1,348 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PrepLakshya - Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --primary: #1a56db;
-      --primary-light: #3b82f6;
-      --primary-dark: #1e3a8a;
-      --accent: #06b6d4;
-      --bg: #f0f4ff;
-      --white: #ffffff;
-      --text-dark: #0f172a;
-      --text-mid: #334155;
-      --text-light: #64748b;
-      --card-bg: rgba(255,255,255,0.92);
-      --shadow: 0 4px 24px rgba(26,86,219,0.08);
-      --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
-      --sidebar-w: 240px;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text-dark);
-      min-height: 100vh;
-      display: flex;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepLakshya - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --primary: #1a56db;
+          --primary-light: #3b82f6;
+          --primary-dark: #1e3a8a;
+          --accent: #06b6d4;
+          --bg: #f0f4ff;
+          --white: #ffffff;
+          --text-dark: #0f172a;
+          --text-mid: #334155;
+          --text-light: #64748b;
+          --card-bg: rgba(255,255,255,0.92);
+          --shadow: 0 4px 24px rgba(26,86,219,0.08);
+          --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
+          --sidebar-w: 240px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: 'Inter', sans-serif;
+          background: var(--bg);
+          color: var(--text-dark);
+          min-height: 100vh;
+          display: flex;
+        }
 
-    /* Sidebar */
-    .sidebar {
-      width: var(--sidebar-w);
-      background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      padding: 28px 16px;
-      position: fixed;
-      left: 0; top: 0; bottom: 0;
-      z-index: 20;
-      box-shadow: 4px 0 24px rgba(26,86,219,0.18);
-    }
-    .sidebar-logo {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 36px;
-      padding: 0 8px;
-    }
-    .sidebar-logo-icon {
-      width: 38px; height: 38px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-    }
-    .sidebar-logo-text {
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 17px;
-      color: white;
-    }
-    .sidebar-logo-sub {
-      font-size: 9px;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    .nav-section {
-      font-size: 10px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.45);
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 0 12px;
-      margin-bottom: 8px;
-      margin-top: 16px;
-    }
-    .nav-item {
-      display: flex; align-items: center; gap: 12px;
-      padding: 11px 14px;
-      border-radius: 12px;
-      color: rgba(255,255,255,0.75);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-bottom: 4px;
-      text-decoration: none;
-    }
-    .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
-    .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
-    .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
-    .sidebar-bottom {
-      margin-top: auto;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.12);
-    }
-    .user-avatar {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.1);
-    }
-    .avatar-circle {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #06b6d4, #3b82f6);
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 700; color: white; font-size: 14px;
-    }
-    .user-name { font-size: 13px; font-weight: 600; color: white; }
-    .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
+        /* Sidebar */
+        .sidebar {
+          width: var(--sidebar-w);
+          background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%);
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          padding: 28px 16px;
+          position: fixed;
+          left: 0; top: 0; bottom: 0;
+          z-index: 20;
+          box-shadow: 4px 0 24px rgba(26,86,219,0.18);
+        }
+        .sidebar-logo {
+          display: flex; align-items: center; gap: 10px;
+          margin-bottom: 36px;
+          padding: 0 8px;
+        }
+        .sidebar-logo-icon {
+          width: 38px; height: 38px;
+          background: rgba(255,255,255,0.15);
+          border-radius: 10px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px;
+        }
+        .sidebar-logo-text {
+          font-family: 'Sora', sans-serif;
+          font-weight: 800;
+          font-size: 17px;
+          color: white;
+        }
+        .sidebar-logo-sub {
+          font-size: 9px;
+          color: rgba(255,255,255,0.6);
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        }
+        .nav-section {
+          font-size: 10px;
+          font-weight: 600;
+          color: rgba(255,255,255,0.45);
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          padding: 0 12px;
+          margin-bottom: 8px;
+          margin-top: 16px;
+        }
+        .nav-item {
+          display: flex; align-items: center; gap: 12px;
+          padding: 11px 14px;
+          border-radius: 12px;
+          color: rgba(255,255,255,0.75);
+          font-size: 14px;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+          margin-bottom: 4px;
+          text-decoration: none;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
+        .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
+        .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
+        .sidebar-bottom {
+          margin-top: auto;
+          padding-top: 20px;
+          border-top: 1px solid rgba(255,255,255,0.12);
+        }
+        .user-avatar {
+          display: flex; align-items: center; gap: 10px;
+          padding: 10px 12px;
+          border-radius: 12px;
+          background: rgba(255,255,255,0.1);
+        }
+        .avatar-circle {
+          width: 36px; height: 36px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #06b6d4, #3b82f6);
+          display: flex; align-items: center; justify-content: center;
+          font-weight: 700; color: white; font-size: 14px;
+        }
+        .user-name { font-size: 13px; font-weight: 600; color: white; }
+        .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
 
-    /* Main content */
-    .main {
-      margin-left: var(--sidebar-w);
-      flex: 1;
-      padding: 28px 32px;
-      overflow-x: hidden;
-    }
+        /* Main content */
+        .main {
+          margin-left: var(--sidebar-w);
+          flex: 1;
+          padding: 28px 32px;
+          overflow-x: hidden;
+        }
 
-    /* Top bar */
-    .topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 28px;
-    }
-    .topbar-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--text-dark);
-    }
-    .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
-    .search-top {
-      display: flex; align-items: center; gap: 12px;
-    }
-    .search-input-wrap {
-      position: relative;
-    }
-    .search-input {
-      padding: 10px 16px 10px 40px;
-      border-radius: 12px;
-      border: 1.5px solid rgba(26,86,219,0.15);
-      background: var(--white);
-      font-size: 14px;
-      font-family: 'Inter', sans-serif;
-      color: var(--text-dark);
-      width: 260px;
-      outline: none;
-      box-shadow: var(--shadow);
-      transition: all 0.2s;
-    }
-    .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
-    .search-input::placeholder { color: var(--text-light); }
-    .search-ic {
-      position: absolute; left: 12px; top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-light); font-size: 16px;
-    }
-    .notif-btn {
-      width: 40px; height: 40px;
-      background: var(--white);
-      border-radius: 10px;
-      border: 1.5px solid rgba(26,86,219,0.12);
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; font-size: 18px;
-      box-shadow: var(--shadow);
-      transition: all 0.2s;
-    }
-    .notif-btn:hover { border-color: var(--primary); }
-    .stats-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 28px;
-  }
-  .stat-card {
-    background: var(--card-bg);
-    border-radius: 18px;
-    padding: 20px 22px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(26,86,219,0.07);
-    display: flex; align-items: center; gap: 16px;
-    transition: all 0.25s;
-  }
-  .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-  .stat-icon {
-    width: 48px; height: 48px;
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-  .si-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-  .si-green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
-  .si-orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
-  .si-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
-  .stat-val {
-    font-family: 'Sora', sans-serif;
-    font-size: 26px; font-weight: 800;
-    color: var(--text-dark);
-    line-height: 1;
-  }
-  .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+        /* Top bar */
+        .topbar {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-bottom: 28px;
+        }
+        .topbar-title {
+          font-family: 'Sora', sans-serif;
+          font-size: 22px;
+          font-weight: 800;
+          color: var(--text-dark);
+        }
+        .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+        .search-top {
+          display: flex; align-items: center; gap: 12px;
+        }
+        .search-input-wrap {
+          position: relative;
+        }
+        .search-input {
+          padding: 10px 16px 10px 40px;
+          border-radius: 12px;
+          border: 1.5px solid rgba(26,86,219,0.15);
+          background: var(--white);
+          font-size: 14px;
+          font-family: 'Inter', sans-serif;
+          color: var(--text-dark);
+          width: 260px;
+          outline: none;
+          box-shadow: var(--shadow);
+          transition: all 0.2s;
+        }
+        .search-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
+        .search-input::placeholder { color: var(--text-light); }
+        .search-ic {
+          position: absolute; left: 12px; top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-light); font-size: 16px;
+        }
+        .notif-btn {
+          width: 40px; height: 40px;
+          background: var(--white);
+          border-radius: 10px;
+          border: 1.5px solid rgba(26,86,219,0.12);
+          display: flex; align-items: center; justify-content: center;
+          cursor: pointer; font-size: 18px;
+          box-shadow: var(--shadow);
+          transition: all 0.2s;
+        }
+        .notif-btn:hover { border-color: var(--primary); }
 
-  /* Progress bar */
-  .progress-section {
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 24px 26px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(26,86,219,0.07);
-    margin-bottom: 28px;
-  }
-  .section-head {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  .section-ttl {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700; font-size: 17px;
-    color: var(--text-dark);
-  }
-  .see-all {
-    font-size: 13px; color: var(--primary);
-    font-weight: 600; cursor: pointer;
-    text-decoration: none;
-  }
-  .topic-row {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 14px;
-  }
-  .topic-name { font-size: 13px; font-weight: 600; color: var(--text-mid); width: 120px; flex-shrink: 0; }
-  .progress-bar-bg {
-    flex: 1; height: 8px;
-    background: #e8f0fe;
-    border-radius: 100px;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    border-radius: 100px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-    transition: width 0.8s ease;
-  }
-  .progress-pct { font-size: 13px; font-weight: 700; color: var(--primary); width: 40px; text-align: right; }
+        /* Stats row */
+        .stats-row {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 16px;
+          margin-bottom: 28px;
+        }
+        .stat-card {
+          background: var(--card-bg);
+          border-radius: 18px;
+          padding: 20px 22px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          display: flex; align-items: center; gap: 16px;
+          transition: all 0.25s;
+        }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .stat-icon {
+          width: 48px; height: 48px;
+          border-radius: 14px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 22px;
+          flex-shrink: 0;
+        }
+        .si-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .si-green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+        .si-orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+        .si-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+        .stat-val {
+          font-family: 'Sora', sans-serif;
+          font-size: 26px; font-weight: 800;
+          color: var(--text-dark);
+          line-height: 1;
+        }
+        .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
 
-  /* Companies section */
-  .companies-section {
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 24px 26px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(26,86,219,0.07);
-    margin-bottom: 28px;
-  }
-  .companies-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-    gap: 14px;
-    margin-top: 4px;
-  }
-  .company-card {
-    background: #f8faff;
-    border: 1.5px solid rgba(26,86,219,0.09);
-    border-radius: 14px;
-    padding: 16px 12px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.22s;
-    position: relative;
-    overflow: hidden;
-  }
-  .company-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
-    background: white;
-  }
-  .company-card.selected {
-    border-color: var(--primary);
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
-  }
-  .company-logo-wrap {
-    width: 48px; height: 48px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    margin: 0 auto 10px;
-    font-size: 24px;
-    font-weight: 800;
-    position: relative;
-  }
-  .company-name-text {
-    font-size: 12px; font-weight: 700;
-    color: var(--text-dark);
-    line-height: 1.3;
-  }
-  .company-count {
-    font-size: 10px; color: var(--text-light);
-    margin-top: 3px;
-  }
-  .selected-badge {
-    position: absolute; top: 6px; right: 6px;
-    width: 18px; height: 18px;
-    background: var(--primary);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: white; font-size: 10px;
-    display: none;
-  }
-  .company-card.selected .selected-badge { display: flex; }
-    .questions-panel {
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 24px 26px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(26,86,219,0.07);
-    margin-bottom: 28px;
-    display: none;
-  }
-  .questions-panel.visible { display: block; }
-  .q-item {
-    display: flex; align-items: flex-start; gap: 14px;
-    padding: 14px 0;
-    border-bottom: 1px solid #f1f5f9;
-  }
-  .q-item:last-child { border-bottom: none; }
-  .q-badge {
-    padding: 4px 10px;
-    border-radius: 8px;
-    font-size: 11px; font-weight: 700;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .q-easy { background: #d1fae5; color: #065f46; }
-  .q-med { background: #fef3c7; color: #92400e; }
-  .q-hard { background: #fee2e2; color: #991b1b; }
-  .q-text { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
-  .q-meta { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+        /* Progress bar */
+        .progress-section {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 24px 26px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          margin-bottom: 28px;
+        }
+        .section-head {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-bottom: 20px;
+        }
+        .section-ttl {
+          font-family: 'Sora', sans-serif;
+          font-weight: 700; font-size: 17px;
+          color: var(--text-dark);
+        }
+        .see-all {
+          font-size: 13px; color: var(--primary);
+          font-weight: 600; cursor: pointer;
+          text-decoration: none;
+        }
+        .topic-row {
+          display: flex; align-items: center; gap: 14px;
+          margin-bottom: 14px;
+        }
+        .topic-name { font-size: 13px; font-weight: 600; color: var(--text-mid); width: 120px; flex-shrink: 0; }
+        .progress-bar-bg {
+          flex: 1; height: 8px;
+          background: #e8f0fe;
+          border-radius: 100px;
+          overflow: hidden;
+        }
+        .progress-bar-fill {
+          height: 100%;
+          border-radius: 100px;
+          background: linear-gradient(90deg, var(--primary), var(--accent));
+          transition: width 0.8s ease;
+        }
+        .progress-pct { font-size: 13px; font-weight: 700; color: var(--primary); width: 40px; text-align: right; }
 
-  /* Animations */
-  @keyframes fadeUp {
+        /* Companies section */
+        .companies-section {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 24px 26px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          margin-bottom: 28px;
+        }
+        .companies-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+          gap: 14px;
+          margin-top: 4px;
+        }
+        .company-card {
+          background: #f8faff;
+          border: 1.5px solid rgba(26,86,219,0.09);
+          border-radius: 14px;
+          padding: 16px 12px;
+          text-align: center;
+          cursor: pointer;
+          transition: all 0.22s;
+          position: relative;
+          overflow: hidden;
+        }
+        .company-card:hover {
+          transform: translateY(-4px);
+          box-shadow: var(--shadow-lg);
+          border-color: var(--primary-light);
+          background: white;
+        }
+        .company-card.selected {
+          border-color: var(--primary);
+          background: linear-gradient(135deg, #eff6ff, #dbeafe);
+          box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
+        }
+        .company-logo-wrap {
+          width: 48px; height: 48px;
+          border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          margin: 0 auto 10px;
+          font-size: 24px;
+          font-weight: 800;
+          position: relative;
+        }
+        .company-name-text {
+          font-size: 12px; font-weight: 700;
+          color: var(--text-dark);
+          line-height: 1.3;
+        }
+        .company-count {
+          font-size: 10px; color: var(--text-light);
+          margin-top: 3px;
+        }
+        .selected-badge {
+          position: absolute; top: 6px; right: 6px;
+          width: 18px; height: 18px;
+          background: var(--primary);
+          border-radius: 50%;
+          display: flex; align-items: center; justify-content: center;
+          color: white; font-size: 10px;
+          display: none;
+        }
+        .company-card.selected .selected-badge { display: flex; }
+
+        /* Interview questions panel */
+        .questions-panel {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 24px 26px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          margin-bottom: 28px;
+          display: none;
+        }
+        .questions-panel.visible { display: block; }
+        .q-item {
+          display: flex; align-items: flex-start; gap: 14px;
+          padding: 14px 0;
+          border-bottom: 1px solid #f1f5f9;
+        }
+        .q-item:last-child { border-bottom: none; }
+        .q-badge {
+          padding: 4px 10px;
+          border-radius: 8px;
+          font-size: 11px; font-weight: 700;
+          flex-shrink: 0;
+          margin-top: 2px;
+        }
+        .q-easy { background: #d1fae5; color: #065f46; }
+        .q-med { background: #fef3c7; color: #92400e; }
+        .q-hard { background: #fee2e2; color: #991b1b; }
+        .q-text { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
+        .q-meta { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+        @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
@@ -353,541 +355,559 @@
     .main { margin-left: 0; padding: 16px; }
     .stats-row { grid-template-columns: repeat(2, 1fr); }
   }
-  </style>
+    </style>
 </head>
 <body>
 
 <!-- Sidebar -->
 <aside class="sidebar">
-  <div class="sidebar-logo">
-    <div class="sidebar-logo-icon">🎯</div>
-    <div>
-      <div class="sidebar-logo-text">PrepLakshya</div>
-      <div class="sidebar-logo-sub">Track. Practice. Achieve.</div>
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🎯</div>
+        <div>
+            <div class="sidebar-logo-text">PrepLakshya</div>
+            <div class="sidebar-logo-sub">Track. Practice. Achieve.</div>
+        </div>
     </div>
-  </div>
 
-  <div class="nav-section">Main</div>
-  <a href="PrepLakshyaDashboard.html" class="nav-item active"><span class="nav-icon">📊</span> Dashboard</a>
-  <a href="#companiesSection" class="nav-item" onclick="scrollToSection('companiesSection')"><span class="nav-icon">🏢</span> Companies</a>
-  <a href="PrepLakshyaTopicTracker.html" class="nav-item"><span class="nav-icon">📚</span> Topic Tracker</a>
-  <a href="#" class="nav-item" onclick="showRoadmapMsg()"><span class="nav-icon">🤖</span> AI Roadmap</a>
+    <div class="nav-section">Main</div>
+    <a href="PrepLakshyaDashboard.html" class="nav-item active"><span class="nav-icon">📊</span> Dashboard</a>
+    <a href="#companiesSection" class="nav-item" onclick="scrollToSection('companiesSection')"><span class="nav-icon">🏢</span> Companies</a>
+    <a href="PrepLakshyaTopicTracker.html" class="nav-item"><span class="nav-icon">📚</span> Topic Tracker</a>
+    <a href="#" class="nav-item" onclick="showRoadmapMsg()"><span class="nav-icon">🤖</span> AI Roadmap</a>
 
-  <div class="nav-section">Practice</div>
-  <a href="#dsaSection" class="nav-item" onclick="scrollToSection('dsaSection')"><span class="nav-icon">💻</span> DSA Problems</a>
-  <a href="#" class="nav-item" onclick="alert('Aptitude section coming soon! 🧠')"><span class="nav-icon">🧠</span> Aptitude</a>
-  <a href="#" class="nav-item" onclick="alert('HR Questions section coming soon! 🎤')"><span class="nav-icon">🎤</span> HR Questions</a>
+    <div class="nav-section">Practice</div>
+    <a href="#dsaSection" class="nav-item" onclick="scrollToSection('dsaSection')"><span class="nav-icon">💻</span> DSA Problems</a>
+    <a href="#" class="nav-item" onclick="alert('Aptitude section coming soon! 🧠')"><span class="nav-icon">🧠</span> Aptitude</a>
+    <a href="#" class="nav-item" onclick="alert('HR Questions section coming soon! 🎤')"><span class="nav-icon">🎤</span> HR Questions</a>
 
-  <div class="sidebar-bottom">
-    <div class="user-avatar">
-      <div class="avatar-circle">SK</div>
-      <div>
-        <div class="user-name">Sudheer Kumar</div>
-        <div class="user-role">B.Tech IT • Final Year</div>
-      </div>
+    <div class="sidebar-bottom">
+        <div class="user-avatar">
+            <div class="avatar-circle">SK</div>
+            <div>
+                <div class="user-name">Sudheer Kumar</div>
+                <div class="user-role">B.Tech IT • Final Year</div>
+            </div>
+        </div>
     </div>
-  </div>
 </aside>
 
 <!-- Main Content -->
 <main class="main">
 
-  <!-- Topbar -->
-  <div class="topbar">
-    <div>
-      <div class="topbar-title">Good Morning, Sudheer! 👋</div>
-      <div class="topbar-sub">You have 8 topics pending today. Keep going!</div>
-    </div>
-    <div class="search-top">
-      <div class="search-input-wrap">
-        <span class="search-ic">🔍</span>
-        <input class="search-input" type="text" placeholder="Search topics, companies...">
-      </div>
-      <div class="notif-btn">🔔</div>
-    </div>
-  </div>
-
-  <!-- Stats Row -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-icon si-blue">📈</div>
-      <div>
-        <div class="stat-val">68%</div>
-        <div class="stat-lbl">Overall Progress</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon si-green">✅</div>
-      <div>
-        <div class="stat-val">34</div>
-        <div class="stat-lbl">Topics Completed</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon si-orange">⏳</div>
-      <div>
-        <div class="stat-val">16</div>
-        <div class="stat-lbl">Topics Pending</div>
-      </div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-icon si-purple">🔥</div>
-      <div>
-        <div class="stat-val">12</div>
-        <div class="stat-lbl">Day Streak</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- DSA Progress -->
-  <div class="progress-section" id="dsaSection">
-    <div class="section-head">
-      <div class="section-ttl">📊 DSA Topic Progress</div>
-      <a href="PrepLakshyaTopicTracker.html" class="see-all">View All →</a>
-    </div>
-    <div class="topic-row">
-      <div class="topic-name">Arrays</div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
-      <div class="progress-pct">90%</div>
-    </div>
-    <div class="topic-row">
-      <div class="topic-name">Linked Lists</div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:75%"></div></div>
-      <div class="progress-pct">75%</div>
-    </div>
-    <div class="topic-row">
-      <div class="topic-name">Trees</div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
-      <div class="progress-pct">60%</div>
-    </div>
-    <div class="topic-row">
-      <div class="topic-name">Graphs</div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
-      <div class="progress-pct">40%</div>
-    </div>
-    <div class="topic-row">
-      <div class="topic-name">Dynamic Prog.</div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:25%"></div></div>
-      <div class="progress-pct">25%</div>
-    </div>
-    <div class="topic-row">
-      <div class="topic-name">SQL</div>
-      <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
-      <div class="progress-pct">80%</div>
-    </div>
-  </div>
-  <div class="companies-section" id="companiesSection">
-    <div class="section-head">
-      <div class="section-ttl">🏢 Target Companies</div>
-      <span style="font-size:12px;color:var(--text-light)">Click to see interview questions</span>
-    </div>
-    <div class="companies-grid" id="companiesGrid">
-
-      <div class="company-card" onclick="showQuestions('TCS')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#f0f9ff;">
-          <img src="https://logo.clearbit.com/tcs.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#0369a1;font-size:16px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">TCS</span>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div>
+            <div class="topbar-title">Good Morning, Sudheer! 👋</div>
+            <div class="topbar-sub">You have 8 topics pending today. Keep going!</div>
         </div>
-        <div class="company-name-text">TCS</div>
-        <div class="company-count">120+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Infosys')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#f0fdf4;">
-          <img src="https://logo.clearbit.com/infosys.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#15803d;font-size:14px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">INFY</span>
-        </div>
-        <div class="company-name-text">Infosys</div>
-        <div class="company-count">95+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Wipro')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fdf4ff;">
-          <img src="https://logo.clearbit.com/wipro.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#7e22ce;font-size:14px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">WIP</span>
-        </div>
-        <div class="company-name-text">Wipro</div>
-        <div class="company-count">85+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Accenture')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fff7ed;">
-          <img src="https://logo.clearbit.com/accenture.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#c2410c;font-size:14px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">ACC</span>
-        </div>
-        <div class="company-name-text">Accenture</div>
-        <div class="company-count">90+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('HCL')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#eff6ff;">
-          <img src="https://logo.clearbit.com/hcltech.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#1d4ed8;font-size:16px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">HCL</span>
-        </div>
-        <div class="company-name-text">HCL</div>
-        <div class="company-count">75+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Cognizant')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#f0fdf4;">
-          <img src="https://logo.clearbit.com/cognizant.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#166534;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">CTG</span>
-        </div>
-        <div class="company-name-text">Cognizant</div>
-        <div class="company-count">80+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Deloitte')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fefce8;">
-          <img src="https://logo.clearbit.com/deloitte.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#a16207;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">DEL</span>
-        </div>
-        <div class="company-name-text">Deloitte</div>
-        <div class="company-count">70+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('IBM')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#eff6ff;">
-          <img src="https://logo.clearbit.com/ibm.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#1e40af;font-size:18px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">IBM</span>
-        </div>
-        <div class="company-name-text">IBM</div>
-        <div class="company-count">88+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Tech Mahindra')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fdf4ff;">
-          <img src="https://logo.clearbit.com/techmahindra.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#9333ea;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">TM</span>
-        </div>
-        <div class="company-name-text">Tech Mahindra</div>
-        <div class="company-count">65+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('ServiceNow')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fff1f2;">
-          <img src="https://logo.clearbit.com/servicenow.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#be123c;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">SNW</span>
-        </div>
-        <div class="company-name-text">ServiceNow</div>
-        <div class="company-count">55+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Microsoft')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#eff6ff;">
-          <img src="https://logo.clearbit.com/microsoft.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#1e40af;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">MSFT</span>
-        </div>
-        <div class="company-name-text">Microsoft</div>
-        <div class="company-count">150+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Google')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fefce8;">
-          <img src="https://logo.clearbit.com/google.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#ea4335;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">GOOG</span>
-        </div>
-        <div class="company-name-text">Google</div>
-        <div class="company-count">180+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Amazon')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fff7ed;">
-          <img src="https://logo.clearbit.com/amazon.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#ff9900;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">AMZ</span>
-        </div>
-        <div class="company-name-text">Amazon</div>
-        <div class="company-count">160+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Flipkart')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#eff6ff;">
-          <img src="https://logo.clearbit.com/flipkart.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#2874f0;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">FK</span>
-        </div>
-        <div class="company-name-text">Flipkart</div>
-        <div class="company-count">110+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('HP')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#f0fdf4;">
-          <img src="https://logo.clearbit.com/hp.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#166534;font-size:22px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">HP</span>
-        </div>
-        <div class="company-name-text">HP</div>
-        <div class="company-count">60+ Qs</div>
-      </div>
-
-      <div class="company-card" onclick="showQuestions('Autodesk')">
-        <div class="selected-badge">✓</div>
-        <div class="company-logo-wrap" style="background:#fff1f2;">
-          <img src="https://logo.clearbit.com/autodesk.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
-          <span style="display:none;color:#be123c;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">ADS</span>
-        </div>
-        <div class="company-name-text">Autodesk</div>
-        <div class="company-count">45+ Qs</div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- Coding Profiles Section -->
-  <div class="companies-section" style="margin-bottom:24px;">
-    <div class="section-head">
-      <div class="section-ttl">💻 Coding Profiles</div>
-      <span style="font-size:12px;color:var(--text-light)">Enter username to fetch your stats</span>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
-
-      <!-- LeetCode -->
-      <div style="background:#f8faff;border:1.5px solid rgba(26,86,219,0.1);border-radius:16px;padding:20px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:40px;height:40px;background:#FFF7ED;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#f89c24;font-size:14px;">LC</div>
-          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;">LeetCode</div>
-        </div>
-        <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <input id="lcUsername" type="text" placeholder="Enter username" style="flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:13px;outline:none;font-family:'Inter',sans-serif;">
-          <button onclick="fetchLeetCode()" style="padding:8px 14px;background:linear-gradient(135deg,#1a56db,#3b82f6);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Fetch</button>
-        </div>
-        <div id="lcStats" style="display:none;">
-          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
-            <div style="background:#d1fae5;border-radius:8px;padding:8px;">
-              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#065f46;" id="lcEasy">0</div>
-              <div style="font-size:11px;color:#065f46;">Easy</div>
+        <div class="search-top">
+            <div class="search-input-wrap">
+                <span class="search-ic">🔍</span>
+                <input class="search-input" type="text" placeholder="Search topics, companies...">
             </div>
-            <div style="background:#fef3c7;border-radius:8px;padding:8px;">
-              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#92400e;" id="lcMedium">0</div>
-              <div style="font-size:11px;color:#92400e;">Medium</div>
-            </div>
-            <div style="background:#fee2e2;border-radius:8px;padding:8px;">
-              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#991b1b;" id="lcHard">0</div>
-              <div style="font-size:11px;color:#991b1b;">Hard</div>
-            </div>
-          </div>
-          <div style="margin-top:10px;text-align:center;font-size:12px;color:var(--text-light);">
-            Rank: <span id="lcRank" style="font-weight:700;color:var(--primary);">-</span>
-          </div>
+            <div class="notif-btn">🔔</div>
         </div>
-        <div id="lcLoading" style="display:none;text-align:center;font-size:13px;color:var(--text-light);">Fetching... ⏳</div>
-        <div id="lcError" style="display:none;font-size:12px;color:#ef4444;margin-top:8px;"></div>
-      </div>
-      <div style="background:#f8faff;border:1.5px solid rgba(26,86,219,0.1);border-radius:16px;padding:20px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:40px;height:40px;background:#F0FDF4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#22c55e;font-size:14px;">HR</div>
-          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;">HackerRank</div>
-        </div>
-        <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <input id="hrUsername" type="text" placeholder="Enter username" style="flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:13px;outline:none;font-family:'Inter',sans-serif;">
-          <button onclick="fetchHackerRank()" style="padding:8px 14px;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Fetch</button>
-        </div>
-        <div id="hrStats" style="display:none;text-align:center;">
-          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:28px;color:#15803d;" id="hrScore">0</div>
-          <div style="font-size:12px;color:var(--text-light);">Total Score</div>
-        </div>
-        <div id="hrLoading" style="display:none;text-align:center;font-size:13px;color:var(--text-light);">Fetching... ⏳</div>
-        <div id="hrError" style="display:none;font-size:12px;color:#ef4444;margin-top:8px;"></div>
-      </div>
-
-      <!-- CodeChef -->
-      <div style="background:#f8faff;border:1.5px solid rgba(26,86,219,0.1);border-radius:16px;padding:20px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:40px;height:40px;background:#FFF8F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#e67e22;font-size:14px;">CC</div>
-          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;">CodeChef</div>
-        </div>
-        <div style="display:flex;gap:8px;margin-bottom:12px;">
-          <input id="ccUsername" type="text" placeholder="Enter username" style="flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:13px;outline:none;font-family:'Inter',sans-serif;">
-          <button onclick="alert('CodeChef integration coming soon! 🍴')" style="padding:8px 14px;background:linear-gradient(135deg,#e67e22,#d35400);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Soon</button>
-        </div>
-        <div style="text-align:center;padding:16px;background:#fff8f0;border-radius:10px;">
-          <div style="font-size:24px;">🍴</div>
-          <div style="font-size:12px;color:var(--text-light);margin-top:6px;">Coming Soon!</div>
-        </div>
-      </div>
-
     </div>
-  </div>
 
-  <!-- Interview Questions Panel -->
-  <div class="questions-panel" id="questionsPanel">
-    <div class="section-head">
-      <div class="section-ttl" id="questionsTitle">🎯 Interview Questions</div>
-      <a href="#" class="see-all" onclick="closeQuestions()">✕ Close</a>
+    <!-- Stats Row -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-icon si-blue">📈</div>
+            <div>
+                <div class="stat-val">68%</div>
+                <div class="stat-lbl">Overall Progress</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon si-green">✅</div>
+            <div>
+                <div class="stat-val">34</div>
+                <div class="stat-lbl">Topics Completed</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon si-orange">⏳</div>
+            <div>
+                <div class="stat-val">16</div>
+                <div class="stat-lbl">Topics Pending</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon si-purple">🔥</div>
+            <div>
+                <div class="stat-val">12</div>
+                <div class="stat-lbl">Day Streak</div>
+            </div>
+        </div>
     </div>
-    <div id="questionsList"></div>
-  </div>
+
+    <!-- DSA Progress -->
+    <div class="progress-section" id="dsaSection">
+        <div class="section-head">
+            <div class="section-ttl">📊 DSA Topic Progress</div>
+            <a href="PrepLakshyaTopicTracker.html" class="see-all">View All →</a>
+        </div>
+        <div class="topic-row">
+            <div class="topic-name">Arrays</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:90%"></div></div>
+            <div class="progress-pct">90%</div>
+        </div>
+        <div class="topic-row">
+            <div class="topic-name">Linked Lists</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:75%"></div></div>
+            <div class="progress-pct">75%</div>
+        </div>
+        <div class="topic-row">
+            <div class="topic-name">Trees</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:60%"></div></div>
+            <div class="progress-pct">60%</div>
+        </div>
+        <div class="topic-row">
+            <div class="topic-name">Graphs</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:40%"></div></div>
+            <div class="progress-pct">40%</div>
+        </div>
+        <div class="topic-row">
+            <div class="topic-name">Dynamic Prog.</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:25%"></div></div>
+            <div class="progress-pct">25%</div>
+        </div>
+        <div class="topic-row">
+            <div class="topic-name">SQL</div>
+            <div class="progress-bar-bg"><div class="progress-bar-fill" style="width:80%"></div></div>
+            <div class="progress-pct">80%</div>
+        </div>
+    </div>
+
+    <!-- Companies -->
+    <div class="companies-section" id="companiesSection">
+        <div class="section-head">
+            <div class="section-ttl">🏢 Target Companies</div>
+            <span style="font-size:12px;color:var(--text-light)">Click to see interview questions</span>
+        </div>
+        <div class="companies-grid" id="companiesGrid">
+
+            <div class="company-card" onclick="showQuestions('TCS')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#f0f9ff;">
+                    <img src="https://logo.clearbit.com/tcs.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#0369a1;font-size:16px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">TCS</span>
+                </div>
+                <div class="company-name-text">TCS</div>
+                <div class="company-count">120+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Infosys')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#f0fdf4;">
+                    <img src="https://logo.clearbit.com/infosys.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#15803d;font-size:14px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">INFY</span>
+                </div>
+                <div class="company-name-text">Infosys</div>
+                <div class="company-count">95+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Wipro')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fdf4ff;">
+                    <img src="https://logo.clearbit.com/wipro.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#7e22ce;font-size:14px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">WIP</span>
+                </div>
+                <div class="company-name-text">Wipro</div>
+                <div class="company-count">85+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Accenture')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fff7ed;">
+                    <img src="https://logo.clearbit.com/accenture.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#c2410c;font-size:14px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">ACC</span>
+                </div>
+                <div class="company-name-text">Accenture</div>
+                <div class="company-count">90+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('HCL')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#eff6ff;">
+                    <img src="https://logo.clearbit.com/hcltech.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#1d4ed8;font-size:16px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">HCL</span>
+                </div>
+                <div class="company-name-text">HCL</div>
+                <div class="company-count">75+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Cognizant')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#f0fdf4;">
+                    <img src="https://logo.clearbit.com/cognizant.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#166534;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">CTG</span>
+                </div>
+                <div class="company-name-text">Cognizant</div>
+                <div class="company-count">80+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Deloitte')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fefce8;">
+                    <img src="https://logo.clearbit.com/deloitte.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#a16207;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">DEL</span>
+                </div>
+                <div class="company-name-text">Deloitte</div>
+                <div class="company-count">70+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('IBM')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#eff6ff;">
+                    <img src="https://logo.clearbit.com/ibm.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#1e40af;font-size:18px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">IBM</span>
+                </div>
+                <div class="company-name-text">IBM</div>
+                <div class="company-count">88+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Tech Mahindra')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fdf4ff;">
+                    <img src="https://logo.clearbit.com/techmahindra.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#9333ea;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">TM</span>
+                </div>
+                <div class="company-name-text">Tech Mahindra</div>
+                <div class="company-count">65+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('ServiceNow')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fff1f2;">
+                    <img src="https://logo.clearbit.com/servicenow.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#be123c;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">SNW</span>
+                </div>
+                <div class="company-name-text">ServiceNow</div>
+                <div class="company-count">55+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Microsoft')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#eff6ff;">
+                    <img src="https://logo.clearbit.com/microsoft.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#1e40af;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">MSFT</span>
+                </div>
+                <div class="company-name-text">Microsoft</div>
+                <div class="company-count">150+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Google')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fefce8;">
+                    <img src="https://logo.clearbit.com/google.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#ea4335;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">GOOG</span>
+                </div>
+                <div class="company-name-text">Google</div>
+                <div class="company-count">180+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Amazon')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fff7ed;">
+                    <img src="https://logo.clearbit.com/amazon.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#ff9900;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">AMZ</span>
+                </div>
+                <div class="company-name-text">Amazon</div>
+                <div class="company-count">160+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Flipkart')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#eff6ff;">
+                    <img src="https://logo.clearbit.com/flipkart.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#2874f0;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">FK</span>
+                </div>
+                <div class="company-name-text">Flipkart</div>
+                <div class="company-count">110+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('HP')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#f0fdf4;">
+                    <img src="https://logo.clearbit.com/hp.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#166534;font-size:22px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">HP</span>
+                </div>
+                <div class="company-name-text">HP</div>
+                <div class="company-count">60+ Qs</div>
+            </div>
+
+            <div class="company-card" onclick="showQuestions('Autodesk')">
+                <div class="selected-badge">✓</div>
+                <div class="company-logo-wrap" style="background:#fff1f2;">
+                    <img src="https://logo.clearbit.com/autodesk.com" onerror="this.style.opacity=0" style="width:38px;height:38px;object-fit:contain;border-radius:8px;">
+                    <span style="display:none;color:#be123c;font-size:13px;font-weight:900;width:100%;height:100%;align-items:center;justify-content:center;">ADS</span>
+                </div>
+                <div class="company-name-text">Autodesk</div>
+                <div class="company-count">45+ Qs</div>
+            </div>
+
+        </div>
+    </div>
+    <div class="companies-section" style="margin-bottom:24px;">
+        <div class="section-head">
+            <div class="section-ttl">💻 Coding Profiles</div>
+            <span style="font-size:12px;color:var(--text-light)">Enter username to fetch your stats</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;">
+
+            <!-- LeetCode -->
+            <div style="background:#f8faff;border:1.5px solid rgba(26,86,219,0.1);border-radius:16px;padding:20px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                    <div style="width:40px;height:40px;background:#FFF7ED;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#f89c24;font-size:14px;">LC</div>
+                    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;">LeetCode</div>
+                </div>
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <input id="lcUsername" type="text" placeholder="Enter username" style="flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:13px;outline:none;font-family:'Inter',sans-serif;">
+                    <button onclick="fetchLeetCode()" style="padding:8px 14px;background:linear-gradient(135deg,#1a56db,#3b82f6);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Fetch</button>
+                </div>
+                <div id="lcStats" style="display:none;">
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center;">
+                        <div style="background:#d1fae5;border-radius:8px;padding:8px;">
+                            <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#065f46;" id="lcEasy">0</div>
+                            <div style="font-size:11px;color:#065f46;">Easy</div>
+                        </div>
+                        <div style="background:#fef3c7;border-radius:8px;padding:8px;">
+                            <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#92400e;" id="lcMedium">0</div>
+                            <div style="font-size:11px;color:#92400e;">Medium</div>
+                        </div>
+                        <div style="background:#fee2e2;border-radius:8px;padding:8px;">
+                            <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:18px;color:#991b1b;" id="lcHard">0</div>
+                            <div style="font-size:11px;color:#991b1b;">Hard</div>
+                        </div>
+                    </div>
+                    <div style="margin-top:10px;text-align:center;font-size:12px;color:var(--text-light);">
+                        Rank: <span id="lcRank" style="font-weight:700;color:var(--primary);">-</span>
+                    </div>
+                </div>
+                <div id="lcLoading" style="display:none;text-align:center;font-size:13px;color:var(--text-light);">Fetching... ⏳</div>
+                <div id="lcError" style="display:none;font-size:12px;color:#ef4444;margin-top:8px;"></div>
+            </div>
+
+            <!-- HackerRank -->
+            <div style="background:#f8faff;border:1.5px solid rgba(26,86,219,0.1);border-radius:16px;padding:20px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                    <div style="width:40px;height:40px;background:#F0FDF4;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#22c55e;font-size:14px;">HR</div>
+                    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;">HackerRank</div>
+                </div>
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <input id="hrUsername" type="text" placeholder="Enter username" style="flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:13px;outline:none;font-family:'Inter',sans-serif;">
+                    <button onclick="fetchHackerRank()" style="padding:8px 14px;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Fetch</button>
+                </div>
+                <div id="hrStats" style="display:none;text-align:center;">
+                    <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:28px;color:#15803d;" id="hrScore">0</div>
+                    <div style="font-size:12px;color:var(--text-light);">Total Score</div>
+                </div>
+                <div id="hrLoading" style="display:none;text-align:center;font-size:13px;color:var(--text-light);">Fetching... ⏳</div>
+                <div id="hrError" style="display:none;font-size:12px;color:#ef4444;margin-top:8px;"></div>
+            </div>
+
+            <!-- CodeChef -->
+            <div style="background:#f8faff;border:1.5px solid rgba(26,86,219,0.1);border-radius:16px;padding:20px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+                    <div style="width:40px;height:40px;background:#FFF8F0;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;color:#e67e22;font-size:14px;">CC</div>
+                    <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;">CodeChef</div>
+                </div>
+                <div style="display:flex;gap:8px;margin-bottom:12px;">
+                    <input id="ccUsername" type="text" placeholder="Enter username" style="flex:1;padding:8px 12px;border-radius:8px;border:1.5px solid #e2e8f0;font-size:13px;outline:none;font-family:'Inter',sans-serif;">
+                    <button onclick="alert('CodeChef integration coming soon! 🍴')" style="padding:8px 14px;background:linear-gradient(135deg,#e67e22,#d35400);color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:13px;">Soon</button>
+                </div>
+                <div style="text-align:center;padding:16px;background:#fff8f0;border-radius:10px;">
+                    <div style="font-size:24px;">🍴</div>
+                    <div style="font-size:12px;color:var(--text-light);margin-top:6px;">Coming Soon!</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Interview Questions Panel -->
+    <div class="questions-panel" id="questionsPanel">
+        <div class="section-head">
+            <div class="section-ttl" id="questionsTitle">🎯 Interview Questions</div>
+            <a href="#" class="see-all" onclick="closeQuestions()">✕ Close</a>
+        </div>
+        <div id="questionsList"></div>
+    </div>
 
 </main>
 
 <script>
-  const companyQuestions = {
-    'TCS': [
-      { q: 'What is the difference between Array and ArrayList in Java?', diff: 'Easy', type: 'Java' },
-      { q: 'Explain the concept of normalization in databases.', diff: 'Medium', type: 'DBMS' },
-      { q: 'What is the time complexity of binary search?', diff: 'Easy', type: 'DSA' },
-      { q: 'Explain OOPS concepts with real-world examples.', diff: 'Medium', type: 'Java' },
-      { q: 'What is a deadlock? How can it be prevented?', diff: 'Medium', type: 'OS' },
-    ],
-    'Infosys': [
-      { q: 'Write a program to reverse a linked list.', diff: 'Medium', type: 'DSA' },
-      { q: 'What is the difference between GET and POST in HTTP?', diff: 'Easy', type: 'Web' },
-      { q: 'Explain Agile methodology and its phases.', diff: 'Easy', type: 'General' },
-      { q: 'What is a HashMap? How does it work internally?', diff: 'Medium', type: 'Java' },
-      { q: 'Find the longest common subsequence of two strings.', diff: 'Hard', type: 'DSA' },
-    ],
-    'Google': [
-      { q: 'Given an array, find two numbers that sum to a target.', diff: 'Easy', type: 'DSA' },
-      { q: 'Design a URL shortening service like bit.ly.', diff: 'Hard', type: 'System Design' },
-      { q: 'Implement LRU Cache from scratch.', diff: 'Hard', type: 'DSA' },
-      { q: 'What is the difference between process and thread?', diff: 'Medium', type: 'OS' },
-      { q: 'Find all permutations of a given string.', diff: 'Medium', type: 'DSA' },
-    ],
-    'Amazon': [
-      { q: 'Tell me about a time you showed leadership (Leadership Principle).', diff: 'Medium', type: 'HR' },
-      { q: 'Implement a stack using two queues.', diff: 'Medium', type: 'DSA' },
-      { q: 'Design Amazon\'s shopping cart system.', diff: 'Hard', type: 'System Design' },
-      { q: 'What is the difference between SQL and NoSQL?', diff: 'Easy', type: 'DBMS' },
-      { q: 'Find the maximum subarray sum (Kadane\'s Algorithm).', diff: 'Medium', type: 'DSA' },
-    ],
-    'Microsoft': [
-      { q: 'What is polymorphism? Explain with example.', diff: 'Easy', type: 'OOP' },
-      { q: 'How does garbage collection work in Java?', diff: 'Medium', type: 'Java' },
-      { q: 'Find the height of a binary tree.', diff: 'Easy', type: 'DSA' },
-      { q: 'Design a parking lot system.', diff: 'Hard', type: 'System Design' },
-      { q: 'Explain REST API principles.', diff: 'Medium', type: 'Web' },
-    ],
-  };
+    const companyQuestions = {
+      'TCS': [
+        { q: 'What is the difference between Array and ArrayList in Java?', diff: 'Easy', type: 'Java' },
+        { q: 'Explain the concept of normalization in databases.', diff: 'Medium', type: 'DBMS' },
+        { q: 'What is the time complexity of binary search?', diff: 'Easy', type: 'DSA' },
+        { q: 'Explain OOPS concepts with real-world examples.', diff: 'Medium', type: 'Java' },
+        { q: 'What is a deadlock? How can it be prevented?', diff: 'Medium', type: 'OS' },
+      ],
+      'Infosys': [
+        { q: 'Write a program to reverse a linked list.', diff: 'Medium', type: 'DSA' },
+        { q: 'What is the difference between GET and POST in HTTP?', diff: 'Easy', type: 'Web' },
+        { q: 'Explain Agile methodology and its phases.', diff: 'Easy', type: 'General' },
+        { q: 'What is a HashMap? How does it work internally?', diff: 'Medium', type: 'Java' },
+        { q: 'Find the longest common subsequence of two strings.', diff: 'Hard', type: 'DSA' },
+      ],
+      'Google': [
+        { q: 'Given an array, find two numbers that sum to a target.', diff: 'Easy', type: 'DSA' },
+        { q: 'Design a URL shortening service like bit.ly.', diff: 'Hard', type: 'System Design' },
+        { q: 'Implement LRU Cache from scratch.', diff: 'Hard', type: 'DSA' },
+        { q: 'What is the difference between process and thread?', diff: 'Medium', type: 'OS' },
+        { q: 'Find all permutations of a given string.', diff: 'Medium', type: 'DSA' },
+      ],
+      'Amazon': [
+        { q: 'Tell me about a time you showed leadership (Leadership Principle).', diff: 'Medium', type: 'HR' },
+        { q: 'Implement a stack using two queues.', diff: 'Medium', type: 'DSA' },
+        { q: 'Design Amazon\'s shopping cart system.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is the difference between SQL and NoSQL?', diff: 'Easy', type: 'DBMS' },
+        { q: 'Find the maximum subarray sum (Kadane\'s Algorithm).', diff: 'Medium', type: 'DSA' },
+      ],
+      'Microsoft': [
+        { q: 'What is polymorphism? Explain with example.', diff: 'Easy', type: 'OOP' },
+        { q: 'How does garbage collection work in Java?', diff: 'Medium', type: 'Java' },
+        { q: 'Find the height of a binary tree.', diff: 'Easy', type: 'DSA' },
+        { q: 'Design a parking lot system.', diff: 'Hard', type: 'System Design' },
+        { q: 'Explain REST API principles.', diff: 'Medium', type: 'Web' },
+      ],
+    };
 
-  const defaultQuestions = [
-    { q: 'Tell me about yourself and your projects.', diff: 'Easy', type: 'HR' },
-    { q: 'What are your strengths and weaknesses?', diff: 'Easy', type: 'HR' },
-    { q: 'Explain your final year project in detail.', diff: 'Medium', type: 'Technical' },
-    { q: 'What is the difference between Java and Python?', diff: 'Easy', type: 'General' },
-    { q: 'Where do you see yourself in 5 years?', diff: 'Easy', type: 'HR' },
-  ];
+    const defaultQuestions = [
+      { q: 'Tell me about yourself and your projects.', diff: 'Easy', type: 'HR' },
+      { q: 'What are your strengths and weaknesses?', diff: 'Easy', type: 'HR' },
+      { q: 'Explain your final year project in detail.', diff: 'Medium', type: 'Technical' },
+      { q: 'What is the difference between Java and Python?', diff: 'Easy', type: 'General' },
+      { q: 'Where do you see yourself in 5 years?', diff: 'Easy', type: 'HR' },
+    ];
 
-  function showQuestions(company) {
-    document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
-    event.currentTarget.classList.add('selected');
+    function showQuestions(company) {
+      document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
+      event.currentTarget.classList.add('selected');
 
-    const panel = document.getElementById('questionsPanel');
-    const title = document.getElementById('questionsTitle');
-    const list = document.getElementById('questionsList');
+      const panel = document.getElementById('questionsPanel');
+      const title = document.getElementById('questionsTitle');
+      const list = document.getElementById('questionsList');
 
-    title.textContent = `🎯 ${company} - Interview Questions`;
-    const questions = companyQuestions[company] || defaultQuestions;
+      title.textContent = `🎯 ${company} - Interview Questions`;
+      const questions = companyQuestions[company] || defaultQuestions;
 
-    list.innerHTML = questions.map(q => `
-      <div class="q-item">
-        <span class="q-badge ${q.diff === 'Easy' ? 'q-easy' : q.diff === 'Medium' ? 'q-med' : 'q-hard'}">${q.diff}</span>
-        <div>
-          <div class="q-text">${q.q}</div>
-          <div class="q-meta">${q.type} • ${company}</div>
+      list.innerHTML = questions.map(q => `
+        <div class="q-item">
+          <span class="q-badge ${q.diff === 'Easy' ? 'q-easy' : q.diff === 'Medium' ? 'q-med' : 'q-hard'}">${q.diff}</span>
+          <div>
+            <div class="q-text">${q.q}</div>
+            <div class="q-meta">${q.type} • ${company}</div>
+          </div>
         </div>
-      </div>
-    `).join('');
+      `).join('');
 
-    panel.classList.add('visible');
-    panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function closeQuestions() {
-    document.getElementById('questionsPanel').classList.remove('visible');
-    document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
-  }
-
-  function scrollToSection(id) {
-    event.preventDefault();
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function showRoadmapMsg() {
-    event.preventDefault();
-    alert('🤖 AI Roadmap is generating your personalized study plan!\n\nMake sure your Gemini API key is configured in application.properties.');
-  }
-
-  // Load user name from localStorage
-  window.onload = function() {
-    const name = localStorage.getItem('userName');
-    if (name) {
-      const title = document.querySelector('.topbar-title');
-      if (title) title.textContent = 'Good Morning, ' + name + '! 👋';
-      const userNameEl = document.querySelector('.user-name');
-      if (userNameEl) userNameEl.textContent = name;
-      const avatarEl = document.querySelector('.avatar-circle');
-      if (avatarEl) avatarEl.textContent = name.substring(0,2).toUpperCase();
+      panel.classList.add('visible');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-  }
 
-  async function fetchLeetCode() {
-    const username = document.getElementById('lcUsername').value.trim();
-    if (!username) { alert('Please enter LeetCode username!'); return; }
+    function closeQuestions() {
+      document.getElementById('questionsPanel').classList.remove('visible');
+      document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
+    }
 
-    document.getElementById('lcLoading').style.display = 'block';
-    document.getElementById('lcStats').style.display = 'none';
-    document.getElementById('lcError').style.display = 'none';
+    function scrollToSection(id) {
+      event.preventDefault();
+      const el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 
-    try {
-      const response = await fetch(`http://localhost:8080/api/profile/leetcode/${username}`);
-      const data = await response.json();
-      const stats = data?.data?.matchedUser?.submitStats?.acSubmissionNum;
-      if (stats) {
-        document.getElementById('lcEasy').textContent = stats.find(s => s.difficulty === 'Easy')?.count || 0;
-        document.getElementById('lcMedium').textContent = stats.find(s => s.difficulty === 'Medium')?.count || 0;
-        document.getElementById('lcHard').textContent = stats.find(s => s.difficulty === 'Hard')?.count || 0;
-        document.getElementById('lcRank').textContent = data?.data?.matchedUser?.profile?.ranking || 'N/A';
-        document.getElementById('lcStats').style.display = 'block';
-      } else {
-        document.getElementById('lcError').textContent = '❌ User not found!';
+    function showRoadmapMsg() {
+      event.preventDefault();
+      alert('🤖 AI Roadmap is generating your personalized study plan!\n\nMake sure your Gemini API key is configured in application.properties.');
+    }
+
+    // Load user name from localStorage
+    window.onload = function() {
+      const name = localStorage.getItem('userName');
+      if (name) {
+        const title = document.querySelector('.topbar-title');
+        if (title) title.textContent = 'Good Morning, ' + name + '! 👋';
+        const userNameEl = document.querySelector('.user-name');
+        if (userNameEl) userNameEl.textContent = name;
+        const avatarEl = document.querySelector('.avatar-circle');
+        if (avatarEl) avatarEl.textContent = name.substring(0,2).toUpperCase();
+      }
+    }
+
+    async function fetchLeetCode() {
+      const username = document.getElementById('lcUsername').value.trim();
+      if (!username) { alert('Please enter LeetCode username!'); return; }
+
+      document.getElementById('lcLoading').style.display = 'block';
+      document.getElementById('lcStats').style.display = 'none';
+      document.getElementById('lcError').style.display = 'none';
+
+      try {
+        const response = await fetch(`http://localhost:8080/api/profile/leetcode/${username}`);
+        const data = await response.json();
+        const stats = data?.data?.matchedUser?.submitStats?.acSubmissionNum;
+        if (stats) {
+          document.getElementById('lcEasy').textContent = stats.find(s => s.difficulty === 'Easy')?.count || 0;
+          document.getElementById('lcMedium').textContent = stats.find(s => s.difficulty === 'Medium')?.count || 0;
+          document.getElementById('lcHard').textContent = stats.find(s => s.difficulty === 'Hard')?.count || 0;
+          document.getElementById('lcRank').textContent = data?.data?.matchedUser?.profile?.ranking || 'N/A';
+          document.getElementById('lcStats').style.display = 'block';
+        } else {
+          document.getElementById('lcError').textContent = '❌ User not found!';
+          document.getElementById('lcError').style.display = 'block';
+        }
+      } catch (e) {
+        document.getElementById('lcError').textContent = '❌ Error fetching data!';
         document.getElementById('lcError').style.display = 'block';
       }
-    } catch (e) {
-      document.getElementById('lcError').textContent = '❌ Error fetching data!';
-      document.getElementById('lcError').style.display = 'block';
+      document.getElementById('lcLoading').style.display = 'none';
     }
-    document.getElementById('lcLoading').style.display = 'none';
-  }
 
-  async function fetchHackerRank() {
-    const username = document.getElementById('hrUsername').value.trim();
-    if (!username) { alert('Please enter HackerRank username!'); return; }
+    async function fetchHackerRank() {
+      const username = document.getElementById('hrUsername').value.trim();
+      if (!username) { alert('Please enter HackerRank username!'); return; }
 
-    document.getElementById('hrLoading').style.display = 'block';
-    document.getElementById('hrStats').style.display = 'none';
-    document.getElementById('hrError').style.display = 'none';
+      document.getElementById('hrLoading').style.display = 'block';
+      document.getElementById('hrStats').style.display = 'none';
+      document.getElementById('hrError').style.display = 'none';
 
-    try {
-      const response = await fetch(`http://localhost:8080/api/profile/hackerrank/${username}`);
-      const data = await response.json();
-      if (data && data.length > 0) {
-        const total = data.reduce((sum, item) => sum + (item.score || 0), 0);
-        document.getElementById('hrScore').textContent = Math.round(total);
-        document.getElementById('hrStats').style.display = 'block';
-      } else {
-        document.getElementById('hrError').textContent = '❌ User not found!';
+      try {
+        const response = await fetch(`http://localhost:8080/api/profile/hackerrank/${username}`);
+        const data = await response.json();
+
+        if (data.profile_url) {
+          document.getElementById('hrStats').innerHTML = `
+            <div style="text-align:center;padding:10px;">
+              <div style="font-size:32px;">🏅</div>
+              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#15803d;margin-top:8px;">${username}</div>
+              <div style="font-size:12px;color:var(--text-light);margin-top:4px;">Click to view badges</div>
+              <a href="${data.profile_url}" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;">View Profile & Badges →</a>
+            </div>
+          `;
+          document.getElementById('hrStats').style.display = 'block';
+        } else if (data && data.length > 0) {
+          const total = data.reduce((sum, item) => sum + (item.score || 0), 0);
+          document.getElementById('hrStats').innerHTML = `
+            <div style="text-align:center;">
+              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:28px;color:#15803d;">${Math.round(total)}</div>
+              <div style="font-size:12px;color:var(--text-light);">Total Score</div>
+            </div>
+          `;
+          document.getElementById('hrStats').style.display = 'block';
+        } else {
+          document.getElementById('hrError').textContent = '❌ User not found!';
+          document.getElementById('hrError').style.display = 'block';
+        }
+      } catch (e) {
+        document.getElementById('hrError').textContent = '❌ Error fetching data!';
         document.getElementById('hrError').style.display = 'block';
       }
-    } catch (e) {
-      document.getElementById('hrError').textContent = '❌ Error fetching data!';
-      document.getElementById('hrError').style.display = 'block';
+      document.getElementById('hrLoading').style.display = 'none';
     }
-    document.getElementById('hrLoading').style.display = 'none';
-  }
 </script>
 </body>
 </html>
