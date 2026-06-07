@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>PrepLakshya – Track. Practice. Achieve.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+          --blue-dark:  #1a3a6e;
+          --blue-mid:   #1e4db7;
+          --blue-main:  #2563eb;
+          --blue-light: #3b82f6;
+          --blue-sky:   #60a5fa;
+          --white:      #ffffff;
+          --off-white:  #f0f6ff;
+          --muted:      #94afd4;
+          --border:     rgba(37,99,235,0.18);
+          --shadow:     0 8px 40px rgba(30,77,183,0.18);
+        }
+
+        body {
+          font-family: 'DM Sans', sans-serif;
+          background: var(--off-white);
+          color: #1e293b;
+          min-height: 100vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          overflow-x: hidden;
+        }
+
+        /* Background wave */
+        .bg-wave {
+          position: fixed; bottom: 0; left: 0; right: 0; z-index: 0;
+          height: 55vh;
+          background: linear-gradient(160deg, #1e4db7 0%, #2563eb 50%, #1a3a6e 100%);
+          border-radius: 60% 60% 0 0 / 30% 30% 0 0;
+        }
+        .bg-wave::before {
+          content: '';
+          position: absolute; inset: 0;
+          background: radial-gradient(ellipse at 30% 40%, rgba(96,165,250,0.25) 0%, transparent 60%),
+                      radial-gradient(ellipse at 80% 70%, rgba(255,255,255,0.08) 0%, transparent 50%);
+          border-radius: inherit;
+        }
+
+        /* Floating dots decoration */
+        .dots {
+          position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+          pointer-events: none; z-index: 0; overflow: hidden;
+        }
+        .dot {
+          position: absolute; border-radius: 50%;
+          background: var(--blue-light); opacity: 0.07;
+          animation: floatDot 8s ease-in-out infinite alternate;
+        }
+        .dot:nth-child(1){ width:180px;height:180px;top:5%;left:-50px;animation-delay:0s; }
+        .dot:nth-child(2){ width:120px;height:120px;top:20%;right:30px;animation-delay:2s;background:var(--blue-sky); }
+        .dot:nth-child(3){ width:80px;height:80px;bottom:40%;left:20%;animation-delay:4s; }
+        @keyframes floatDot {
+          from { transform: translateY(0) scale(1); }
+          to   { transform: translateY(-20px) scale(1.06); }
+        }
+
+        /* Top brand bar */
+        .top-bar {
+          position: relative; z-index: 10;
+          width: min(480px, 94vw);
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 20px 0 18px;
+          animation: fadeDown 0.5s ease both;
+        }
+        @keyframes fadeDown { from{opacity:0;transform:translateY(-16px);} to{opacity:1;transform:none;} }
+
+        .brand-logo {
+          display: flex; align-items: center; gap: 12px;
+        }
+        .logo-icon {
+          width: 46px; height: 46px; border-radius: 14px;
+          background: linear-gradient(135deg, var(--blue-main), var(--blue-dark));
+          display: flex; align-items: center; justify-content: center;
+          font-size: 22px;
+          box-shadow: 0 4px 16px rgba(37,99,235,0.35);
+        }
+        .brand-text h2 {
+          font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800;
+          color: var(--blue-dark); letter-spacing: -0.01em;
+        }
+        .brand-text p {
+          font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+          color: var(--muted); text-transform: uppercase; margin-top: 1px;
+        }
+
+        .get-started-btn {
+          background: var(--blue-main); color: #fff;
+          border: none; border-radius: 12px;
+          padding: 10px 20px; font-family: 'DM Sans', sans-serif;
+          font-size: 14px; font-weight: 600; cursor: pointer;
+          box-shadow: 0 4px 18px rgba(37,99,235,0.35);
+          transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .get-started-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.45); }
+
+        /* Hero text */
+        .hero {
+      position: relative; z-index: 10;
+      width: min(480px, 94vw);
+      text-align: center;
+      padding: 32px 0 28px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:none;} }
+
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 6vw, 36px);
+      font-weight: 800; line-height: 1.15;
+      color: #0f172a;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 .highlight {
+      color: var(--blue-main);
+    }
+    .hero p {
+      margin-top: 14px; font-size: 15px; color: #475569; line-height: 1.65;
+    }
+
+    /* Main card */
+    .card {
+      position: relative; z-index: 10;
+      width: min(480px, 94vw);
+      background: var(--white);
+      border-radius: 24px;
+      box-shadow: var(--shadow), 0 0 0 1px var(--border);
+      overflow: hidden;
+      animation: fadeUp 0.7s 0.2s cubic-bezier(.16,1,.3,1) both;
+      margin-bottom: 24px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      background: var(--off-white);
+      border-bottom: 1px solid var(--border);
+    }
+    .tab-btn {
+      flex: 1; padding: 16px; border: none; background: transparent;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--muted); cursor: pointer; transition: all 0.22s;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+    }
+    .tab-btn.active {
+      color: var(--blue-main); font-weight: 700;
+      border-bottom-color: var(--blue-main);
+      background: #fff;
+    }
+
+    /* Form */
+    .form-body { padding: 32px 36px 36px; }
+    .form-view { display: none; animation: slideIn 0.3s ease both; }
+    .form-view.active { display: block; }
+    @keyframes slideIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:none;} }
+
+    .form-title {
+      font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+      color: #0f172a; margin-bottom: 4px;
+    }
+    .form-sub { font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+
+    .field { margin-bottom: 16px; }
+    .field label {
+      display: block; font-size: 12px; font-weight: 600; color: #475569;
+      margin-bottom: 6px; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .input-wrap { position: relative; }
+    .input-wrap .icon {
+      position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 15px; pointer-events: none;
+    }
+    .input-wrap input {
+      width: 100%;
+      background: var(--off-white);
+      border: 1.5px solid #e2eaf6;
+      border-radius: 12px;
+      padding: 12px 14px 12px 42px;
+      color: #0f172a; font-family: 'DM Sans', sans-serif; font-size: 14px;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .input-wrap input:focus {
+      border-color: var(--blue-main);
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+      background: #fff;
+    }
+    .input-wrap input::placeholder { color: #b0c4de; }
+
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .forgot {
+      text-align: right; margin-top: -8px; margin-bottom: 18px;
+    }
+    .forgot a { font-size: 12px; color: var(--blue-main); text-decoration: none; font-weight: 500; }
+
+    .btn-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, var(--blue-main) 0%, var(--blue-dark) 100%);
+      color: #fff; font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
+      border: none; border-radius: 12px; cursor: pointer;
+      letter-spacing: 0.01em;
+      box-shadow: 0 6px 24px rgba(37,99,235,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(37,99,235,0.45); }
+    .btn-submit:active { transform: scale(0.98); }
+
+    .divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 18px 0; color: var(--muted); font-size: 12px;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px; background: #e2eaf6;
+    }
+
+    .social-btn {
+      width: 100%; padding: 12px;
+      background: #fff; border: 1.5px solid #e2eaf6;
+      border-radius: 12px; color: #1e293b;
+      font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .social-btn:hover { background: var(--off-white); border-color: var(--blue-main); box-shadow: 0 2px 12px rgba(37,99,235,0.1); }
+
+    .terms {
+      font-size: 12px; color: var(--muted); margin-top: 14px; text-align: center;
+    }
+    .terms a { color: var(--blue-main); text-decoration: none; font-weight: 500; }
+        ave-features {
+      position: relative; z-index: 10;
+      width: min(480px, 94vw);
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; padding-bottom: 32px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .feat-card {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.25);
+      border-radius: 16px; padding: 16px;
+      backdrop-filter: blur(12px);
+      color: #fff;
+    }
+    .feat-card .feat-icon { font-size: 22px; margin-bottom: 8px; }
+    .feat-card .feat-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; }
+    .feat-card .feat-sub { font-size: 12px; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+    @media (max-width: 480px) {
+      .form-body { padding: 24px 22px 28px; }
+      .row2 { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 26px; }
+    }
+    </style>
+</head>
+<body>
+
+<div class="bg-wave"></div>
+<div class="dots">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+</div>
+
+<!-- Top brand bar -->
+<div class="top-bar">
+    <div class="brand-logo">
+        <div class="logo-icon">🎯</div>
+        <div class="brand-text">
+            <h2>PrepLakshya</h2>
+            <p>Track. Practice. Achieve.</p>
+        </div>
+    </div>
+    <button class="get-started-btn">Get Started →</button>
+</div>
+
+<!-- Hero -->
+<div class="hero">
+    <h1>Track Your Progress.<br>Achieve Your <span class="highlight">Lakshya.</span></h1>
+    <p>Your all-in-one placement preparation tracker. Set your target company, track topics, and land your dream job.</p>
+</div>
+
+<!-- Auth Card -->
+<div class="card">
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+        <button class="tab-btn" onclick="switchTab('register')">Register</button>
+    </div>
+
+    <div class="form-body">
+
+        <!-- Login -->
+        <div class="form-view active" id="login">
+            <div class="form-title">Welcome back 👋</div>
+            <div class="form-sub">Sign in to continue your prep journey</div>
+
+            <div class="field">
+                <label>Email Address</label>
+                <div class="input-wrap">
+                    <span class="icon">✉️</span>
+                    <input type="email" placeholder="you@example.com" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <span class="icon">🔒</span>
+                    <input type="password" placeholder="Enter your password" />
+                </div>
+            </div>
+
+            <div class="forgot"><a href="#">Forgot password?</a></div>
+
+            <button class="btn-submit">Sign In →</button>
+
+            <div class="divider">or continue with</div>
+
+            <button class="social-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                Continue with Google
+            </button>
+        </div>
+
+        <!-- Register -->
+        <div class="form-view" id="register">
+            <div class="form-title">Join PrepLakshya 🚀</div>
+            <div class="form-sub">Start tracking your placement prep today</div>
+
+            <div class="row2">
+                <div class="field">
+                    <label>First Name</label>
+                    <div class="input-wrap">
+                        <span class="icon">👤</span>
+                        <input type="text" placeholder="First name" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Last Name</label>
+                    <div class="input-wrap">
+                        <span class="icon">👤</span>
+                        <input type="text" placeholder="Last name" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Email Address</label>
+                <div class="input-wrap">
+                    <span class="icon">✉️</span>
+                    <input type="email" placeholder="you@example.com" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label>College / University</label>
+                <div class="input-wrap">
+                    <span class="icon">🎓</span>
+                    <input type="text" placeholder="Your college name" />
+                </div>
+            </div>
+
+            <div class="field">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <span class="icon">🔒</span>
+                    <input type="password" placeholder="Create a strong password" />
+                </div>
+            </div>
+
+            <button class="btn-submit">Create Account →</button>
+
+            <div class="terms">
+                By registering you agree to our <a href="#">Terms</a> & <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bottom feature cards (on the blue wave) -->
+<div class="wave-features">
+    <div class="feat-card">
+        <div class="feat-icon">💻</div>
+        <div class="feat-title">LeetCode Profile</div>
+        <div class="feat-sub">Track DSA progress</div>
+    </div>
+    <div class="feat-card">
+        <div class="feat-icon">🏆</div>
+        <div class="feat-title">HackerRank</div>
+        <div class="feat-sub">View certifications</div>
+    </div>
+    <div class="feat-card">
+        <div class="feat-icon">🏢</div>
+        <div class="feat-title">Company Tracker</div>
+        <div class="feat-sub">120+ companies covered</div>
+    </div>
+    <div class="feat-card">
+        <div class="feat-icon">🔥</div>
+        <div class="feat-title">Study Streaks</div>
+        <div class="feat-sub">Stay consistent daily</div>
+    </div>
+</div>
+
+<script>
+    function switchTab(tab) {
+      document.querySelectorAll('.tab-btn').forEach((b, i) => {
+        b.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'register'));
+      });
+      document.querySelectorAll('.form-view').forEach(f => f.classList.remove('active'));
+      const target = document.getElementById(tab);
+      target.classList.add('active');
+      target.style.animation = 'none';
+      target.offsetHeight;
+      target.style.animation = '';
+    }
+</script>
+</body>
+</html>
