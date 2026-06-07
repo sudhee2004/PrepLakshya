@@ -170,180 +170,178 @@
           transition: all 0.2s;
         }
         .notif-btn:hover { border-color: var(--primary); }
-
-        /* Stats row */
         .stats-row {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 16px;
-          margin-bottom: 28px;
-        }
-        .stat-card {
-          background: var(--card-bg);
-          border-radius: 18px;
-          padding: 20px 22px;
-          box-shadow: var(--shadow);
-          border: 1.5px solid rgba(26,86,219,0.07);
-          display: flex; align-items: center; gap: 16px;
-          transition: all 0.25s;
-        }
-        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
-        .stat-icon {
-          width: 48px; height: 48px;
-          border-radius: 14px;
-          display: flex; align-items: center; justify-content: center;
-          font-size: 22px;
-          flex-shrink: 0;
-        }
-        .si-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
-        .si-green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
-        .si-orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
-        .si-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
-        .stat-val {
-          font-family: 'Sora', sans-serif;
-          font-size: 26px; font-weight: 800;
-          color: var(--text-dark);
-          line-height: 1;
-        }
-        .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+  .stat-card {
+    background: var(--card-bg);
+    border-radius: 18px;
+    padding: 20px 22px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(26,86,219,0.07);
+    display: flex; align-items: center; gap: 16px;
+    transition: all 0.25s;
+  }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .stat-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+  .si-blue { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+  .si-green { background: linear-gradient(135deg, #d1fae5, #a7f3d0); }
+  .si-orange { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+  .si-purple { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+  .stat-val {
+    font-family: 'Sora', sans-serif;
+    font-size: 26px; font-weight: 800;
+    color: var(--text-dark);
+    line-height: 1;
+  }
+  .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
 
-        /* Progress bar */
-        .progress-section {
-          background: var(--card-bg);
-          border-radius: 20px;
-          padding: 24px 26px;
-          box-shadow: var(--shadow);
-          border: 1.5px solid rgba(26,86,219,0.07);
-          margin-bottom: 28px;
-        }
-        .section-head {
-          display: flex; align-items: center; justify-content: space-between;
-          margin-bottom: 20px;
-        }
-        .section-ttl {
-          font-family: 'Sora', sans-serif;
-          font-weight: 700; font-size: 17px;
-          color: var(--text-dark);
-        }
-        .see-all {
-          font-size: 13px; color: var(--primary);
-          font-weight: 600; cursor: pointer;
-          text-decoration: none;
-        }
-        .topic-row {
-          display: flex; align-items: center; gap: 14px;
-          margin-bottom: 14px;
-        }
-        .topic-name { font-size: 13px; font-weight: 600; color: var(--text-mid); width: 120px; flex-shrink: 0; }
-        .progress-bar-bg {
-          flex: 1; height: 8px;
-          background: #e8f0fe;
-          border-radius: 100px;
-          overflow: hidden;
-        }
-        .progress-bar-fill {
-          height: 100%;
-          border-radius: 100px;
-          background: linear-gradient(90deg, var(--primary), var(--accent));
-          transition: width 0.8s ease;
-        }
-        .progress-pct { font-size: 13px; font-weight: 700; color: var(--primary); width: 40px; text-align: right; }
+  /* Progress bar */
+  .progress-section {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(26,86,219,0.07);
+    margin-bottom: 28px;
+  }
+  .section-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .section-ttl {
+    font-family: 'Sora', sans-serif;
+    font-weight: 700; font-size: 17px;
+    color: var(--text-dark);
+  }
+  .see-all {
+    font-size: 13px; color: var(--primary);
+    font-weight: 600; cursor: pointer;
+    text-decoration: none;
+  }
+  .topic-row {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 14px;
+  }
+  .topic-name { font-size: 13px; font-weight: 600; color: var(--text-mid); width: 120px; flex-shrink: 0; }
+  .progress-bar-bg {
+    flex: 1; height: 8px;
+    background: #e8f0fe;
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    transition: width 0.8s ease;
+  }
+  .progress-pct { font-size: 13px; font-weight: 700; color: var(--primary); width: 40px; text-align: right; }
 
-        /* Companies section */
-        .companies-section {
-          background: var(--card-bg);
-          border-radius: 20px;
-          padding: 24px 26px;
-          box-shadow: var(--shadow);
-          border: 1.5px solid rgba(26,86,219,0.07);
-          margin-bottom: 28px;
-        }
-        .companies-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-          gap: 14px;
-          margin-top: 4px;
-        }
-        .company-card {
-          background: #f8faff;
-          border: 1.5px solid rgba(26,86,219,0.09);
-          border-radius: 14px;
-          padding: 16px 12px;
-          text-align: center;
-          cursor: pointer;
-          transition: all 0.22s;
-          position: relative;
-          overflow: hidden;
-        }
-        .company-card:hover {
-          transform: translateY(-4px);
-          box-shadow: var(--shadow-lg);
-          border-color: var(--primary-light);
-          background: white;
-        }
-        .company-card.selected {
-          border-color: var(--primary);
-          background: linear-gradient(135deg, #eff6ff, #dbeafe);
-          box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
-        }
-        .company-logo-wrap {
-          width: 48px; height: 48px;
-          border-radius: 12px;
-          display: flex; align-items: center; justify-content: center;
-          margin: 0 auto 10px;
-          font-size: 24px;
-          font-weight: 800;
-          position: relative;
-        }
-        .company-name-text {
-          font-size: 12px; font-weight: 700;
-          color: var(--text-dark);
-          line-height: 1.3;
-        }
-        .company-count {
-          font-size: 10px; color: var(--text-light);
-          margin-top: 3px;
-        }
-        .selected-badge {
-          position: absolute; top: 6px; right: 6px;
-          width: 18px; height: 18px;
-          background: var(--primary);
-          border-radius: 50%;
-          display: flex; align-items: center; justify-content: center;
-          color: white; font-size: 10px;
-          display: none;
-        }
-        .company-card.selected .selected-badge { display: flex; }
+  /* Companies section */
+  .companies-section {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(26,86,219,0.07);
+    margin-bottom: 28px;
+  }
+  .companies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 14px;
+    margin-top: 4px;
+  }
+  .company-card {
+    background: #f8faff;
+    border: 1.5px solid rgba(26,86,219,0.09);
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.22s;
+    position: relative;
+    overflow: hidden;
+  }
+  .company-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary-light);
+    background: white;
+  }
+  .company-card.selected {
+    border-color: var(--primary);
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    box-shadow: 0 0 0 3px rgba(26,86,219,0.12);
+  }
+  .company-logo-wrap {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 10px;
+    font-size: 24px;
+    font-weight: 800;
+    position: relative;
+  }
+  .company-name-text {
+    font-size: 12px; font-weight: 700;
+    color: var(--text-dark);
+    line-height: 1.3;
+  }
+  .company-count {
+    font-size: 10px; color: var(--text-light);
+    margin-top: 3px;
+  }
+  .selected-badge {
+    position: absolute; top: 6px; right: 6px;
+    width: 18px; height: 18px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 10px;
+    display: none;
+  }
+  .company-card.selected .selected-badge { display: flex; }
 
-        /* Interview questions panel */
-        .questions-panel {
-          background: var(--card-bg);
-          border-radius: 20px;
-          padding: 24px 26px;
-          box-shadow: var(--shadow);
-          border: 1.5px solid rgba(26,86,219,0.07);
-          margin-bottom: 28px;
-          display: none;
-        }
-        .questions-panel.visible { display: block; }
-        .q-item {
-          display: flex; align-items: flex-start; gap: 14px;
-          padding: 14px 0;
-          border-bottom: 1px solid #f1f5f9;
-        }
-        .q-item:last-child { border-bottom: none; }
-        .q-badge {
-          padding: 4px 10px;
-          border-radius: 8px;
-          font-size: 11px; font-weight: 700;
-          flex-shrink: 0;
-          margin-top: 2px;
-        }
-        .q-easy { background: #d1fae5; color: #065f46; }
-        .q-med { background: #fef3c7; color: #92400e; }
-        .q-hard { background: #fee2e2; color: #991b1b; }
-        .q-text { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
-        .q-meta { font-size: 11px; color: var(--text-light); margin-top: 4px; }
+  /* Interview questions panel */
+  .questions-panel {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 24px 26px;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(26,86,219,0.07);
+    margin-bottom: 28px;
+    display: none;
+  }
+  .questions-panel.visible { display: block; }
+  .q-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .q-item:last-child { border-bottom: none; }
+  .q-badge {
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px; font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .q-easy { background: #d1fae5; color: #065f46; }
+  .q-med { background: #fef3c7; color: #92400e; }
+  .q-hard { background: #fee2e2; color: #991b1b; }
+  .q-text { font-size: 14px; color: var(--text-mid); line-height: 1.5; font-weight: 500; }
+  .q-meta { font-size: 11px; color: var(--text-light); margin-top: 4px; }
         @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -741,10 +739,15 @@
     const companyQuestions = {
       'TCS': [
         { q: 'What is the difference between Array and ArrayList in Java?', diff: 'Easy', type: 'Java' },
-        { q: 'Explain the concept of normalization in databases.', diff: 'Medium', type: 'DBMS' },
+        { q: 'Explain the concept of normalization in databases with examples.', diff: 'Medium', type: 'DBMS' },
         { q: 'What is the time complexity of binary search?', diff: 'Easy', type: 'DSA' },
         { q: 'Explain OOPS concepts with real-world examples.', diff: 'Medium', type: 'Java' },
         { q: 'What is a deadlock? How can it be prevented?', diff: 'Medium', type: 'OS' },
+        { q: 'Write a program to find the second largest element in an array.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is the difference between primary key and unique key?', diff: 'Easy', type: 'DBMS' },
+        { q: 'Explain the difference between stack and queue with examples.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is multithreading in Java? Explain with an example.', diff: 'Medium', type: 'Java' },
+        { q: 'Tell me about yourself and your projects.', diff: 'Easy', type: 'HR' },
       ],
       'Infosys': [
         { q: 'Write a program to reverse a linked list.', diff: 'Medium', type: 'DSA' },
@@ -752,20 +755,107 @@
         { q: 'Explain Agile methodology and its phases.', diff: 'Easy', type: 'General' },
         { q: 'What is a HashMap? How does it work internally?', diff: 'Medium', type: 'Java' },
         { q: 'Find the longest common subsequence of two strings.', diff: 'Hard', type: 'DSA' },
+        { q: 'What are the ACID properties in DBMS?', diff: 'Medium', type: 'DBMS' },
+        { q: 'Explain the concept of inheritance in Java.', diff: 'Easy', type: 'Java' },
+        { q: 'What is the difference between abstract class and interface?', diff: 'Medium', type: 'Java' },
+        { q: 'Write SQL query to find employees with salary greater than average.', diff: 'Medium', type: 'DBMS' },
+        { q: 'Why do you want to join Infosys?', diff: 'Easy', type: 'HR' },
       ],
-      'Google': [
-        { q: 'Given an array, find two numbers that sum to a target.', diff: 'Easy', type: 'DSA' },
-        { q: 'Design a URL shortening service like bit.ly.', diff: 'Hard', type: 'System Design' },
-        { q: 'Implement LRU Cache from scratch.', diff: 'Hard', type: 'DSA' },
+      'Wipro': [
+        { q: 'What is the difference between == and .equals() in Java?', diff: 'Easy', type: 'Java' },
+        { q: 'Explain bubble sort with time complexity.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is a foreign key? Give an example.', diff: 'Easy', type: 'DBMS' },
+        { q: 'What is exception handling in Java? Types of exceptions?', diff: 'Medium', type: 'Java' },
+        { q: 'Write a program to check if a string is palindrome.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is the difference between TCP and UDP?', diff: 'Medium', type: 'Networks' },
+        { q: 'Explain the concept of virtual memory in OS.', diff: 'Medium', type: 'OS' },
+        { q: 'What are your strengths and weaknesses?', diff: 'Easy', type: 'HR' },
+        { q: 'Write SQL query to find duplicate records in a table.', diff: 'Medium', type: 'DBMS' },
+        { q: 'What is the difference between compiler and interpreter?', diff: 'Easy', type: 'General' },
+      ],
+      'Accenture': [
+        { q: 'Explain the Software Development Life Cycle (SDLC).', diff: 'Easy', type: 'General' },
+        { q: 'What is cloud computing? What are its types?', diff: 'Easy', type: 'Cloud' },
+        { q: 'Write a program to find factorial using recursion.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is the difference between microservices and monolithic architecture?', diff: 'Medium', type: 'System Design' },
+        { q: 'Explain the concept of polymorphism with example.', diff: 'Easy', type: 'Java' },
+        { q: 'What is REST API? What are HTTP methods?', diff: 'Medium', type: 'Web' },
+        { q: 'What is Agile? What is the difference between Scrum and Kanban?', diff: 'Medium', type: 'General' },
+        { q: 'Write SQL query using JOIN to combine two tables.', diff: 'Medium', type: 'DBMS' },
+        { q: 'Where do you see yourself in 5 years?', diff: 'Easy', type: 'HR' },
+        { q: 'What is DevOps? Explain CI/CD pipeline.', diff: 'Medium', type: 'General' },
+      ],
+      'HCL': [
         { q: 'What is the difference between process and thread?', diff: 'Medium', type: 'OS' },
-        { q: 'Find all permutations of a given string.', diff: 'Medium', type: 'DSA' },
+        { q: 'Write a program to find GCD of two numbers.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is encapsulation? Why is it important?', diff: 'Easy', type: 'Java' },
+        { q: 'Explain indexing in databases and its types.', diff: 'Medium', type: 'DBMS' },
+        { q: 'What is the difference between DFS and BFS?', diff: 'Medium', type: 'DSA' },
+        { q: 'What is a binary search tree? Operations on BST?', diff: 'Medium', type: 'DSA' },
+        { q: 'What is the difference between HTTP and HTTPS?', diff: 'Easy', type: 'Networks' },
+        { q: 'Tell me about a challenging situation you overcame.', diff: 'Easy', type: 'HR' },
+        { q: 'What is a stored procedure in SQL?', diff: 'Medium', type: 'DBMS' },
+        { q: 'Explain paging and segmentation in OS.', diff: 'Hard', type: 'OS' },
       ],
-      'Amazon': [
-        { q: 'Tell me about a time you showed leadership (Leadership Principle).', diff: 'Medium', type: 'HR' },
-        { q: 'Implement a stack using two queues.', diff: 'Medium', type: 'DSA' },
-        { q: 'Design Amazon\'s shopping cart system.', diff: 'Hard', type: 'System Design' },
-        { q: 'What is the difference between SQL and NoSQL?', diff: 'Easy', type: 'DBMS' },
-        { q: 'Find the maximum subarray sum (Kadane\'s Algorithm).', diff: 'Medium', type: 'DSA' },
+      'Cognizant': [
+        { q: 'What is the difference between overloading and overriding?', diff: 'Easy', type: 'Java' },
+        { q: 'Write a program to print Fibonacci series.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is normalization? Explain 1NF, 2NF, 3NF.', diff: 'Medium', type: 'DBMS' },
+        { q: 'What is the difference between ArrayList and LinkedList?', diff: 'Easy', type: 'Java' },
+        { q: 'Explain the concept of hashing and hash tables.', diff: 'Medium', type: 'DSA' },
+        { q: 'What is OWASP? Name common security vulnerabilities.', diff: 'Medium', type: 'Security' },
+        { q: 'What is the difference between inner join and outer join?', diff: 'Medium', type: 'DBMS' },
+        { q: 'Why should we hire you for this position?', diff: 'Easy', type: 'HR' },
+        { q: 'What is a design pattern? Explain Singleton pattern.', diff: 'Medium', type: 'Java' },
+        { q: 'What is the time complexity of merge sort?', diff: 'Easy', type: 'DSA' },
+      ],
+      'Deloitte': [
+        { q: 'What is the difference between waterfall and agile methodology?', diff: 'Easy', type: 'General' },
+        { q: 'Explain SOLID principles in software design.', diff: 'Hard', type: 'Java' },
+        { q: 'Write a program to find all pairs with given sum in array.', diff: 'Medium', type: 'DSA' },
+        { q: 'What is data warehousing? What is ETL?', diff: 'Medium', type: 'Data' },
+        { q: 'Explain the concept of transactions in database.', diff: 'Medium', type: 'DBMS' },
+        { q: 'What is machine learning? Types of ML?', diff: 'Medium', type: 'AI/ML' },
+        { q: 'How do you handle pressure and tight deadlines?', diff: 'Easy', type: 'HR' },
+        { q: 'What is Power BI? What are its components?', diff: 'Easy', type: 'Data' },
+        { q: 'Explain the concept of Big Data and its 5 Vs.', diff: 'Medium', type: 'Data' },
+        { q: 'What is the difference between data analyst and data scientist?', diff: 'Easy', type: 'Data' },
+      ],
+      'IBM': [
+        { q: 'What is Docker? How is it different from a virtual machine?', diff: 'Medium', type: 'DevOps' },
+        { q: 'Explain the concept of recursion with an example.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is Kubernetes? What problems does it solve?', diff: 'Hard', type: 'DevOps' },
+        { q: 'What is the difference between SQL and NoSQL databases?', diff: 'Easy', type: 'DBMS' },
+        { q: 'Explain the CAP theorem in distributed systems.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is artificial intelligence? Types of AI?', diff: 'Easy', type: 'AI/ML' },
+        { q: 'Write a program to implement binary search.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is the difference between public, private and protected in Java?', diff: 'Easy', type: 'Java' },
+        { q: 'Tell me about a time you worked in a team.', diff: 'Easy', type: 'HR' },
+        { q: 'What is blockchain? How does it work?', diff: 'Medium', type: 'General' },
+      ],
+      'Tech Mahindra': [
+        { q: 'What is the difference between 4G and 5G technology?', diff: 'Easy', type: 'Networks' },
+        { q: 'Explain the OSI model and its 7 layers.', diff: 'Medium', type: 'Networks' },
+        { q: 'Write a program to count occurrences of a character in a string.', diff: 'Easy', type: 'DSA' },
+        { q: 'What is API testing? Tools used for API testing?', diff: 'Easy', type: 'Testing' },
+        { q: 'What is the difference between white box and black box testing?', diff: 'Easy', type: 'Testing' },
+        { q: 'Explain the concept of load balancing.', diff: 'Medium', type: 'Networks' },
+        { q: 'What is the difference between switch and router?', diff: 'Easy', type: 'Networks' },
+        { q: 'What are your salary expectations?', diff: 'Easy', type: 'HR' },
+        { q: 'What is IoT? Give real world examples.', diff: 'Easy', type: 'General' },
+        { q: 'Explain the concept of firewall and its types.', diff: 'Medium', type: 'Networks' },
+      ],
+      'ServiceNow': [
+        { q: 'What is ITSM? What are its key processes?', diff: 'Easy', type: 'ServiceNow' },
+        { q: 'What is ServiceNow? What are its main modules?', diff: 'Easy', type: 'ServiceNow' },
+        { q: 'What is the difference between incident and problem in ITIL?', diff: 'Medium', type: 'ServiceNow' },
+        { q: 'What is a workflow in ServiceNow? How do you create one?', diff: 'Medium', type: 'ServiceNow' },
+        { q: 'Explain the concept of CMDB in ServiceNow.', diff: 'Medium', type: 'ServiceNow' },
+        { q: 'What is a business rule in ServiceNow?', diff: 'Medium', type: 'ServiceNow' },
+        { q: 'What is Glide API in ServiceNow?', diff: 'Hard', type: 'ServiceNow' },
+        { q: 'What is the difference between a table and a view in ServiceNow?', diff: 'Easy', type: 'ServiceNow' },
+        { q: 'What are ACLs in ServiceNow?', diff: 'Medium', type: 'ServiceNow' },
+        { q: 'Why do you want to work at ServiceNow?', diff: 'Easy', type: 'HR' },
       ],
       'Microsoft': [
         { q: 'What is polymorphism? Explain with example.', diff: 'Easy', type: 'OOP' },
@@ -773,141 +863,206 @@
         { q: 'Find the height of a binary tree.', diff: 'Easy', type: 'DSA' },
         { q: 'Design a parking lot system.', diff: 'Hard', type: 'System Design' },
         { q: 'Explain REST API principles.', diff: 'Medium', type: 'Web' },
+        { q: 'What is the difference between HashMap and TreeMap?', diff: 'Medium', type: 'Java' },
+        { q: 'Implement a queue using two stacks.', diff: 'Medium', type: 'DSA' },
+        { q: 'What is Azure? Name its key services.', diff: 'Medium', type: 'Cloud' },
+        { q: 'Design a notification system for millions of users.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is your greatest achievement so far?', diff: 'Easy', type: 'HR' },
       ],
-    };
+      'Google': [
+        { q: 'Given an array, find two numbers that sum to a target.', diff: 'Easy', type: 'DSA' },
+        { q: 'Design a URL shortening service like bit.ly.', diff: 'Hard', type: 'System Design' },
+        { q: 'Implement LRU Cache from scratch.', diff: 'Hard', type: 'DSA' },
+        { q: 'What is the difference between process and thread?', diff: 'Medium', type: 'OS' },
+        { q: 'Find all permutations of a given string.', diff: 'Medium', type: 'DSA' },
+        { q: 'Design Google Search autocomplete feature.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is the time and space complexity of quicksort?', diff: 'Medium', type: 'DSA' },
+        { q: 'How would you detect a cycle in a linked list?', diff: 'Medium', type: 'DSA' },
+        { q: 'Design a system to handle 1 million requests per second.', diff: 'Hard', type: 'System Design' },
+        { q: 'Tell me about a project you are most proud of.', diff: 'Easy', type: 'HR' },
+      ],
+      'Amazon': [
+        { q: 'Tell me about a time you showed leadership (Leadership Principle).', diff: 'Medium', type: 'HR' },
+        { q: 'Implement a stack using two queues.', diff: 'Medium', type: 'DSA' },
+        { q: 'Design Amazon\'s shopping cart system.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is the difference between SQL and NoSQL?', diff: 'Easy', type: 'DBMS' },
+        { q: 'Find the maximum subarray sum (Kadane\'s Algorithm).', diff: 'Medium', type: 'DSA' },
+        { q: 'Design Amazon\'s recommendation system.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is the difference between SQS and SNS in AWS?', diff: 'Medium', type: 'Cloud' },
+        { q: 'Tell me about a time you failed and what you learned.', diff: 'Medium', type: 'HR' },
+        { q: 'How do you handle conflicts in a team?', diff: 'Easy', type: 'HR' },
+        { q: 'Find the kth largest element in an array.', diff: 'Medium', type: 'DSA' },
+      ],
+      'Flipkart': [
+        { q: 'Design Flipkart\'s product search system.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is the difference between monolith and microservices?', diff: 'Medium', type: 'System Design' },
+        { q: 'Write a program to find anagrams in a list of strings.', diff: 'Medium', type: 'DSA' },
+        { q: 'What is Redis? How is it used in caching?', diff: 'Medium', type: 'System Design' },
+        { q: 'Explain the concept of consistent hashing.', diff: 'Hard', type: 'System Design' },
+        { q: 'What is Kafka? How does it work?', diff: 'Hard', type: 'System Design' },
+        { q: 'How would you design a flash sale system?', diff: 'Hard', type: 'System Design' },
+        { q: 'What is the difference between synchronous and asynchronous APIs?', diff: 'Medium', type: 'Web' },
+        { q: 'Why do you want to join Flipkart?', diff: 'Easy', type: 'HR' },
+        { q: 'Find the median of a stream of numbers.', diff: 'Hard', type: 'DSA' },
+      ],
+      'HP': [
+        { q: 'What is the difference between RAM and ROM?', diff: 'Easy', type: 'Hardware' },
+        { q: 'Explain the concept of virtualization.', diff: 'Medium', type: 'Cloud' },
+        { q: 'Write a program to sort an array using merge sort.', diff: 'Medium', type: 'DSA' },
+        { q: 'What is the difference between SSD and HDD?', diff: 'Easy', type: 'Hardware' },
+        { q: 'Explain the concept of BIOS and its functions.', diff: 'Easy', type: 'Hardware' },
+        { q: 'What is the difference between LAN, MAN and WAN?', diff: 'Easy', type: 'Networks' },
+        { q: 'What is cloud storage? Types of cloud deployment?', diff: 'Easy', type: 'Cloud' },
+        { q: 'Tell me about your final year project.', diff: 'Easy', type: 'HR' },
+    { q: 'What is the difference between IPv4 and IPv6?', diff: 'Medium', type: 'Networks' },
+    { q: 'What are your hobbies and interests?', diff: 'Easy', type: 'HR' },
+  ],
+  'Autodesk': [
+    { q: 'What is the difference between 2D and 3D modeling?', diff: 'Easy', type: 'General' },
+    { q: 'Explain object-oriented design principles.', diff: 'Medium', type: 'Java' },
+    { q: 'What is the difference between raster and vector graphics?', diff: 'Easy', type: 'General' },
+    { q: 'Write a program to implement a linked list from scratch.', diff: 'Medium', type: 'DSA' },
+    { q: 'What is the MVC design pattern?', diff: 'Medium', type: 'Java' },
+    { q: 'What is the difference between static and dynamic memory allocation?', diff: 'Medium', type: 'OS' },
+    { q: 'Explain the concept of API versioning.', diff: 'Medium', type: 'Web' },
+    { q: 'What is your experience with any CAD software?', diff: 'Easy', type: 'General' },
+    { q: 'How do you approach debugging a complex bug?', diff: 'Medium', type: 'General' },
+    { q: 'What motivates you to work in the tech industry?', diff: 'Easy', type: 'HR' },
+  ],
+};
 
-    const defaultQuestions = [
-      { q: 'Tell me about yourself and your projects.', diff: 'Easy', type: 'HR' },
-      { q: 'What are your strengths and weaknesses?', diff: 'Easy', type: 'HR' },
-      { q: 'Explain your final year project in detail.', diff: 'Medium', type: 'Technical' },
-      { q: 'What is the difference between Java and Python?', diff: 'Easy', type: 'General' },
-      { q: 'Where do you see yourself in 5 years?', diff: 'Easy', type: 'HR' },
-    ];
+const defaultQuestions = [
+  { q: 'Tell me about yourself and your projects.', diff: 'Easy', type: 'HR' },
+  { q: 'What are your strengths and weaknesses?', diff: 'Easy', type: 'HR' },
+  { q: 'Explain your final year project in detail.', diff: 'Medium', type: 'Technical' },
+  { q: 'What is the difference between Java and Python?', diff: 'Easy', type: 'General' },
+  { q: 'Where do you see yourself in 5 years?', diff: 'Easy', type: 'HR' },
+];
 
-    function showQuestions(company) {
-      document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
-      event.currentTarget.classList.add('selected');
+function showQuestions(company) {
+  document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
+  event.currentTarget.classList.add('selected');
 
-      const panel = document.getElementById('questionsPanel');
-      const title = document.getElementById('questionsTitle');
-      const list = document.getElementById('questionsList');
+  const panel = document.getElementById('questionsPanel');
+  const title = document.getElementById('questionsTitle');
+  const list = document.getElementById('questionsList');
 
-      title.textContent = `🎯 ${company} - Interview Questions`;
-      const questions = companyQuestions[company] || defaultQuestions;
+  title.textContent = `🎯 ${company} - Interview Questions`;
+  const questions = companyQuestions[company] || defaultQuestions;
 
-      list.innerHTML = questions.map(q => `
-        <div class="q-item">
-          <span class="q-badge ${q.diff === 'Easy' ? 'q-easy' : q.diff === 'Medium' ? 'q-med' : 'q-hard'}">${q.diff}</span>
-          <div>
-            <div class="q-text">${q.q}</div>
-            <div class="q-meta">${q.type} • ${company}</div>
-          </div>
+  list.innerHTML = questions.map(q => `
+    <div class="q-item">
+      <span class="q-badge ${q.diff === 'Easy' ? 'q-easy' : q.diff === 'Medium' ? 'q-med' : 'q-hard'}">${q.diff}</span>
+      <div>
+        <div class="q-text">${q.q}</div>
+        <div class="q-meta">${q.type} • ${company}</div>
+      </div>
+    </div>
+  `).join('');
+
+  panel.classList.add('visible');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function closeQuestions() {
+  document.getElementById('questionsPanel').classList.remove('visible');
+  document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
+}
+
+function scrollToSection(id) {
+  event.preventDefault();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function showRoadmapMsg() {
+  event.preventDefault();
+  alert('🤖 AI Roadmap is generating your personalized study plan!\n\nMake sure your Gemini API key is configured in application.properties.');
+}
+
+// Load user name from localStorage
+window.onload = function() {
+  const name = localStorage.getItem('userName');
+  if (name) {
+    const title = document.querySelector('.topbar-title');
+    if (title) title.textContent = 'Good Morning, ' + name + '! 👋';
+    const userNameEl = document.querySelector('.user-name');
+    if (userNameEl) userNameEl.textContent = name;
+    const avatarEl = document.querySelector('.avatar-circle');
+    if (avatarEl) avatarEl.textContent = name.substring(0,2).toUpperCase();
+  }
+}
+
+async function fetchLeetCode() {
+  const username = document.getElementById('lcUsername').value.trim();
+  if (!username) { alert('Please enter LeetCode username!'); return; }
+
+  document.getElementById('lcLoading').style.display = 'block';
+  document.getElementById('lcStats').style.display = 'none';
+  document.getElementById('lcError').style.display = 'none';
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/profile/leetcode/${username}`);
+    const data = await response.json();
+    const stats = data?.data?.matchedUser?.submitStats?.acSubmissionNum;
+    if (stats) {
+      document.getElementById('lcEasy').textContent = stats.find(s => s.difficulty === 'Easy')?.count || 0;
+      document.getElementById('lcMedium').textContent = stats.find(s => s.difficulty === 'Medium')?.count || 0;
+      document.getElementById('lcHard').textContent = stats.find(s => s.difficulty === 'Hard')?.count || 0;
+      document.getElementById('lcRank').textContent = data?.data?.matchedUser?.profile?.ranking || 'N/A';
+      document.getElementById('lcStats').style.display = 'block';
+    } else {
+      document.getElementById('lcError').textContent = '❌ User not found!';
+      document.getElementById('lcError').style.display = 'block';
+    }
+  } catch (e) {
+    document.getElementById('lcError').textContent = '❌ Error fetching data!';
+    document.getElementById('lcError').style.display = 'block';
+  }
+  document.getElementById('lcLoading').style.display = 'none';
+}
+
+async function fetchHackerRank() {
+  const username = document.getElementById('hrUsername').value.trim();
+  if (!username) { alert('Please enter HackerRank username!'); return; }
+
+  document.getElementById('hrLoading').style.display = 'block';
+  document.getElementById('hrStats').style.display = 'none';
+  document.getElementById('hrError').style.display = 'none';
+
+  try {
+    const response = await fetch(`http://localhost:8080/api/profile/hackerrank/${username}`);
+    const data = await response.json();
+
+    if (data.profile_url) {
+      document.getElementById('hrStats').innerHTML = `
+        <div style="text-align:center;padding:10px;">
+          <div style="font-size:32px;">🏅</div>
+          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#15803d;margin-top:8px;">${username}</div>
+          <div style="font-size:12px;color:var(--text-light);margin-top:4px;">Click to view badges</div>
+          <a href="${data.profile_url}" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;">View Profile & Badges →</a>
         </div>
-      `).join('');
-
-      panel.classList.add('visible');
-      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      `;
+      document.getElementById('hrStats').style.display = 'block';
+    } else if (data && data.length > 0) {
+      const total = data.reduce((sum, item) => sum + (item.score || 0), 0);
+      document.getElementById('hrStats').innerHTML = `
+        <div style="text-align:center;">
+          <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:28px;color:#15803d;">${Math.round(total)}</div>
+          <div style="font-size:12px;color:var(--text-light);">Total Score</div>
+        </div>
+      `;
+      document.getElementById('hrStats').style.display = 'block';
+    } else {
+      document.getElementById('hrError').textContent = '❌ User not found!';
+      document.getElementById('hrError').style.display = 'block';
     }
-
-    function closeQuestions() {
-      document.getElementById('questionsPanel').classList.remove('visible');
-      document.querySelectorAll('.company-card').forEach(c => c.classList.remove('selected'));
-    }
-
-    function scrollToSection(id) {
-      event.preventDefault();
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    function showRoadmapMsg() {
-      event.preventDefault();
-      alert('🤖 AI Roadmap is generating your personalized study plan!\n\nMake sure your Gemini API key is configured in application.properties.');
-    }
-
-    // Load user name from localStorage
-    window.onload = function() {
-      const name = localStorage.getItem('userName');
-      if (name) {
-        const title = document.querySelector('.topbar-title');
-        if (title) title.textContent = 'Good Morning, ' + name + '! 👋';
-        const userNameEl = document.querySelector('.user-name');
-        if (userNameEl) userNameEl.textContent = name;
-        const avatarEl = document.querySelector('.avatar-circle');
-        if (avatarEl) avatarEl.textContent = name.substring(0,2).toUpperCase();
-      }
-    }
-
-    async function fetchLeetCode() {
-      const username = document.getElementById('lcUsername').value.trim();
-      if (!username) { alert('Please enter LeetCode username!'); return; }
-
-      document.getElementById('lcLoading').style.display = 'block';
-      document.getElementById('lcStats').style.display = 'none';
-      document.getElementById('lcError').style.display = 'none';
-
-      try {
-        const response = await fetch(`http://localhost:8080/api/profile/leetcode/${username}`);
-        const data = await response.json();
-        const stats = data?.data?.matchedUser?.submitStats?.acSubmissionNum;
-        if (stats) {
-          document.getElementById('lcEasy').textContent = stats.find(s => s.difficulty === 'Easy')?.count || 0;
-          document.getElementById('lcMedium').textContent = stats.find(s => s.difficulty === 'Medium')?.count || 0;
-          document.getElementById('lcHard').textContent = stats.find(s => s.difficulty === 'Hard')?.count || 0;
-          document.getElementById('lcRank').textContent = data?.data?.matchedUser?.profile?.ranking || 'N/A';
-          document.getElementById('lcStats').style.display = 'block';
-        } else {
-          document.getElementById('lcError').textContent = '❌ User not found!';
-          document.getElementById('lcError').style.display = 'block';
-        }
-      } catch (e) {
-        document.getElementById('lcError').textContent = '❌ Error fetching data!';
-        document.getElementById('lcError').style.display = 'block';
-      }
-      document.getElementById('lcLoading').style.display = 'none';
-    }
-
-    async function fetchHackerRank() {
-      const username = document.getElementById('hrUsername').value.trim();
-      if (!username) { alert('Please enter HackerRank username!'); return; }
-
-      document.getElementById('hrLoading').style.display = 'block';
-      document.getElementById('hrStats').style.display = 'none';
-      document.getElementById('hrError').style.display = 'none';
-
-      try {
-        const response = await fetch(`http://localhost:8080/api/profile/hackerrank/${username}`);
-        const data = await response.json();
-
-        if (data.profile_url) {
-          document.getElementById('hrStats').innerHTML = `
-            <div style="text-align:center;padding:10px;">
-              <div style="font-size:32px;">🏅</div>
-              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:16px;color:#15803d;margin-top:8px;">${username}</div>
-              <div style="font-size:12px;color:var(--text-light);margin-top:4px;">Click to view badges</div>
-              <a href="${data.profile_url}" target="_blank" style="display:inline-block;margin-top:10px;padding:8px 16px;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none;">View Profile & Badges →</a>
-            </div>
-          `;
-          document.getElementById('hrStats').style.display = 'block';
-        } else if (data && data.length > 0) {
-          const total = data.reduce((sum, item) => sum + (item.score || 0), 0);
-          document.getElementById('hrStats').innerHTML = `
-            <div style="text-align:center;">
-              <div style="font-family:'Sora',sans-serif;font-weight:800;font-size:28px;color:#15803d;">${Math.round(total)}</div>
-              <div style="font-size:12px;color:var(--text-light);">Total Score</div>
-            </div>
-          `;
-          document.getElementById('hrStats').style.display = 'block';
-        } else {
-          document.getElementById('hrError').textContent = '❌ User not found!';
-          document.getElementById('hrError').style.display = 'block';
-        }
-      } catch (e) {
-        document.getElementById('hrError').textContent = '❌ Error fetching data!';
-        document.getElementById('hrError').style.display = 'block';
-      }
-      document.getElementById('hrLoading').style.display = 'none';
-    }
+  } catch (e) {
+    document.getElementById('hrError').textContent = '❌ Error fetching data!';
+    document.getElementById('hrError').style.display = 'block';
+  }
+  document.getElementById('hrLoading').style.display = 'none';
+}
 </script>
 </body>
 </html>
