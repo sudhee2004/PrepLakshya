@@ -356,6 +356,52 @@
     </style>
 </head>
 <body>
+<!-- Reminder Modal -->
+<div id="reminderModal" style="display:none;position:fixed;top:0;left:0;
+  width:100%;height:100%;background:rgba(0,0,0,0.4);z-index:999;
+  align-items:center;justify-content:center;">
+    <div style="background:white;border-radius:24px;padding:32px;
+    width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
+        <div style="font-family:'Sora',sans-serif;font-size:20px;
+      font-weight:800;margin-bottom:6px;">🔔 Study Reminder</div>
+        <div style="font-size:13px;color:#64748b;margin-bottom:24px;">
+            Set a daily reminder to keep your streak going!</div>
+        <div style="margin-bottom:16px;">
+            <label style="font-size:11px;font-weight:700;color:#64748b;
+        letter-spacing:0.06em;text-transform:uppercase;display:block;
+        margin-bottom:6px;">Reminder Time</label>
+            <input type="time" id="reminderTime"
+                   style="width:100%;padding:12px 16px;border-radius:12px;
+        border:1.5px solid #e2e8f0;font-size:15px;outline:none;
+        font-family:'Inter',sans-serif;color:#0f172a;">
+        </div>
+        <div style="margin-bottom:24px;">
+            <label style="font-size:11px;font-weight:700;color:#64748b;
+        letter-spacing:0.06em;text-transform:uppercase;display:block;
+        margin-bottom:6px;">Reminder Message</label>
+            <input type="text" id="reminderMsg"
+                   placeholder="Time to study! 📚"
+                   style="width:100%;padding:12px 16px;border-radius:12px;
+        border:1.5px solid #e2e8f0;font-size:14px;outline:none;
+        font-family:'Inter',sans-serif;color:#0f172a;">
+        </div>
+        <div style="display:flex;gap:12px;">
+            <button onclick="closeReminderModal()"
+                    style="flex:1;padding:12px;border-radius:12px;border:1.5px solid #e2e8f0;
+        background:white;font-size:14px;font-weight:600;cursor:pointer;">
+                Cancel
+            </button>
+            <button onclick="saveReminder()"
+                    style="flex:1;padding:12px;border-radius:12px;border:none;
+        background:linear-gradient(135deg,#1a56db,#3b82f6);color:white;
+        font-size:14px;font-weight:700;cursor:pointer;">
+                Save Reminder ✅
+            </button>
+        </div>
+        <div id="reminderStatus" style="margin-top:14px;text-align:center;
+      font-size:13px;color:#16a34a;display:none;"></div>
+    </div>
+</div>
 
 <!-- Sidebar -->
 <aside class="sidebar">
@@ -377,7 +423,6 @@
     <a href="#dsaSection" class="nav-item" onclick="scrollToSection('dsaSection')"><span class="nav-icon">💻</span> DSA Problems</a>
     <a href="#" class="nav-item" onclick="alert('Aptitude section coming soon! 🧠')"><span class="nav-icon">🧠</span> Aptitude</a>
     <a href="#" class="nav-item" onclick="alert('HR Questions section coming soon! 🎤')"><span class="nav-icon">🎤</span> HR Questions</a>
-
     <div class="sidebar-bottom">
         <div class="user-avatar">
             <div class="avatar-circle">SK</div>
@@ -386,7 +431,14 @@
                 <div class="user-role">B.Tech IT • Final Year</div>
             </div>
         </div>
+        <div onclick="logout()" style="margin-top:10px;padding:10px 14px;
+    border-radius:12px;color:rgba(255,255,255,0.7);font-size:13px;
+    cursor:pointer;text-align:center;
+    background:rgba(255,255,255,0.08);">
+            🚪 Logout
+        </div>
     </div>
+
 </aside>
 
 <!-- Main Content -->
@@ -403,7 +455,7 @@
                 <span class="search-ic">🔍</span>
                 <input class="search-input" type="text" placeholder="Search topics, companies...">
             </div>
-            <div class="notif-btn">🔔</div>
+            <div class="notif-btn" onclick="openReminderModal()">🔔</div>
         </div>
     </div>
 
@@ -982,17 +1034,52 @@ function showRoadmapMsg() {
 
 // Load user name from localStorage
 window.onload = function() {
-  const name = localStorage.getItem('userName');
-  if (name) {
-    const title = document.querySelector('.topbar-title');
-    if (title) title.textContent = 'Good Morning, ' + name + '! 👋';
-    const userNameEl = document.querySelector('.user-name');
-    if (userNameEl) userNameEl.textContent = name;
-    const avatarEl = document.querySelector('.avatar-circle');
-    if (avatarEl) avatarEl.textContent = name.substring(0,2).toUpperCase();
-  }
-}
+  const user = JSON.parse(localStorage.getItem('currentUser'));
 
+  if (!user) {
+    window.location.href = 'login.html';
+    return;
+  }
+
+  // Greeting
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? 'Morning' : hour < 17 ? 'Afternoon' : 'Evening';
+  document.querySelector('.topbar-title').textContent =
+    `Good ${greeting}, ${user.name}! 👋`;
+
+  // Sidebar name & avatar
+  document.querySelector('.user-name').textContent = user.name;
+  document.querySelector('.user-role').textContent =
+    user.targetCompany ? `Target: ${user.targetCompany}` : 'B.Tech • Final Year';
+  document.querySelector('.avatar-circle').textContent =
+    user.name.substring(0, 2).toUpperCase();
+
+  // Load this user's progress from localStorage (keyed by email)
+  const key = 'progress_' + user.email;
+  const progress = JSON.parse(localStorage.getItem(key)) || {
+    overall: 0, completed: 0, pending: 50, streak: 0,
+    arrays: 0, linkedLists: 0, trees: 0,
+    graphs: 0, dp: 0, sql: 0
+  };
+
+  // Stats cards
+  document.querySelectorAll('.stat-val')[0].textContent = progress.overall + '%';
+  document.querySelectorAll('.stat-val')[1].textContent = progress.completed;
+  document.querySelectorAll('.stat-val')[2].textContent = progress.pending;
+  document.querySelectorAll('.stat-val')[3].textContent = progress.streak;
+
+  // DSA progress bars
+  const bars = document.querySelectorAll('.progress-bar-fill');
+  const pcts = document.querySelectorAll('.progress-pct');
+  const topics = [
+    progress.arrays, progress.linkedLists, progress.trees,
+    progress.graphs, progress.dp, progress.sql
+  ];
+  topics.forEach((val, i) => {
+    bars[i].style.width = val + '%';
+    pcts[i].textContent = val + '%';
+  });
+}
 async function fetchLeetCode() {
   const username = document.getElementById('lcUsername').value.trim();
   if (!username) { alert('Please enter LeetCode username!'); return; }
@@ -1062,6 +1149,71 @@ async function fetchHackerRank() {
     document.getElementById('hrError').style.display = 'block';
   }
   document.getElementById('hrLoading').style.display = 'none';
+}
+    function openReminderModal() {
+  const modal = document.getElementById('reminderModal');
+  modal.style.display = 'flex';
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  if (user) {
+    const saved = localStorage.getItem('reminder_' + user.email);
+    if (saved) {
+      const r = JSON.parse(saved);
+      document.getElementById('reminderTime').value = r.time || '';
+      document.getElementById('reminderMsg').value = r.msg || '';
+    } else {
+      document.getElementById('reminderMsg').value =
+        `Hey ${user.name}! Time to study for ${user.targetCompany || 'your target company'} 📚`;
+    }
+  }
+}
+
+function closeReminderModal() {
+  document.getElementById('reminderModal').style.display = 'none';
+}
+
+function saveReminder() {
+  const time = document.getElementById('reminderTime').value;
+  const msg  = document.getElementById('reminderMsg').value;
+  if (!time) { alert('Please select a reminder time!'); return; }
+  Notification.requestPermission().then(permission => {
+    if (permission === 'granted') {
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      localStorage.setItem('reminder_' + user.email, JSON.stringify({ time, msg }));
+      const status = document.getElementById('reminderStatus');
+      status.textContent = `✅ Reminder set for ${time} daily!`;
+      status.style.display = 'block';
+      startReminderChecker();
+      setTimeout(() => closeReminderModal(), 1500);
+    } else {
+      alert('Please allow notifications in your browser!');
+    }
+  });
+}
+
+function startReminderChecker() {
+  setInterval(() => {
+    const user = JSON.parse(localStorage.getItem('currentUser'));
+    if (!user) return;
+    const saved = localStorage.getItem('reminder_' + user.email);
+    if (!saved) return;
+    const { time, msg } = JSON.parse(saved);
+    const now  = new Date();
+    const hhmm = now.getHours().toString().padStart(2,'0') + ':' +
+                 now.getMinutes().toString().padStart(2,'0');
+    if (hhmm === time) {
+      new Notification('PrepLakshya Reminder 🎯', { body: msg });
+    }
+  }, 60000);
+}
+
+window.addEventListener('load', () => {
+  if (Notification.permission === 'granted') {
+    startReminderChecker();
+  }
+});
+    function logout() {
+     localStorage.removeItem('currentUser');
+     window.location.href = 'login.html';
 }
 </script>
 </body>

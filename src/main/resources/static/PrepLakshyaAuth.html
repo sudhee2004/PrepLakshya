@@ -646,9 +646,8 @@
         const data = await res.json();
         if (res.ok) {
           showAlert('✅ Login successful! Redirecting...', 'success');
-          localStorage.setItem('userId', data.id);
-          localStorage.setItem('userName', data.name);
-          setTimeout(() => { window.location.href = 'PrepLakshyaDashboard.html'; }, 1200);
+           localStorage.setItem('currentUser', JSON.stringify(data));
+           setTimeout(() => { window.location.href = 'PrepLakshyaDashboard.html'; }, 1200);
         } else {
           showAlert('❌ ' + (data || 'Invalid email or password!'), 'error');
           setLoading('loginBtn', false, 'Login to PrepLakshya →');

@@ -546,6 +546,53 @@
     </div>
 
     <!-- Topic Checklist -->
+    <!-- Daily Study Planner -->
+    <div class="card" style="margin-bottom:24px;">
+        <div class="card-title">📅 Daily Study Planner
+            <span style="margin-left:auto;font-size:12px;color:var(--text-light);
+      font-weight:500;" id="plannerDate"></span>
+        </div>
+
+        <!-- Add Task Input -->
+        <div style="display:flex;gap:10px;margin-bottom:16px;">
+            <input id="taskInput" type="text" placeholder="Add a task... e.g. Practice 10 Array questions"
+                   style="flex:1;padding:11px 16px;border-radius:12px;
+      border:1.5px solid #e2e8f0;font-size:14px;outline:none;
+      font-family:'Inter',sans-serif;color:#0f172a;background:#f8faff;"
+                   onkeydown="if(event.key==='Enter') addTask()"/>
+            <button onclick="addTask()"
+                    style="padding:11px 20px;background:linear-gradient(135deg,#1a56db,#3b82f6);
+      color:white;border:none;border-radius:12px;font-weight:700;
+      font-size:14px;cursor:pointer;white-space:nowrap;">
+                + Add
+            </button>
+        </div>
+
+        <!-- Task Stats -->
+        <div style="display:flex;gap:12px;margin-bottom:16px;">
+            <div style="background:#f0fdf4;border-radius:10px;padding:8px 14px;
+      font-size:13px;font-weight:700;color:#15803d;">
+                ✅ <span id="doneCount">0</span> Done
+            </div>
+            <div style="background:#fff7ed;border-radius:10px;padding:8px 14px;
+      font-size:13px;font-weight:700;color:#c2410c;">
+                ⏳ <span id="pendingCount">0</span> Pending
+            </div>
+            <div style="background:#eff6ff;border-radius:10px;padding:8px 14px;
+      font-size:13px;font-weight:700;color:#1d4ed8;">
+                📋 <span id="totalCount">0</span> Total
+            </div>
+        </div>
+
+        <!-- Tasks List -->
+        <div id="tasksList"></div>
+
+        <!-- Empty state -->
+        <div id="emptyState" style="text-align:center;padding:24px;
+    color:var(--text-light);font-size:14px;">
+            📝 No tasks yet! Add your first task above.
+        </div>
+    </div>
     <div class="card topic-checklist">
         <div class="card-title">📋 Topic Checklist</div>
         <div class="checklist-tabs">
@@ -674,6 +721,107 @@
       document.getElementById('tab-' + tab).classList.add('active');
       event.target.classList.add('active');
     }
+    // ── Daily Study Planner ──
+function getPlannerKey() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const today = new Date().toISOString().split('T')[0];
+  return user ? 'tasks_' + user.email + '_' + today : 'tasks_guest_' + today;
+}
+
+function loadTasks() {
+  const key = getPlannerKey();
+  return JSON.parse(localStorage.getItem(key)) || [];
+}
+
+function saveTasks(tasks) {
+  localStorage.setItem(getPlannerKey(), JSON.stringify(tasks));
+}
+
+function renderTasks() {
+  const tasks = loadTasks();
+  const list  = document.getElementById('tasksList');
+  const empty = document.getElementById('emptyState');
+
+  const done    = tasks.filter(t => t.done).length;
+  const pending = tasks.filter(t => !t.done).length;
+
+  document.getElementById('doneCount').textContent    = done;
+  document.getElementById('pendingCount').textContent = pending;
+  document.getElementById('totalCount').textContent   = tasks.length;
+
+  if (tasks.length === 0) {
+    empty.style.display = 'block';
+    list.innerHTML = '';
+    return;
+  }
+  empty.style.display = 'none';
+
+  list.innerHTML = tasks.map((t, i) => `
+    <div style="display:flex;align-items:center;gap:12px;
+      padding:12px 14px;border-radius:12px;margin-bottom:8px;
+      background:${t.done ? '#f0fdf4' : '#f8faff'};
+      border:1.5px solid ${t.done ? '#bbf7d0' : '#e2e8f0'};
+      transition:all 0.2s;">
+      <div onclick="toggleTask(${i})"
+        style="width:24px;height:24px;border-radius:7px;
+        background:${t.done ? '#22c55e' : 'white'};
+        border:2px solid ${t.done ? '#22c55e' : '#e2e8f0'};
+        display:flex;align-items:center;justify-content:center;
+        cursor:pointer;flex-shrink:0;font-size:13px;color:white;">
+        ${t.done ? '✓' : ''}
+      </div>
+      <div style="flex:1;font-size:14px;font-weight:500;
+        color:${t.done ? '#86efac' : '#0f172a'};
+        text-decoration:${t.done ? 'line-through' : 'none'};">
+        ${t.text}
+      </div>
+      <div onclick="deleteTask(${i})"
+        style="cursor:pointer;font-size:16px;color:#94a3b8;
+        padding:4px 8px;border-radius:8px;"
+        onmouseover="this.style.color='#ef4444'"
+        onmouseout="this.style.color='#94a3b8'">
+        🗑️
+      </div>
+    </div>
+  `).join('');
+}
+
+function addTask() {
+  const input = document.getElementById('taskInput');
+  const text  = input.value.trim();
+  if (!text) { input.focus(); return; }
+
+  const tasks = loadTasks();
+  tasks.push({ text, done: false });
+  saveTasks(tasks);
+  input.value = '';
+  renderTasks();
+}
+
+function toggleTask(index) {
+  const tasks = loadTasks();
+  tasks[index].done = !tasks[index].done;
+  saveTasks(tasks);
+  renderTasks();
+}
+
+function deleteTask(index) {
+  const tasks = loadTasks();
+  tasks.splice(index, 1);
+  saveTasks(tasks);
+  renderTasks();
+}
+
+// Set today's date in planner header
+const today = new Date();
+const dateEl = document.getElementById('plannerDate');
+if (dateEl) {
+  dateEl.textContent = today.toLocaleDateString('en-IN',
+    { weekday:'long', day:'numeric', month:'long' });
+}
+
+// Initial render
+renderTasks();
 </script>
 </body>
 </html>
