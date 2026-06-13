@@ -461,7 +461,7 @@
     <div class="loading-card" id="loadingCard">
         <div class="ai-pulse">🤖</div>
         <div class="loading-text">Generating your personalized roadmap...</div>
-        <div class="loading-sub">Gemini AI is analyzing your profile and creating a custom study plan</div>
+        <div class="loading-sub">Groq AI is analyzing your profile and creating a custom study plan</div>
         <div class="loading-dots">
             <span></span><span></span><span></span>
         </div>
@@ -549,15 +549,16 @@
         );
         const rawText = await res.text();
 
-        // Parse Gemini response
+        // Parse Groq response
         let roadmapText = '';
         try {
           const json = JSON.parse(rawText);
-          roadmapText = json?.candidates?.[0]
-              ?.content?.parts?.[0]?.text || rawText;
+          roadmapText = json?.choices?.[0]
+              ?.message?.content || rawText;
         } catch {
           roadmapText = rawText;
         }
+
 
         currentRoadmapText = roadmapText;
 
@@ -569,7 +570,7 @@
         document.getElementById('roadmapCard').classList.add('visible');
 
       } catch (e) {
-        alert('❌ Could not generate roadmap. Make sure Spring Boot is running and Gemini API key is set!');
+        alert('❌ Could not generate roadmap. Make sure Spring Boot is running and Groq API key is set!');
       }
 
       // Reset button
