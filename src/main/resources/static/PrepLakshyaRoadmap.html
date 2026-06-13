@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepLakshya - AI Roadmap</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+          --primary: #1a56db;
+          --primary-light: #3b82f6;
+          --primary-dark: #1e3a8a;
+          --accent: #06b6d4;
+          --bg: #f0f4ff;
+          --white: #ffffff;
+          --text-dark: #0f172a;
+          --text-mid: #334155;
+          --text-light: #64748b;
+          --card-bg: rgba(255,255,255,0.92);
+          --shadow: 0 4px 24px rgba(26,86,219,0.08);
+          --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
+          --green: #22c55e;
+          --orange: #f97316;
+          --red: #ef4444;
+          --sidebar-w: 240px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+          font-family: 'Inter', sans-serif;
+          background: var(--bg);
+          color: var(--text-dark);
+          min-height: 100vh;
+          display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+          width: var(--sidebar-w);
+          background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%);
+          min-height: 100vh;
+          display: flex; flex-direction: column;
+          padding: 28px 16px;
+          position: fixed; left: 0; top: 0; bottom: 0;
+          z-index: 20;
+          box-shadow: 4px 0 24px rgba(26,86,219,0.18);
+        }
+        .sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; padding: 0 8px; }
+        .sidebar-logo-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .sidebar-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 17px; color: white; }
+        .sidebar-logo-sub { font-size: 9px; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; }
+        .nav-section { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 1.5px; text-transform: uppercase; padding: 0 12px; margin-bottom: 8px; margin-top: 16px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; margin-bottom: 4px; text-decoration: none; }
+        .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
+        .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
+        .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
+        .sidebar-bottom { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); }
+        .user-avatar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.1); }
+        .avatar-circle { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 14px; }
+        .user-name { font-size: 13px; font-weight: 600; color: white; }
+        .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
+
+        .main { margin-left: var(--sidebar-w); flex: 1; padding: 28px 32px; overflow-x: hidden; }
+
+        /* Topbar */
+        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+        .mini-logo { display: flex; align-items: center; gap: 8px; background: var(--card-bg); border: 1.5px solid rgba(26,86,219,0.12); border-radius: 12px; padding: 7px 12px; box-shadow: var(--shadow); text-decoration: none; }
+        .mini-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+        .mini-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 14px; color: var(--primary-dark); }
+        .topbar-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); }
+        .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+
+        /* Input Card */
+        .input-card {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 28px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          margin-bottom: 24px;
+        }
+        .input-card-title {
+          font-family: 'Sora', sans-serif;
+          font-weight: 700; font-size: 16px;
+          color: var(--text-dark);
+          margin-bottom: 20px;
+          display: flex; align-items: center; gap: 8px;
+        }
+        .input-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+          margin-bottom: 20px;
+        }
+        .input-group label {
+          display: block;
+          font-size: 12px; font-weight: 700;
+          color: var(--text-light);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin-bottom: 8px;
+        }
+        .form-input {
+          width: 100%;
+          padding: 12px 16px;
+          border-radius: 12px;
+          border: 1.5px solid #e2e8f0;
+          background: #f8faff;
+          font-size: 14px;
+          font-family: 'Inter', sans-serif;
+          color: var(--text-dark);
+          outline: none;
+          transition: all 0.2s;
+        }
+        .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
+        .form-input::placeholder { color: var(--text-light); }
+
+        .weeks-row {
+          display: flex; gap: 10px;
+          margin-bottom: 20px; flex-wrap: wrap;
+        }
+        .weeks-row label {
+          font-size: 12px; font-weight: 700;
+          color: var(--text-light);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          display: block;
+          margin-bottom: 10px;
+          width: 100%;
+        }
+        .week-btn {
+          padding: 8px 18px;
+          border-radius: 10px;
+          font-size: 13px; font-weight: 600;
+          cursor: pointer; border: 1.5px solid #e2e8f0;
+          background: white; color: var(--text-light);
+          transition: all 0.2s;
+          font-family: 'Inter', sans-serif;
+        }
+        .week-btn.active {
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          color: white; border-color: transparent;
+          box-shadow: 0 4px 12px rgba(26,86,219,0.25);
+        }
+        .week-btn:hover:not(.active) { border-color: var(--primary); color: var(--primary); }
+
+        .generate-btn {
+          width: 100%;
+          padding: 14px;
+          border-radius: 14px;
+          border: none;
+          background: linear-gradient(135deg, #1a56db, #3b82f6);
+          color: white;
+          font-family: 'Sora', sans-serif;
+          font-size: 15px; font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s;
+          box-shadow: 0 4px 20px rgba(26,86,219,0.35);
+          display: flex; align-items: center; justify-content: center; gap: 10px;
+        }
+        .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(26,86,219,0.45); }
+        .generate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+        /* Loading */
+        .loading-card {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 48px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          text-align: center;
+          display: none;
+          margin-bottom: 24px;
+        }
+        .loading-card.visible { display: block; }
+        .ai-pulse {
+          width: 72px; height: 72px;
+          border-radius: 20px;
+          background: linear-gradient(135deg, #1a56db, #06b6d4);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 32px;
+          margin: 0 auto 20px;
+          animation: pulse-glow 1.5s ease-in-out infinite;
+        }
+        @keyframes pulse-glow {
+          0%,100% { box-shadow: 0 0 0 0 rgba(26,86,219,0.4); transform: scale(1); }
+          50% { box-shadow: 0 0 0 16px rgba(26,86,219,0); transform: scale(1.05); }
+        }
+        .loading-text {
+          font-family: 'Sora', sans-serif;
+          font-size: 18px; font-weight: 700;
+          color: var(--text-dark); margin-bottom: 8px;
+        }
+        .loading-sub { font-size: 14px; color: var(--text-light); }
+        .loading-dots span {
+          display: inline-block;
+          width: 8px; height: 8px;
+          border-radius: 50%;
+          background: var(--primary);
+          margin: 16px 4px 0;
+          animation: dot-bounce 1.2s ease-in-out infinite;
+        }
+        .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dot-bounce {
+          0%,80%,100% { transform: scale(0.6); opacity: 0.4; }
+          40% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Roadmap Output */
+        .roadmap-card {
+          background: var(--card-bg);
+          border-radius: 20px;
+          padding: 28px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+          margin-bottom: 24px;
+          display: none;
+        }
+        .roadmap-card.visible { display: block; }
+        .roadmap-header {
+          display: flex; align-items: center; justify-content: space-between;
+          margin-bottom: 24px;
+          padding-bottom: 16px;
+          border-bottom: 1.5px solid #f1f5f9;
+        }
+        .roadmap-title {
+          font-family: 'Sora', sans-serif;
+          font-size: 18px; font-weight: 800;
+          color: var(--text-dark);
+        }
+        .roadmap-badge {
+          display: flex; align-items: center; gap: 6px;
+          background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+          color: #065f46;
+          padding: 6px 14px; border-radius: 10px;
+          font-size: 12px; font-weight: 700;
+        }
+
+        /* Week cards */
+        .week-card {
+          background: #f8faff;
+          border: 1.5px solid rgba(26,86,219,0.08);
+          border-radius: 16px;
+          padding: 20px;
+          margin-bottom: 16px;
+          transition: all 0.2s;
+        }
+        .week-card:hover { border-color: var(--primary-light); box-shadow: var(--shadow); }
+        .week-card-header {
+          display: flex; align-items: center; gap: 12px;
+          margin-bottom: 14px;
+          cursor: pointer;
+        }
+        .week-number {
+          width: 40px; height: 40px;
+          border-radius: 12px;
+          background: linear-gradient(135deg, var(--primary), var(--accent));
+          display: flex; align-items: center; justify-content: center;
+          font-family: 'Sora', sans-serif;
+          font-weight: 800; font-size: 14px; color: white;
+          flex-shrink: 0;
+        }
+        .week-title {
+          font-family: 'Sora', sans-serif;
+          font-weight: 700; font-size: 15px;
+          color: var(--text-dark); flex: 1;
+        }
+        .week-toggle {
+          font-size: 18px; color: var(--text-light);
+          transition: transform 0.2s;
+        }
+        .week-toggle.open { transform: rotate(180deg); }
+        .week-content {
+          font-size: 14px;
+          color: var(--text-mid);
+          line-height: 1.8;
+          padding-left: 52px;
+        }
+        .week-content ul { padding-left: 16px; }
+        .week-content li { margin-bottom: 6px; }
+        .week-content strong { color: var(--primary); }
+        .roadmap-raw {
+          font-size: 14px;
+          color: var(--text-mid);
+          line-height: 1.9;
+          white-space: pre-wrap;
+          font-family: 'Inter', sans-serif;
+        }
+
+        /* Action buttons */
+        .action-row {
+          display: flex; gap: 12px; margin-top: 20px;
+        }
+        .action-btn {
+          padding: 10px 20px;
+          border-radius: 12px;
+          font-size: 13px; font-weight: 600;
+          cursor: pointer; border: none;
+          transition: all 0.2s;
+          font-family: 'Inter', sans-serif;
+          display: flex; align-items: center; gap: 8px;
+        }
+        .btn-primary {
+          background: linear-gradient(135deg, var(--primary), var(--primary-light));
+          color: white;
+          box-shadow: 0 4px 12px rgba(26,86,219,0.25);
+        }
+        .btn-secondary {
+          background: white;
+          color: var(--primary);
+          border: 1.5px solid rgba(26,86,219,0.2);
+        }
+        .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(26,86,219,0.35); }
+        .btn-secondary:hover { border-color: var(--primary); background: #eff6ff; }
+
+        /* Quick tips */
+        .tips-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          margin-bottom: 24px;
+        }
+        .tip-card {
+          background: var(--card-bg);
+          border-radius: 16px;
+          padding: 20px;
+          box-shadow: var(--shadow);
+          border: 1.5px solid rgba(26,86,219,0.07);
+        }
+        .tip-icon {
+          width: 42px; height: 42px;
+          border-radius: 12px;
+          display: flex; align-items: center; justify-content: center;
+          font-size: 20px; margin-bottom: 12px;
+        }
+        .tip-title {
+          font-family: 'Sora', sans-serif;
+          font-weight: 700; font-size: 14px;
+          color: var(--text-dark); margin-bottom: 6px;
+        }
+        .tip-text { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+
+        .spinner {
+          display: inline-block;
+          width: 16px; height: 16px;
+          border: 2px solid rgba(255,255,255,0.4);
+          border-top-color: white;
+          border-radius: 50%;
+          animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 900px) {
+          .sidebar { display: none; }
+          .main { margin-left: 0; padding: 16px; }
+          .input-grid { grid-template-columns: 1fr; }
+          .tips-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🎯</div>
+        <div>
+            <div class="sidebar-logo-text">PrepLakshya</div>
+            <div class="sidebar-logo-sub">Track. Practice. Achieve.</div>
+        </div>
+    </div>
+    <div class="nav-section">Main</div>
+    <a href="PrepLakshyaDashboard.html" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Companies</a>
+    <a href="PrepLakshyaTopicTracker.html" class="nav-item"><span class="nav-icon">📚</span> Topic Tracker</a>
+    <a href="PrepLakshyaRoadmap.html" class="nav-item active"><span class="nav-icon">🤖</span> AI Roadmap</a>
+    <div class="nav-section">Practice</div>
+    <a href="#" class="nav-item"><span class="nav-icon">💻</span> DSA Problems</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🧠</span> Aptitude</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🎤</span> HR Questions</a>
+    <div class="sidebar-bottom">
+        <div class="user-avatar">
+            <div class="avatar-circle" id="avatarCircle">SK</div>
+            <div>
+                <div class="user-name" id="userName">Sudheer Kumar</div>
+                <div class="user-role" id="userRole">B.Tech IT • Final Year</div>
+            </div>
+        </div>
+        <div onclick="logout()" style="margin-top:10px;padding:10px 14px;border-radius:12px;color:rgba(255,255,255,0.7);font-size:13px;cursor:pointer;text-align:center;background:rgba(255,255,255,0.08);">
+            🚪 Logout
+        </div>
+    </div>
+</aside>
+
+<main class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <a href="PrepLakshyaDashboard.html" class="mini-logo">
+                <div class="mini-logo-icon">🎯</div>
+                <div class="mini-logo-text">PrepLakshya</div>
+            </a>
+            <div>
+                <div class="topbar-title">🤖 AI Roadmap</div>
+                <div class="topbar-sub">Generate your personalized placement preparation plan</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Tips -->
+    <div class="tips-grid">
+        <div class="tip-card">
+            <div class="tip-icon" style="background:#eff6ff;">🎯</div>
+            <div class="tip-title">Target Specific</div>
+            <div class="tip-text">Enter your exact target company for a tailored roadmap covering their specific interview pattern.</div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon" style="background:#f0fdf4;">💡</div>
+            <div class="tip-title">List Your Skills</div>
+            <div class="tip-text">Mention your current skills like Java, SQL, DSA so the AI builds on what you already know.</div>
+        </div>
+        <div class="tip-card">
+            <div class="tip-icon" style="background:#fff7ed;">📅</div>
+            <div class="tip-title">Pick Your Timeline</div>
+            <div class="tip-text">Choose how many weeks you have — the AI will distribute topics evenly across your timeline.</div>
+        </div>
+    </div>
+
+    <!-- Input Card -->
+    <div class="input-card">
+        <div class="input-card-title">🚀 Generate Your Roadmap</div>
+
+        <div class="input-grid">
+            <div class="input-group">
+                <label>Target Company</label>
+                <input class="form-input" type="text" id="targetCompany"
+                       placeholder="e.g. TCS, Infosys, Google">
+            </div>
+            <div class="input-group">
+                <label>Your Current Skills</label>
+                <input class="form-input" type="text" id="skills"
+                       placeholder="e.g. Java, MySQL, DSA basics">
+            </div>
+        </div>
+
+        <div class="weeks-row">
+            <label>Preparation Timeline</label>
+            <button class="week-btn active" onclick="selectWeeks(4, this)">4 Weeks</button>
+            <button class="week-btn" onclick="selectWeeks(6, this)">6 Weeks</button>
+            <button class="week-btn" onclick="selectWeeks(8, this)">8 Weeks</button>
+            <button class="week-btn" onclick="selectWeeks(12, this)">12 Weeks</button>
+        </div>
+
+        <button class="generate-btn" onclick="generateRoadmap()" id="generateBtn">
+            🤖 Generate AI Roadmap
+        </button>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-card" id="loadingCard">
+        <div class="ai-pulse">🤖</div>
+        <div class="loading-text">Generating your personalized roadmap...</div>
+        <div class="loading-sub">Gemini AI is analyzing your profile and creating a custom study plan</div>
+        <div class="loading-dots">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+
+    <!-- Roadmap Output -->
+    <div class="roadmap-card" id="roadmapCard">
+        <div class="roadmap-header">
+            <div class="roadmap-title" id="roadmapTitle">Your Roadmap</div>
+            <div class="roadmap-badge">✅ AI Generated</div>
+        </div>
+        <div id="roadmapContent"></div>
+        <div class="action-row">
+            <button class="action-btn btn-primary" onclick="generateRoadmap()">🔄 Regenerate</button>
+            <button class="action-btn btn-secondary" onclick="printRoadmap()">🖨️ Print Roadmap</button>
+            <button class="action-btn btn-secondary" onclick="copyRoadmap()">📋 Copy Text</button>
+        </div>
+    </div>
+
+</main>
+
+<script>
+    let selectedWeeks = 4;
+    let currentRoadmapText = '';
+
+    // Load user from localStorage
+    window.onload = function() {
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if (!user) {
+        window.location.href = 'PrepLakshya-Home.html';
+        return;
+      }
+
+      // Set sidebar user info
+      document.getElementById('userName').textContent = user.name;
+      document.getElementById('avatarCircle').textContent =
+          user.name.substring(0, 2).toUpperCase();
+      document.getElementById('userRole').textContent =
+          user.targetCompany
+              ? `Target: ${user.targetCompany}`
+              : 'B.Tech • Final Year';
+
+      // Pre-fill from user profile
+      if (user.targetCompany) {
+        document.getElementById('targetCompany').value =
+            user.targetCompany;
+      }
+      if (user.skills) {
+        document.getElementById('skills').value = user.skills;
+      }
+    }
+
+    function selectWeeks(weeks, btn) {
+      selectedWeeks = weeks;
+      document.querySelectorAll('.week-btn')
+          .forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    async function generateRoadmap() {
+      const company = document.getElementById('targetCompany').value.trim();
+      const skills  = document.getElementById('skills').value.trim();
+
+      if (!company) {
+        alert('Please enter your target company!');
+        document.getElementById('targetCompany').focus();
+        return;
+      }
+      if (!skills) {
+        alert('Please enter your current skills!');
+        document.getElementById('skills').focus();
+        return;
+      }
+
+      // Show loading
+      const btn = document.getElementById('generateBtn');
+      btn.disabled = true;
+      btn.innerHTML = '<div class="spinner"></div> Generating...';
+      document.getElementById('loadingCard').classList.add('visible');
+      document.getElementById('roadmapCard').classList.remove('visible');
+
+      try {
+        const res = await fetch(
+          `http://localhost:8080/api/roadmap/generate?targetCompany=${encodeURIComponent(company + ' (' + selectedWeeks + ' weeks plan)')}&skills=${encodeURIComponent(skills)}`
+        );
+        const rawText = await res.text();
+
+        // Parse Gemini response
+        let roadmapText = '';
+        try {
+          const json = JSON.parse(rawText);
+          roadmapText = json?.candidates?.[0]
+              ?.content?.parts?.[0]?.text || rawText;
+        } catch {
+          roadmapText = rawText;
+        }
+
+        currentRoadmapText = roadmapText;
+
+        // Display roadmap
+        document.getElementById('roadmapTitle').textContent =
+            `🎯 ${company} — ${selectedWeeks} Week Roadmap`;
+        document.getElementById('roadmapContent').innerHTML =
+            formatRoadmap(roadmapText);
+        document.getElementById('roadmapCard').classList.add('visible');
+
+      } catch (e) {
+        alert('❌ Could not generate roadmap. Make sure Spring Boot is running and Gemini API key is set!');
+      }
+
+      // Reset button
+      btn.disabled = false;
+      btn.innerHTML = '🤖 Generate AI Roadmap';
+      document.getElementById('loadingCard').classList.remove('visible');
+
+      // Scroll to result
+      document.getElementById('roadmapCard')
+          .scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function formatRoadmap(text) {
+      // Clean markdown symbols
+      text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+
+      const lines = text.split('\n').filter(l => l.trim());
+      let html = '';
+      let inWeek = false;
+      let weekContent = '';
+      let weekTitle = '';
+      let weekNum = 0;
+      let inList = false;
+
+      function closeWeek() {
+        if (inWeek) {
+          if (inList) { weekContent += '</ul>'; inList = false; }
+          html += `
+            <div class="week-card">
+              <div class="week-card-header" onclick="toggleWeek(this)">
+                <div class="week-number">W${weekNum}</div>
+                <div class="week-title">${weekTitle}</div>
+                <div class="week-toggle open">▼</div>
+              </div>
+              <div class="week-content">${weekContent}</div>
+            </div>`;
+          weekContent = '';
+          inWeek = false;
+        }
+      }
+
+      lines.forEach(line => {
+        const trimmed = line.trim();
+
+        // Detect week headers
+        if (/^(week\s*\d+|#\s*week)/i.test(trimmed)) {
+          closeWeek();
+          weekNum++;
+          weekTitle = trimmed.replace(/^#+\s*/, '').replace(/\*\*/g, '');
+          inWeek = true;
+          weekContent = '';
+        }
+        // Detect numbered sections like "1.", "2."
+        else if (/^\d+\.\s+\*\*Week/i.test(trimmed) || /^\*\*Week/i.test(trimmed)) {
+          closeWeek();
+          weekNum++;
+          weekTitle = trimmed.replace(/^\d+\.\s*/, '').replace(/\*\*/g, '');
+          inWeek = true;
+          weekContent = '';
+        }
+        // List items
+        else if (/^[-•*]\s+/.test(trimmed) || /^\d+\.\s/.test(trimmed)) {
+          if (!inList) { weekContent += '<ul>'; inList = true; }
+          const item = trimmed.replace(/^[-•*\d\.]\s+/, '');
+          weekContent += `<li>${item}</li>`;
+        }
+        // Regular text inside week
+        else if (inWeek && trimmed) {
+          if (inList) { weekContent += '</ul>'; inList = false; }
+          weekContent += `<p style="margin-bottom:8px;">${trimmed}</p>`;
+        }
+        // Text before any week
+        else if (!inWeek && trimmed) {
+          html += `<p style="margin-bottom:10px;color:var(--text-mid);font-size:14px;line-height:1.7;">${trimmed}</p>`;
+        }
+      });
+
+      closeWeek();
+
+      // If no weeks detected, show raw formatted text
+      if (weekNum === 0) {
+        return `<div class="roadmap-raw">${text}</div>`;
+      }
+
+      return html;
+    }
+
+    function toggleWeek(header) {
+      const content = header.nextElementSibling;
+      const toggle  = header.querySelector('.week-toggle');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
+        toggle.classList.add('open');
+      } else {
+        content.style.display = 'none';
+        toggle.classList.remove('open');
+      }
+    }
+
+    function printRoadmap() {
+      window.print();
+    }
+
+    function copyRoadmap() {
+      navigator.clipboard.writeText(currentRoadmapText)
+        .then(() => alert('✅ Roadmap copied to clipboard!'))
+        .catch(() => alert('❌ Could not copy. Please copy manually.'));
+    }
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'PrepLakshyaAuth.html';
+    }
+</script>
+</body>
+</html>
