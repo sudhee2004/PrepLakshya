@@ -1091,7 +1091,7 @@ async function fetchLeetCode() {
   document.getElementById('lcError').style.display = 'none';
 
   try {
-    const response = await fetch(`http://localhost:8080/api/profile/leetcode/${username}`);
+    const response = await fetch(`/api/profile/leetcode/${username}`);
     const data = await response.json();
     const stats = data?.data?.matchedUser?.submitStats?.acSubmissionNum;
     if (stats) {
@@ -1120,7 +1120,7 @@ async function fetchHackerRank() {
   document.getElementById('hrError').style.display = 'none';
 
   try {
-    const response = await fetch(`http://localhost:8080/api/profile/hackerrank/${username}`);
+    const response = await fetch(`API/api/profile/hackerrank/${username}`);
     const data = await response.json();
 
     if (data.profile_url) {

@@ -615,7 +615,7 @@
     // Load DSA sections from API
     function loadDSASections() {
       const container = document.getElementById('dsa-sections-container');
-      fetch('http://localhost:8080/api/dsa/sections')
+      fetch('/api/dsa/sections')
         .then(res => res.json())
         .then(sections => {
           if (!sections || sections.length === 0) {

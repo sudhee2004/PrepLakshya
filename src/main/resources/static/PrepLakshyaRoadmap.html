@@ -545,7 +545,7 @@
 
       try {
         const res = await fetch(
-          `http://localhost:8080/api/roadmap/generate?targetCompany=${encodeURIComponent(company + ' (' + selectedWeeks + ' weeks plan)')}&skills=${encodeURIComponent(skills)}`
+          `/api/roadmap/generate?targetCompany=${encodeURIComponent(company + ' (' + selectedWeeks + ' weeks plan)')}&skills=${encodeURIComponent(skills)}`
         );
         const rawText = await res.text();
 
