@@ -622,8 +622,11 @@
     alert('loadDSASections called, fetching from: /api/dsa/sections');
       const container = document.getElementById('dsa-sections-container');
       fetch('/api/dsa/sections')
-        .then(res => res.json())
-        .then(sections => {
+  .then(res => {
+    alert('Status: ' + res.status + ', OK: ' + res.ok);
+    return res.json();
+  })
+  .then(sections => {
         alert('Got sections: ' + JSON.stringify(sections));
           if (!sections || sections.length === 0) {
             container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
