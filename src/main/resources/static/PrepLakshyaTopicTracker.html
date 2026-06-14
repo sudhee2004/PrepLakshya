@@ -444,17 +444,17 @@
                             </linearGradient>
                         </defs>
                         <circle class="bg-circle" cx="70" cy="70" r="60"/>
-                        <circle class="fg-circle" cx="70" cy="70" r="60"/>
+                        <circle class="fg-circle" id="progressCircle" cx="70" cy="70" r="60"/>
                     </svg>
                     <div class="circle-text">
-                        <div class="circle-pct">70%</div>
+                        <div class="circle-pct" id="overallPct">0%</div>
                         <div class="circle-lbl">Complete</div>
                     </div>
                 </div>
                 <div class="circle-stats">
-                    <div class="cs-item"><div class="cs-val" style="color:#22c55e;">35</div><div class="cs-lbl">Done ✅</div></div>
-                    <div class="cs-item"><div class="cs-val" style="color:#f97316;">10</div><div class="cs-lbl">Weak ⚠️</div></div>
-                    <div class="cs-item"><div class="cs-val" style="color:#94a3b8;">5</div><div class="cs-lbl">Left ⏳</div></div>
+                    <div class="cs-item"><div class="cs-val" id="doneCount2" style="color:#22c55e;">0</div><div class="cs-lbl">Done ✅</div></div>
+                    <div class="cs-item"><div class="cs-val" id="weakCount" style="color:#f97316;">0</div><div class="cs-lbl">Weak ⚠️</div></div>
+                    <div class="cs-item"><div class="cs-val" id="leftCount" style="color:#94a3b8;">0</div><div class="cs-lbl">Left ⏳</div></div>
                 </div>
             </div>
         </div>
@@ -493,7 +493,7 @@
             </div>
         </div>
     </div>
-
+    <div id="strongAreasList">
     <div class="grid-2">
         <div class="card">
             <div class="card-title">💪 Strong Areas</div>
@@ -503,6 +503,9 @@
             <div class="area-item"><div class="area-icon ai-green">☕</div><div class="area-name">Core Java (OOP)</div><span class="area-pct pct-green">90%</span></div>
             <div class="area-item"><div class="area-icon ai-green">🔍</div><div class="area-name">Searching & Sorting</div><span class="area-pct pct-green">82%</span></div>
         </div>
+        </div>
+
+        <div id="weakAreasList">
         <div class="card">
             <div class="card-title">⚠️ Weak Areas — Focus Here!</div>
             <div class="area-item"><div class="area-icon ai-red">🌐</div><div class="area-name">Graphs (BFS/DFS)</div><span class="area-pct pct-red">35%</span></div>
@@ -512,6 +515,8 @@
             <div class="area-item"><div class="area-icon ai-red">🧮</div><div class="area-name">Aptitude & Reasoning</div><span class="area-pct pct-red">40%</span></div>
         </div>
     </div>
+    </div>
+
 
     <!-- Daily Study Planner -->
     <div class="card" style="margin-bottom:24px;">
@@ -614,6 +619,7 @@
 
     // Load DSA sections from API
     function loadDSASections() {
+    alert('loadDSASections called, fetching from: /api/dsa/sections');
       const container = document.getElementById('dsa-sections-container');
       fetch('/api/dsa/sections')
         .then(res => res.json())
@@ -708,6 +714,88 @@
   const dateEl = document.getElementById('plannerDate');
   if (dateEl) dateEl.textContent = today.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long' });
   renderTasks();
+
+  // Section icon/category mapping for display
+const areaIcons = {
+  'Arrays': { icon: '📐', class: 'ai-green' },
+  'Linked Lists': { icon: '🔗', class: 'ai-green' },
+  'Trees': { icon: '🌳', class: 'ai-orange' },
+  'Graphs': { icon: '🌐', class: 'ai-red' },
+  'Dynamic Programming': { icon: '⚡', class: 'ai-red' },
+  'SQL': { icon: '🗄️', class: 'ai-green' }
+};
+
+function loadOverallProgress() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const userId = user ? user.id : 1;
+
+  fetch(`/api/dsa/progress/overall/${userId}`)
+    .then(res => res.json())
+    .then(data => {
+      const pct = data.overallPercentage;
+
+      document.getElementById('overallPct').textContent = pct + '%';
+
+      const circle = document.getElementById('progressCircle');
+      const radius = 60;
+      const circumference = 2 * Math.PI * radius;
+      const offset = circumference - (pct / 100) * circumference;
+      circle.style.strokeDasharray = circumference;
+      circle.style.strokeDashoffset = offset;
+
+      const strong = [];
+      const weak = [];
+      let doneTotal = 0;
+
+      data.sections.forEach(sec => {
+        doneTotal += sec.solved;
+        if (sec.percentage >= 70) strong.push(sec);
+        else weak.push(sec);
+      });
+
+      strong.sort((a, b) => b.percentage - a.percentage);
+      weak.sort((a, b) => a.percentage - b.percentage);
+
+      document.getElementById('doneCount2').textContent = doneTotal;
+      document.getElementById('weakCount').textContent = weak.length;
+      document.getElementById('leftCount').textContent = data.totalPending;
+
+      const strongList = document.getElementById('strongAreasList');
+      if (strong.length === 0) {
+        strongList.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">No strong areas yet — keep solving! 💪</div>`;
+      } else {
+        strongList.innerHTML = strong.map(sec => {
+          const meta = areaIcons[sec.name] || { icon: '📘', class: 'ai-green' };
+          return `
+            <div class="area-item">
+              <div class="area-icon ${meta.class}">${meta.icon}</div>
+              <div class="area-name">${sec.name}</div>
+              <span class="area-pct pct-green">${sec.percentage}%</span>
+            </div>`;
+        }).join('');
+      }
+
+      const weakList = document.getElementById('weakAreasList');
+      if (weak.length === 0) {
+        weakList.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">Great! No weak areas right now 🎉</div>`;
+      } else {
+        weakList.innerHTML = weak.map(sec => {
+          const meta = areaIcons[sec.name] || { icon: '📘', class: 'ai-red' };
+          const pctClass = sec.percentage < 40 ? 'pct-red' : 'pct-orange';
+          return `
+            <div class="area-item">
+              <div class="area-icon ${meta.class}">${meta.icon}</div>
+              <div class="area-name">${sec.name}</div>
+              <span class="area-pct ${pctClass}">${sec.percentage}%</span>
+            </div>`;
+        }).join('');
+      }
+    })
+    .catch(() => {
+      console.log('Could not load overall progress');
+    });
+}
+  loadOverallProgress();
   loadDSASections();
 </script>
 </body>
