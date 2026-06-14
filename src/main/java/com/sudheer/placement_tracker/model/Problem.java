@@ -2,6 +2,7 @@ package com.sudheer.placement_tracker.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import jakarta.persistence.Transient;
 
 @Data
 @Entity
@@ -29,5 +30,15 @@ public class Problem {
 
     public enum Difficulty {
         EASY, MEDIUM, HARD
+    }
+    @Transient
+    private String userStatus;
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
     }
 }

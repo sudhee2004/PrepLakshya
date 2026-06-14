@@ -22,12 +22,12 @@ public class ProblemController {
                 problemService.getDSASections());
     }
 
-    // GET problems by section
     @GetMapping("/sections/{sectionId}/problems")
     public ResponseEntity<List<Problem>> getProblems(
-            @PathVariable Long sectionId) {
+            @PathVariable Long sectionId,
+            @RequestParam(defaultValue = "1") Long userId) {
         return ResponseEntity.ok(
-                problemService.getProblemsBySection(sectionId));
+                problemService.getProblemsBySection(sectionId, userId));
     }
 
     // PUT update problem status

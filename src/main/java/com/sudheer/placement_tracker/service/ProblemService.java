@@ -27,8 +27,19 @@ public class ProblemService {
     }
 
     // Get problems by section
-    public List<Problem> getProblemsBySection(Long sectionId) {
-        return problemRepository.findBySectionId(sectionId);
+    public List<Problem> getProblemsBySection(Long sectionId, Long userId) {
+        List<Problem> problems = problemRepository.findBySectionId(sectionId);
+        List<UserProgress> progressList = userProgressRepository.findByUserId(userId);
+
+        for (Problem problem : problems) {
+            for (UserProgress progress : progressList) {
+                if (progress.getProblem().getId().equals(problem.getId())) {
+                    problem.setUserStatus(progress.getStatus().toString());
+                    break;
+                }
+            }
+        }
+        return problems;
     }
 
     // Update problem status
