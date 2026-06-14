@@ -624,6 +624,7 @@
       fetch('/api/dsa/sections')
         .then(res => res.json())
         .then(sections => {
+        alert('Got sections: ' + JSON.stringify(sections));
           if (!sections || sections.length === 0) {
             container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
             return;
@@ -650,9 +651,10 @@
     container.innerHTML = '';
         container.appendChild(grid);
       })
-      .catch(() => {
-        container.innerHTML = `<div class="dsa-loading">⚠️ Could not load sections. Make sure Spring Boot is running on port 8080.</div>`;
-      });
+      .catch((err) => {
+  alert('FETCH ERROR: ' + err.message);
+  container.innerHTML = `<div class="dsa-loading">⚠️ Could not load sections...`;
+});
   }
 
   // Tab switcher
