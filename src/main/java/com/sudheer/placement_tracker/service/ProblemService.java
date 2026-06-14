@@ -5,6 +5,9 @@ import com.sudheer.placement_tracker.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ProblemService {
@@ -84,5 +87,52 @@ public class ProblemService {
                 .count();
 
         return (int) ((solved * 100) / problems.size());
+    }
+    public Map<String, Object> getOverallProgress(Long userId) {
+        List<Section> sections = sectionRepository.findByCategory("DSA");
+        List<UserProgress> progressList = userProgressRepository.findByUserId(userId);
+
+        int totalProblems = 0;
+        int totalSolved = 0;
+        List<Map<String, Object>> sectionStats = new ArrayList<>();
+
+        for (Section section : sections) {
+            List<Problem> problems = problemRepository.findBySectionId(section.getId());
+            int sectionTotal = problems.size();
+            int sectionSolved = 0;
+
+            for (Problem problem : problems) {
+                for (UserProgress progress : progressList) {
+                    if (progress.getProblem().getId().equals(problem.getId())
+                            && progress.getStatus() == UserProgress.Status.SOLVED) {
+                        sectionSolved++;
+                        break;
+                    }
+                }
+            }
+
+            int sectionPct = sectionTotal == 0 ? 0 : (sectionSolved * 100) / sectionTotal;
+
+            Map<String, Object> stat = new HashMap<>();
+            stat.put("name", section.getName());
+            stat.put("total", sectionTotal);
+            stat.put("solved", sectionSolved);
+            stat.put("percentage", sectionPct);
+            sectionStats.add(stat);
+
+            totalProblems += sectionTotal;
+            totalSolved += sectionSolved;
+        }
+
+        int overallPct = totalProblems == 0 ? 0 : (totalSolved * 100) / totalProblems;
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("overallPercentage", overallPct);
+        result.put("totalProblems", totalProblems);
+        result.put("totalSolved", totalSolved);
+        result.put("totalPending", totalProblems - totalSolved);
+        result.put("sections", sectionStats);
+
+        return result;
     }
 }

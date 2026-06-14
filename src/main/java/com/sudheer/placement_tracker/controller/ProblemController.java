@@ -56,4 +56,8 @@ public class ProblemController {
                 .getSectionProgress(userId, sectionId);
         return ResponseEntity.ok(progress + "%");
     }
+    @GetMapping("/progress/overall/{userId}")
+    public ResponseEntity<?> getOverallProgress(@PathVariable Long userId) {
+        return ResponseEntity.ok(problemService.getOverallProgress(userId));
+    }
 }
