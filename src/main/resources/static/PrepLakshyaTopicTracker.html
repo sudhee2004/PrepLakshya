@@ -619,46 +619,41 @@
 
     // Load DSA sections from API
     function loadDSASections() {
-    alert('loadDSASections called, fetching from: /api/dsa/sections');
-      const container = document.getElementById('dsa-sections-container');
-      fetch('/api/dsa/sections')
-  .then(res => {
-    alert('Status: ' + res.status + ', OK: ' + res.ok);
-    return res.json();
-  })
-  .then(sections => {
-        alert('Got sections: ' + JSON.stringify(sections));
-          if (!sections || sections.length === 0) {
-            container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
-            return;
-          }
-          const grid = document.createElement('div');
-          grid.className = 'dsa-sections-grid';
+  const container = document.getElementById('dsa-sections-container');
 
-          sections.forEach(section => {
-            const meta = sectionIcons[section.name] || { icon: '💻', bg: '#eff6ff' };
-            const card = document.createElement('a');
-            card.className = 'dsa-section-card';
-            card.href = `dsa-problems.html?sectionId=${section.id}&sectionName=${encodeURIComponent(section.name)}`;
-            card.innerHTML = `
-              <div class="dsa-section-icon" style="background:${meta.bg};">${meta.icon}</div>
-              <div class="dsa-section-name">${section.name}</div>
-              <div class="dsa-section-meta">Click to view problems →</div>
-              <div class="dsa-section-bar">
-                <div class="dsa-section-bar-fill" style="width:0%;"></div>
-              </div>
-              <div class="dsa-section-pct">0% complete</div>
-            `;
-            grid.appendChild(card);
-          });
-    container.innerHTML = '';
-        container.appendChild(grid);
-      })
-      .catch((err) => {
-  alert('FETCH ERROR: ' + err.message);
-  container.innerHTML = `<div class="dsa-loading">⚠️ Could not load sections...`;
-});
-  }
+  fetch('/api/dsa/sections')
+    .then(res => res.json())
+    .then(sections => {
+      if (!sections || sections.length === 0) {
+        container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
+        return;
+      }
+      const grid = document.createElement('div');
+      grid.className = 'dsa-sections-grid';
+
+      sections.forEach(section => {
+        const meta = sectionIcons[section.name] || { icon: '💻', bg: '#eff6ff' };
+        const card = document.createElement('a');
+        card.className = 'dsa-section-card';
+        card.href = `dsa-problems.html?sectionId=${section.id}&sectionName=${encodeURIComponent(section.name)}`;
+        card.innerHTML = `
+          <div class="dsa-section-icon" style="background:${meta.bg};">${meta.icon}</div>
+          <div class="dsa-section-name">${section.name}</div>
+          <div class="dsa-section-meta">Click to view problems →</div>
+          <div class="dsa-section-bar">
+            <div class="dsa-section-bar-fill" style="width:0%;"></div>
+          </div>
+          <div class="dsa-section-pct">0% complete</div>
+        `;
+        grid.appendChild(card);
+      });
+      container.innerHTML = '';
+      container.appendChild(grid);
+    })
+    .catch((err) => {
+      container.innerHTML = `<div class="dsa-loading">⚠️ Could not load sections.</div>`;
+    });
+}
 
   // Tab switcher
   function switchTab(tab, event) {
@@ -800,8 +795,9 @@ function loadOverallProgress() {
       console.log('Could not load overall progress');
     });
 }
-  loadOverallProgress();
   loadDSASections();
+  loadOverallProgress();
+
 </script>
 </body>
 </html>
