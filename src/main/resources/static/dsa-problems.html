@@ -321,19 +321,27 @@
         </div>
     </div>
 </main>
-
 <script>
     // Read URL params
     const params = new URLSearchParams(window.location.search);
-    const sectionId   = params.get('sectionId');
+    const sectionId = params.get('sectionId');
     const sectionName = params.get('sectionName') || 'DSA';
     const user = JSON.parse(localStorage.getItem('currentUser'));
-  const userId = user ? user.id : 1;
+    const userId = user ? user.id : 1;
 
-    // Section icons map
+    const sectionIcons = {
+      'Arrays': '📦', 'Strings': '🔤', 'Linked Lists': '🔗',
+      'Trees': '🌳', 'Graphs': '🕸️', 'Dynamic Programming': '🧩',
+      'Recursion': '🔄', 'Sorting': '📊', 'Searching': '🔍',
+      'Stack & Queue': '📚', 'Queue': '🗂️', 'Hashing': '#️⃣',
+      'Greedy Algorithms': '💡', 'Backtracking': '↩️', 'Heap & Priority Queue': '🏔️',
+      'Bit Manipulation': '⚙️', 'Binary Search': '🔍', 'Sliding Window': '🪟',
+      'Two Pointers': '👉', 'String Problems': '🔤', 'Math & Number Theory': '🔢',
+      'Matrix & 2D Arrays': '📐', 'Divide & Conquer': '✂️', 'Trie': '🌲',
+      'Segment Tree': '🌿', 'Game Theory': '🎮', 'Intervals': '📏',
+      'Monotonic Stack': '📈', 'Design Problems': '🏗️'
+    };
 
-
-    // Set page title
     const icon = sectionIcons[sectionName] || '💻';
     document.getElementById('pageTitle').textContent = icon + ' ' + sectionName;
     document.getElementById('pageSubtitle').textContent = 'Practice ' + sectionName + ' problems';
@@ -343,11 +351,10 @@
     let allProblems = [];
     let currentFilter = 'ALL';
 
-    // Load problems from API
     function loadProblems() {
       if (!sectionId) {
         document.getElementById('problemsList').innerHTML =
-          '<div class="empty-problems">⚠️ No section selected. <a href="topic-tracker.html">Go back</a></div>';
+          '<div class="empty-problems">⚠️ No section selected. <a href="PrepLakshyaTopicTracker.html">Go back</a></div>';
         return;
       }
 
@@ -365,9 +372,9 @@
     }
 
     function updateStats() {
-      const solved   = allProblems.filter(p => p.userStatus === 'SOLVED').length;
-      const revisit  = allProblems.filter(p => p.userStatus === 'REVISIT').length;
-      const pending  = allProblems.filter(p => !p.userStatus || p.userStatus === 'UNSOLVED').length;
+      const solved  = allProblems.filter(p => p.userStatus === 'SOLVED').length;
+      const revisit = allProblems.filter(p => p.userStatus === 'REVISIT').length;
+      const pending = allProblems.filter(p => !p.userStatus || p.userStatus === 'UNSOLVED').length;
       document.getElementById('totalProblems').textContent = allProblems.length;
       document.getElementById('solvedCount').textContent   = solved;
       document.getElementById('revisitCount').textContent  = revisit;
@@ -384,22 +391,20 @@
 
     function renderProblems() {
       let filtered = allProblems;
-
-      if (currentFilter === 'EASY')     filtered = allProblems.filter(p => p.difficulty === 'EASY');
-      else if (currentFilter === 'MEDIUM') filtered = allProblems.filter(p => p.difficulty === 'MEDIUM');
-      else if (currentFilter === 'HARD')   filtered = allProblems.filter(p => p.difficulty === 'HARD');
-      else if (currentFilter === 'SOLVED') filtered = allProblems.filter(p => p.userStatus === 'SOLVED');
+      if (currentFilter === 'EASY')         filtered = allProblems.filter(p => p.difficulty === 'EASY');
+      else if (currentFilter === 'MEDIUM')  filtered = allProblems.filter(p => p.difficulty === 'MEDIUM');
+      else if (currentFilter === 'HARD')    filtered = allProblems.filter(p => p.difficulty === 'HARD');
+      else if (currentFilter === 'SOLVED')  filtered = allProblems.filter(p => p.userStatus === 'SOLVED');
       else if (currentFilter === 'UNSOLVED') filtered = allProblems.filter(p => !p.userStatus || p.userStatus === 'UNSOLVED');
 
       const container = document.getElementById('problemsList');
-
       if (filtered.length === 0) {
         container.innerHTML = '<div class="empty-problems">📭 No problems found for this filter.</div>';
         return;
       }
 
       container.innerHTML = filtered.map((problem, index) => {
-        const status    = problem.userStatus || 'UNSOLVED';
+        const status = problem.userStatus || 'UNSOLVED';
         const diffClass = problem.difficulty === 'EASY' ? 'diff-easy' : problem.difficulty === 'MEDIUM' ? 'diff-medium' : 'diff-hard';
         const statusClass = status === 'SOLVED' ? 'solved' : status === 'REVISIT' ? 'revisit' : '';
         const checkIcon = status === 'SOLVED' ? '✓' : status === 'REVISIT' ? '↩' : '';
@@ -413,8 +418,7 @@
               <span style="color:var(--text-light);font-size:12px;margin-right:8px;">#${index + 1}</span>
               ${problem.link
                 ? `<a href="${problem.link}" target="_blank">${problem.title} ↗</a>`
-                : problem.title
-              }
+                : problem.title}
             </div>
             <span class="difficulty-badge ${diffClass}">${problem.difficulty}</span>
             <select class="status-dropdown ${statusClass.toLowerCase()}"
@@ -428,8 +432,8 @@
       }).join('');
     }
 
-    // Cycle status by clicking checkbox
     function cycleStatus(problemId) {
+
       const problem = allProblems.find(p => p.id === problemId);
       if (!problem) return;
       const current = problem.userStatus || 'UNSOLVED';
@@ -437,25 +441,36 @@
       updateStatus(problemId, next, null);
     }
 
-    // Update status via API
     function updateStatus(problemId, newStatus, selectEl) {
-      fetch('/api/dsa/progress/update?userId=${userId}&problemId=${problemId}&status=${newStatus}`, {
+      fetch(`/api/dsa/progress/update?userId=${userId}&problemId=${problemId}&status=${newStatus}`, {
         method: 'PUT'
       })
       .then(res => res.json())
       .then(() => {
-        // Update local data
+        if (newStatus === 'SOLVED') {
+  const today = new Date().toISOString().split('T')[0];
+  const dayOfWeek = new Date().getDay();
+  let streak = JSON.parse(localStorage.getItem('studyStreak')) || { count: 0, lastDate: null, days: [] };
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = yesterday.toISOString().split('T')[0];
+  if (streak.lastDate !== today) {
+    if (streak.lastDate === yesterdayStr) { streak.count += 1; }
+    else { streak.count = 1; streak.days = []; }
+    if (!streak.days) streak.days = [];
+    if (!streak.days.includes(dayOfWeek)) streak.days.push(dayOfWeek);
+    streak.lastDate = today;
+    localStorage.setItem('studyStreak', JSON.stringify(streak));
+  }
+}
         const problem = allProblems.find(p => p.id === problemId);
         if (problem) problem.userStatus = newStatus;
         updateStats();
         renderProblems();
       })
-      .catch(() => {
-        alert('Could not update status. Check if Spring Boot is running.');
-      });
+      .catch(() => alert('Failed to update status.'));
     }
 
-    // Init
     loadProblems();
 </script>
 </body>

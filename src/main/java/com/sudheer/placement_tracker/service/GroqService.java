@@ -2,10 +2,10 @@ package com.sudheer.placement_tracker.service;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import org.springframework.http.*;
+import org.springframework.web.client.RestTemplate;
+import java.util.Map;
+import java.util.List;
 
 @Service
 public class GroqService {
@@ -13,36 +13,33 @@ public class GroqService {
     @Value("${groq.api.key}")
     private String apiKey;
 
+    private final RestTemplate restTemplate = new RestTemplate();
+    private static final String GROQ_URL = "https://api.groq.com/openai/v1/chat/completions";
+
     public String generateRoadmap(String targetCompany, String skills) {
-        try {
-            String prompt = "Create a detailed placement preparation roadmap for a student targeting "
-                    + targetCompany + " company. Their current skills are: " + skills
-                    + ". Give a week by week study plan covering DSA, aptitude, and technical topics.";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(apiKey);
 
-            // Escape quotes and newlines for JSON safety
-            String safePrompt = prompt.replace("\\", "\\\\").replace("\"", "\\\"");
+        String prompt = "Generate a detailed study roadmap for placement at "
+                + targetCompany + ". My current skills are: " + skills
+                + ". Include topics, resources and timeline.";
 
-            String requestBody = "{"
-                    + "\"model\": \"llama-3.3-70b-versatile\","
-                    + "\"messages\": [{\"role\": \"user\", \"content\": \"" + safePrompt + "\"}],"
-                    + "\"temperature\": 0.7"
-                    + "}";
+        Map<String, Object> body = Map.of(
+                "model", "llama-3.3-70b-versatile",
+                "messages", List.of(
+                        Map.of("role", "user", "content", prompt)
+                )
+        );
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://api.groq.com/openai/v1/chat/completions"))
-                    .header("Content-Type", "application/json")
-                    .header("Authorization", "Bearer " + apiKey)
-                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
-                    .build();
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(body, headers);
 
-            HttpResponse<String> response = client.send(request,
-                    HttpResponse.BodyHandlers.ofString());
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                GROQ_URL, request, Map.class
+        );
 
-            return response.body();
-
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
-        }
+        List<Map> choices = (List<Map>) response.getBody().get("choices");
+        Map message = (Map) choices.get(0).get("message");
+        return message.get("content").toString();
     }
 }
