@@ -25,363 +25,100 @@
           --sidebar-w: 240px;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-          font-family: 'Inter', sans-serif;
-          background: var(--bg);
-          color: var(--text-dark);
-          min-height: 100vh;
-          display: flex;
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; }
+        .sidebar { width: var(--sidebar-w); background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%); min-height: 100vh; display: flex; flex-direction: column; padding: 28px 16px; position: fixed; left: 0; top: 0; bottom: 0; z-index: 20; box-shadow: 4px 0 24px rgba(26,86,219,0.18); }
+        .sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; padding: 0 8px; }
+        .sidebar-logo-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .sidebar-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 17px; color: white; }
+        .sidebar-logo-sub { font-size: 9px; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; }
+        .nav-section { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 1.5px; text-transform: uppercase; padding: 0 12px; margin-bottom: 8px; margin-top: 16px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; margin-bottom: 4px; text-decoration: none; }
+        .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
+        .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
+        .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
+        .sidebar-bottom { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); }
+        .user-avatar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.1); }
+        .avatar-circle { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 14px; }
+        .user-name { font-size: 13px; font-weight: 600; color: white; }
+        .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
+        .main { margin-left: var(--sidebar-w); flex: 1; padding: 28px 32px; overflow-x: hidden; }
+        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+        .mini-logo { display: flex; align-items: center; gap: 8px; background: var(--card-bg); border: 1.5px solid rgba(26,86,219,0.12); border-radius: 12px; padding: 7px 12px; box-shadow: var(--shadow); text-decoration: none; }
+        .mini-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+        .mini-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 14px; color: var(--primary-dark); }
+        .topbar-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); }
+        .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+        .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); border: 1.5px solid rgba(26,86,219,0.07); transition: all 0.25s; }
+        .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .card-title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 16px; color: var(--text-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .circle-wrap { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 0; }
+        .progress-circle { position: relative; width: 140px; height: 140px; }
+        .progress-circle svg { transform: rotate(-90deg); width: 140px; height: 140px; }
+        .progress-circle .bg-circle { fill: none; stroke: #e8f0fe; stroke-width: 10; }
+        .progress-circle .fg-circle { fill: none; stroke: url(#circleGrad); stroke-width: 10; stroke-linecap: round; stroke-dasharray: 377; stroke-dashoffset: 377; transition: stroke-dashoffset 1s ease; }
+        .circle-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .circle-pct { font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .circle-lbl { font-size: 11px; color: var(--text-light); font-weight: 500; }
+        .circle-stats { display: flex; gap: 20px; margin-top: 16px; }
+        .cs-item { text-align: center; }
+        .cs-val { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-dark); }
+        .cs-lbl { font-size: 11px; color: var(--text-light); }
+        .streak-val { font-family: 'Sora', sans-serif; font-size: 48px; font-weight: 800; background: linear-gradient(135deg, #f97316, #ef4444); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; }
+        .streak-lbl { font-size: 14px; color: var(--text-light); margin-top: 6px; }
+        .streak-days { display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap; }
+        .day-dot { width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+        .day-dot.done { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; }
+        .day-dot.today { background: linear-gradient(135deg, #f97316, #ef4444); color: white; }
+        .day-dot.pending { background: #f1f5f9; color: var(--text-light); }
+        .area-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #f1f5f9; }
+        .area-item:last-child { border-bottom: none; }
+        .area-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+        .ai-green { background: #d1fae5; }
+        .ai-red { background: #fee2e2; }
+        .ai-orange { background: #ffedd5; }
+        .area-name { font-size: 14px; font-weight: 600; color: var(--text-dark); flex: 1; }
+        .area-pct { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 8px; }
+        .pct-green { background: #d1fae5; color: #065f46; }
+        .pct-red { background: #fee2e2; color: #991b1b; }
+        .pct-orange { background: #ffedd5; color: #92400e; }
+        .topic-checklist { margin-bottom: 24px; }
+        .checklist-tabs { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .tab-btn { padding: 8px 18px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+        .tab-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; box-shadow: 0 4px 12px rgba(26,86,219,0.25); }
+        .tab-btn:not(.active) { background: var(--white); color: var(--text-light); border: 1.5px solid rgba(26,86,219,0.12); }
+        .tab-btn:not(.active):hover { border-color: var(--primary); color: var(--primary); }
+        .topics-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+        .topic-item { background: var(--card-bg); border-radius: 14px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow); border: 1.5px solid rgba(26,86,219,0.07); cursor: pointer; transition: all 0.2s; }
+        .topic-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+        .topic-item.completed { border-color: #bbf7d0; background: #f0fdf4; }
+        .topic-item.weak { border-color: #fecaca; background: #fff5f5; }
+        .topic-check { width: 24px; height: 24px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; border: 2px solid #e2e8f0; }
+        .topic-item.completed .topic-check { background: var(--green); border-color: var(--green); color: white; }
+        .topic-item.weak .topic-check { background: #fee2e2; border-color: #fca5a5; color: #ef4444; }
+        .topic-info { flex: 1; }
+        .topic-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
+        .topic-sub { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .dsa-sections-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-top: 8px; }
+        .dsa-section-card { background: var(--card-bg); border-radius: 16px; padding: 20px 18px; border: 1.5px solid rgba(26,86,219,0.10); box-shadow: var(--shadow); cursor: pointer; transition: all 0.22s; text-decoration: none; display: flex; flex-direction: column; gap: 10px; }
+        .dsa-section-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--primary-light); }
+        .dsa-section-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 2px; }
+        .dsa-section-name { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: var(--text-dark); }
+        .dsa-section-meta { font-size: 12px; color: var(--text-light); }
+        .dsa-section-bar { height: 5px; border-radius: 100px; background: #e8f0fe; overflow: hidden; }
+        .dsa-section-bar-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--primary), var(--accent)); }
+        .dsa-section-pct { font-size: 12px; font-weight: 700; color: var(--primary); }
+        .dsa-loading { text-align: center; padding: 32px; color: var(--text-light); font-size: 14px; }
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 16px; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .grid-2 { grid-template-columns: 1fr; }
         }
-        .sidebar {
-    width: var(--sidebar-w);
-    background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    padding: 28px 16px;
-    position: fixed;
-    left: 0; top: 0; bottom: 0;
-    z-index: 20;
-    box-shadow: 4px 0 24px rgba(26,86,219,0.18);
-  }
-  .sidebar-logo {
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 36px;
-    padding: 0 8px;
-  }
-  .sidebar-logo-icon {
-    width: 38px; height: 38px;
-    background: rgba(255,255,255,0.15);
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px;
-  }
-  .sidebar-logo-text {
-    font-family: 'Sora', sans-serif;
-    font-weight: 800; font-size: 17px; color: white;
-  }
-  .sidebar-logo-sub {
-    font-size: 9px; color: rgba(255,255,255,0.6);
-    letter-spacing: 1px; text-transform: uppercase;
-  }
-  .nav-section {
-    font-size: 10px; font-weight: 600;
-    color: rgba(255,255,255,0.45);
-    letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 0 12px; margin-bottom: 8px; margin-top: 16px;
-  }
-  .nav-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 11px 14px; border-radius: 12px;
-    color: rgba(255,255,255,0.75);
-    font-size: 14px; font-weight: 500;
-    cursor: pointer; transition: all 0.2s;
-    margin-bottom: 4px; text-decoration: none;
-  }
-  .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
-  .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
-  .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
-  .sidebar-bottom {
-    margin-top: auto; padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.12);
-  }
-  .user-avatar {
-    display: flex; align-items: center; gap: 10px;
-    padding: 10px 12px; border-radius: 12px;
-    background: rgba(255,255,255,0.1);
-  }
-  .avatar-circle {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4, #3b82f6);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; color: white; font-size: 14px;
-  }
-  .user-name { font-size: 13px; font-weight: 600; color: white; }
-  .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
-        .main {
-    margin-left: var(--sidebar-w);
-    flex: 1; padding: 28px 32px;
-    overflow-x: hidden;
-  }
-  .topbar {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 28px;
-  }
-  .topbar-left { display: flex; align-items: center; gap: 14px; }
-  .mini-logo {
-    display: flex; align-items: center; gap: 8px;
-    background: var(--card-bg);
-    border: 1.5px solid rgba(26,86,219,0.12);
-    border-radius: 12px;
-    padding: 7px 12px;
-    box-shadow: var(--shadow);
-    text-decoration: none;
-  }
-  .mini-logo-icon {
-    width: 28px; height: 28px;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 15px;
-  }
-  .mini-logo-text {
-    font-family: 'Sora', sans-serif;
-    font-weight: 800; font-size: 14px;
-    color: var(--primary-dark);
-  }
-  .topbar-title {
-    font-family: 'Sora', sans-serif;
-    font-size: 22px; font-weight: 800; color: var(--text-dark);
-  }
-  .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
-        .grid-3 {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-  .grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-bottom: 24px;
-  }
-  .card {
-    background: var(--card-bg);
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(26,86,219,0.07);
-    transition: all 0.25s;
-  }
-  .card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-  .card-title {
-    font-family: 'Sora', sans-serif;
-    font-weight: 700; font-size: 16px;
-    color: var(--text-dark); margin-bottom: 18px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .circle-wrap {
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    padding: 10px 0;
-  }
-  .progress-circle {
-    position: relative;
-    width: 140px; height: 140px;
-  }
-  .progress-circle svg {
-    transform: rotate(-90deg);
-    width: 140px; height: 140px;
-  }
-  .progress-circle .bg-circle {
-    fill: none; stroke: #e8f0fe; stroke-width: 10;
-  }
-  .progress-circle .fg-circle {
-    fill: none;
-    stroke: url(#circleGrad);
-    stroke-width: 10;
-    stroke-linecap: round;
-    stroke-dasharray: 377;
-    stroke-dashoffset: 113;
-    transition: stroke-dashoffset 1s ease;
-  }
-  .circle-text {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-  }
-  .circle-pct {
-    font-family: 'Sora', sans-serif;
-    font-size: 28px; font-weight: 800;
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .circle-lbl { font-size: 11px; color: var(--text-light); font-weight: 500; }
-  .circle-stats { display: flex; gap: 20px; margin-top: 16px; }
-  .cs-item { text-align: center; }
-  .cs-val { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-dark); }
-  .cs-lbl { font-size: 11px; color: var(--text-light); }
-  .streak-val {
-    font-family: 'Sora', sans-serif;
-    font-size: 48px; font-weight: 800;
-    background: linear-gradient(135deg, #f97316, #ef4444);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    line-height: 1;
-  }
-  .streak-lbl { font-size: 14px; color: var(--text-light); margin-top: 6px; }
-  .streak-days { display: flex; gap: 6px; margin-top: 16px; flex-wrap: wrap; }
-  .day-dot {
-    width: 32px; height: 32px;
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700;
-  }
-  .day-dot.done { background: linear-gradient(135deg, var(--primary), var(--accent)); color: white; }
-  .day-dot.today { background: linear-gradient(135deg, #f97316, #ef4444); color: white; }
-  .day-dot.pending { background: #f1f5f9; color: var(--text-light); }
-  .target-company {
-    display: flex; align-items: center; gap: 14px;
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-radius: 14px; padding: 16px;
-    margin-bottom: 14px;
-    border: 1.5px solid rgba(26,86,219,0.15);
-  }
-  .tc-logo {
-    width: 44px; height: 44px;
-    border-radius: 10px;
-    background: white;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    box-shadow: var(--shadow);
-    font-weight: 900; color: var(--primary);
-    flex-shrink: 0;
-  }
-  .tc-name { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px; color: var(--text-dark); }
-  .tc-days { font-size: 12px; color: var(--primary); font-weight: 600; margin-top: 3px; }
-  .area-item {
-    display: flex; align-items: center; gap: 12px;
-    padding: 10px 0;
-    border-bottom: 1px solid #f1f5f9;
-  }
-  .area-item:last-child { border-bottom: none; }
-  .area-icon {
-    width: 36px; height: 36px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; flex-shrink: 0;
-  }
-  .ai-green { background: #d1fae5; }
-  .ai-red { background: #fee2e2; }
-  .ai-orange { background: #ffedd5; }
-  .area-name { font-size: 14px; font-weight: 600; color: var(--text-dark); flex: 1; }
-  .area-pct { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 8px; }
-  .pct-green { background: #d1fae5; color: #065f46; }
-  .pct-red { background: #fee2e2; color: #991b1b; }
-  .pct-orange { background: #ffedd5; color: #92400e; }
-  .topic-checklist { margin-bottom: 24px; }
-  .checklist-tabs {
-    display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap;
-  }
-  .tab-btn {
-    padding: 8px 18px;
-    border-radius: 10px;
-    font-size: 13px; font-weight: 600;
-    cursor: pointer; border: none;
-    transition: all 0.2s;
-    font-family: 'Inter', sans-serif;
-  }
-  .tab-btn.active {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: white;
-    box-shadow: 0 4px 12px rgba(26,86,219,0.25);
-  }
-  .tab-btn:not(.active) {
-    background: var(--white);
-    color: var(--text-light);
-    border: 1.5px solid rgba(26,86,219,0.12);
-  }
-  .tab-btn:not(.active):hover { border-color: var(--primary); color: var(--primary); }
-  .topics-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 12px;
-  }
-  .topic-item {
-    background: var(--card-bg);
-    border-radius: 14px;
-    padding: 14px 16px;
-    display: flex; align-items: center; gap: 12px;
-    box-shadow: var(--shadow);
-    border: 1.5px solid rgba(26,86,219,0.07);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .topic-item:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
-  .topic-item.completed { border-color: #bbf7d0; background: #f0fdf4; }
-  .topic-item.weak { border-color: #fecaca; background: #fff5f5; }
-  .topic-check {
-    width: 24px; height: 24px;
-    border-radius: 7px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; flex-shrink: 0;
-    border: 2px solid #e2e8f0;
-  }
-  .topic-item.completed .topic-check { background: var(--green); border-color: var(--green); color: white; }
-  .topic-item.weak .topic-check { background: #fee2e2; border-color: #fca5a5; color: #ef4444; }
-  .topic-info { flex: 1; }
-  .topic-name { font-size: 13px; font-weight: 600; color: var(--text-dark); }
-  .topic-sub { font-size: 11px; color: var(--text-light); margin-top: 2px; }
-  .topic-pct-bar { width: 40px; height: 4px; background: #e2e8f0; border-radius: 100px; overflow: hidden; }
-  .topic-pct-fill { height: 100%; border-radius: 100px; }
-  .tab-content { display: none; }
-  .tab-content.active { display: block; }
-        .dsa-sections-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 16px;
-    margin-top: 8px;
-  }
-  .dsa-section-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 20px 18px;
-    border: 1.5px solid rgba(26,86,219,0.10);
-    box-shadow: var(--shadow);
-    cursor: pointer;
-    transition: all 0.22s;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .dsa-section-card:hover {
-    transform: translateY(-3px);
-    box-shadow: var(--shadow-lg);
-    border-color: var(--primary-light);
-  }
-  .dsa-section-icon {
-    width: 44px; height: 44px;
-    border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    margin-bottom: 2px;
-  }
-  .dsa-section-name {
-    font-family: 'Sora', sans-serif;
-    font-size: 14px; font-weight: 700;
-    color: var(--text-dark);
-  }
-  .dsa-section-meta {
-    font-size: 12px; color: var(--text-light);
-  }
-  .dsa-section-bar {
-    height: 5px; border-radius: 100px;
-    background: #e8f0fe; overflow: hidden;
-  }
-  .dsa-section-bar-fill {
-    height: 100%; border-radius: 100px;
-    background: linear-gradient(90deg, var(--primary), var(--accent));
-  }
-  .dsa-section-pct {
-    font-size: 12px; font-weight: 700;
-    color: var(--primary);
-  }
-  .dsa-loading {
-    text-align: center; padding: 32px;
-    color: var(--text-light); font-size: 14px;
-  }
-
-  @media (max-width: 900px) {
-    .sidebar { display: none; }
-    .main { margin-left: 0; padding: 16px; }
-    .grid-3 { grid-template-columns: 1fr; }
-    .grid-2 { grid-template-columns: 1fr; }
-  }
     </style>
 </head>
 <body>
@@ -404,7 +141,15 @@
     <a href="dsa-problems.html" class="nav-item"><span class="nav-icon">💻</span> DSA Problems</a>
     <a href="#" class="nav-item"><span class="nav-icon">🧠</span> Aptitude</a>
     <a href="#" class="nav-item"><span class="nav-icon">🎤</span> HR Questions</a>
-
+    <div class="sidebar-bottom">
+        <div class="user-avatar">
+            <div class="avatar-circle" id="sidebarAvatar">SK</div>
+            <div>
+                <div class="user-name" id="sidebarName">Sudheer Kumar</div>
+                <div class="user-role">B.Tech IT • Final Year</div>
+            </div>
+        </div>
+    </div>
 </aside>
 
 <main class="main">
@@ -421,9 +166,8 @@
             </div>
         </div>
     </div>
-
-    <!-- Top 3 cards -->
     <div class="grid-3">
+        <!-- Overall Progress -->
         <div class="card">
             <div class="card-title">📈 Overall Progress</div>
             <div class="circle-wrap">
@@ -451,28 +195,21 @@
             </div>
         </div>
 
+        <!-- Streak -->
         <div class="card">
             <div class="card-title">🔥 Study Streak</div>
             <div class="streak-val" id="streakCount">0</div>
             <div class="streak-lbl">days in a row — keep it up!</div>
             <div class="streak-days" id="streakDays"></div>
-                <div class="day-dot done">M</div>
-                <div class="day-dot done">T</div>
-                <div class="day-dot done">W</div>
-                <div class="day-dot done">T</div>
-                <div class="day-dot done">F</div>
-                <div class="day-dot today">S</div>
-                <div class="day-dot pending">S</div>
-            </div>
             <div style="margin-top:16px;background:#fff7ed;border-radius:10px;padding:10px 12px;border:1px solid #fed7aa;">
                 <div style="font-size:12px;font-weight:700;color:#c2410c;">⚡ Today's Goal</div>
-                <div style="font-size:13px;color:#92400e;margin-top:3px;">Complete Trees + Graphs topics</div>
+                <div style="font-size:13px;color:#92400e;margin-top:3px;">Solve at least 5 problems today!</div>
             </div>
         </div>
 
+        <!-- Target Companies -->
         <div class="card">
             <div class="card-title">🎯 Target Companies</div>
-
             <div id="companiesList"></div>
             <div style="text-align:center;margin-top:8px;">
                 <button onclick="openAddCompany()"
@@ -482,30 +219,22 @@
             </div>
         </div>
     </div>
-    <div id="strongAreasList">
+
+    <!-- Strong & Weak Areas -->
     <div class="grid-2">
         <div class="card">
             <div class="card-title">💪 Strong Areas</div>
-            <div class="area-item"><div class="area-icon ai-green">📐</div><div class="area-name">Arrays & Strings</div><span class="area-pct pct-green">92%</span></div>
-            <div class="area-item"><div class="area-icon ai-green">🔗</div><div class="area-name">Linked Lists</div><span class="area-pct pct-green">88%</span></div>
-            <div class="area-item"><div class="area-icon ai-green">🗄️</div><div class="area-name">SQL & Databases</div><span class="area-pct pct-green">85%</span></div>
-            <div class="area-item"><div class="area-icon ai-green">☕</div><div class="area-name">Core Java (OOP)</div><span class="area-pct pct-green">90%</span></div>
-            <div class="area-item"><div class="area-icon ai-green">🔍</div><div class="area-name">Searching & Sorting</div><span class="area-pct pct-green">82%</span></div>
+            <div id="strongAreasList">
+                <div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">No strong areas yet — keep solving! 💪</div>
+            </div>
         </div>
-        </div>
-
-        <div id="weakAreasList">
         <div class="card">
             <div class="card-title">⚠️ Weak Areas — Focus Here!</div>
-            <div class="area-item"><div class="area-icon ai-red">🌐</div><div class="area-name">Graphs (BFS/DFS)</div><span class="area-pct pct-red">35%</span></div>
-            <div class="area-item"><div class="area-icon ai-red">⚡</div><div class="area-name">Dynamic Programming</div><span class="area-pct pct-red">28%</span></div>
-            <div class="area-item"><div class="area-icon ai-orange">🌳</div><div class="area-name">Trees & BST</div><span class="area-pct pct-orange">55%</span></div>
-            <div class="area-item"><div class="area-icon ai-orange">🔢</div><div class="area-name">Bit Manipulation</div><span class="area-pct pct-orange">45%</span></div>
-            <div class="area-item"><div class="area-icon ai-red">🧮</div><div class="area-name">Aptitude & Reasoning</div><span class="area-pct pct-red">40%</span></div>
+            <div id="weakAreasList">
+                <div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">Loading areas...</div>
+            </div>
         </div>
     </div>
-    </div>
-
 
     <!-- Daily Study Planner -->
     <div class="card" style="margin-bottom:24px;">
@@ -541,7 +270,7 @@
             <button class="tab-btn" onclick="switchTab('hr', event)">🎤 HR</button>
         </div>
 
-        <!-- DSA Tab — Shows sections from API -->
+        <!-- DSA Tab -->
         <div class="tab-content active" id="tab-dsa">
             <div id="dsa-sections-container">
                 <div class="dsa-loading">⏳ Loading DSA sections...</div>
@@ -590,311 +319,8 @@
             </div>
         </div>
     </div>
-
 </main>
 
-<script>
-    // Section icons map
-    const sectionIcons = {
-      'Arrays': { icon: '📐', bg: '#eff6ff' },
-      'Linked Lists': { icon: '🔗', bg: '#f0fdf4' },
-      'Trees': { icon: '🌳', bg: '#fefce8' },
-      'Graphs': { icon: '🌐', bg: '#fff1f2' },
-      'Dynamic Programming': { icon: '⚡', bg: '#fdf4ff' },
-      'SQL': { icon: '🗄️', bg: '#f0fdfa' },
-      'Stack & Queue': { icon: '📚', bg: '#fff7ed' },
-      'Sorting': { icon: '🔢', bg: '#eff6ff' },
-    };
-
-    // Load DSA sections from API
-    function loadDSASections() {
-  const container = document.getElementById('dsa-sections-container');
-
-  fetch('/api/dsa/sections')
-    .then(res => res.json())
-    .then(sections => {
-      if (!sections || sections.length === 0) {
-        container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
-        return;
-      }
-      const grid = document.createElement('div');
-      grid.className = 'dsa-sections-grid';
-
-      sections.forEach(section => {
-        const meta = sectionIcons[section.name] || { icon: '💻', bg: '#eff6ff' };
-        const card = document.createElement('a');
-        card.className = 'dsa-section-card';
-        card.href = `dsa-problems.html?sectionId=${section.id}&sectionName=${encodeURIComponent(section.name)}`;
-        card.innerHTML = `
-          <div class="dsa-section-icon" style="background:${meta.bg};">${meta.icon}</div>
-          <div class="dsa-section-name">${section.name}</div>
-          <div class="dsa-section-meta">Click to view problems →</div>
-          <div class="dsa-section-bar">
-            <div class="dsa-section-bar-fill" style="width:0%;"></div>
-          </div>
-          <div class="dsa-section-pct">0% complete</div>
-        `;
-        grid.appendChild(card);
-      });
-      container.innerHTML = '';
-      container.appendChild(grid);
-    })
-    .catch((err) => {
-      container.innerHTML = `<div class="dsa-loading">⚠️ Could not load sections.</div>`;
-    });
-}
-
-  // Tab switcher
-  function switchTab(tab, event) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + tab).classList.add('active');
-    event.target.classList.add('active');
-  }
-
-  // ── Daily Study Planner ──
-  function getPlannerKey() {
-    const user = JSON.parse(localStorage.getItem('currentUser'));
-    const today = new Date().toISOString().split('T')[0];
-    return user ? 'tasks_' + user.email + '_' + today : 'tasks_guest_' + today;
-  }
-  function loadTasks() { return JSON.parse(localStorage.getItem(getPlannerKey())) || []; }
-  function saveTasks(tasks) { localStorage.setItem(getPlannerKey(), JSON.stringify(tasks)); }
-  function renderTasks() {
-    const tasks = loadTasks();
-    const list  = document.getElementById('tasksList');
-    const empty = document.getElementById('emptyState');
-    const done    = tasks.filter(t => t.done).length;
-    const pending = tasks.filter(t => !t.done).length;
-    document.getElementById('doneCount').textContent    = done;
-    document.getElementById('pendingCount').textContent = pending;
-    document.getElementById('totalCount').textContent   = tasks.length;
-    if (tasks.length === 0) { empty.style.display = 'block'; list.innerHTML = ''; return; }
-    empty.style.display = 'none';
-    list.innerHTML = tasks.map((t, i) => `
-      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:${t.done?'#f0fdf4':'#f8faff'};border:1.5px solid ${t.done?'#bbf7d0':'#e2e8f0'};transition:all 0.2s;">
-        <div onclick="toggleTask(${i})" style="width:24px;height:24px;border-radius:7px;background:${t.done?'#22c55e':'white'};border:2px solid ${t.done?'#22c55e':'#e2e8f0'};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px;color:white;">${t.done?'✓':''}</div>
-        <div style="flex:1;font-size:14px;font-weight:500;color:${t.done?'#86efac':'#0f172a'};text-decoration:${t.done?'line-through':'none'};">${t.text}</div>
-        <div onclick="deleteTask(${i})" style="cursor:pointer;font-size:16px;color:#94a3b8;padding:4px 8px;border-radius:8px;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'">🗑️</div>
-      </div>
-    `).join('');
-  }
-  function addTask() {
-    const input = document.getElementById('taskInput');
-    const text  = input.value.trim();
-    if (!text) { input.focus(); return; }
-    const tasks = loadTasks();
-    tasks.push({ text, done: false });
-    saveTasks(tasks);
-    input.value = '';
-    renderTasks();
-  }
-  function toggleTask(index) {
-    const tasks = loadTasks(); tasks[index].done = !tasks[index].done;
-    saveTasks(tasks); renderTasks();
-  }
-  function deleteTask(index) {
-    const tasks = loadTasks(); tasks.splice(index, 1);
-    saveTasks(tasks); renderTasks();
-  }
-
-  // Init
-  const today = new Date();
-  const dateEl = document.getElementById('plannerDate');
-  if (dateEl) dateEl.textContent = today.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long' });
-  renderTasks();
-
-  // Section icon/category mapping for display
-const areaIcons = {
-  'Arrays': { icon: '📐', class: 'ai-green' },
-  'Linked Lists': { icon: '🔗', class: 'ai-green' },
-  'Trees': { icon: '🌳', class: 'ai-orange' },
-  'Graphs': { icon: '🌐', class: 'ai-red' },
-  'Dynamic Programming': { icon: '⚡', class: 'ai-red' },
-  'SQL': { icon: '🗄️', class: 'ai-green' }
-};
-
-function loadOverallProgress() {
-  const user = JSON.parse(localStorage.getItem('currentUser'));
-  const userId = user ? user.id : 1;
-
-  fetch(`/api/dsa/progress/overall/${userId}`)
-    .then(res => res.json())
-    .then(data => {
-
-      const pct = data.overallPercentage;
-
-
-      document.getElementById('overallPct').textContent = pct + '%';
-
-      const circle = document.getElementById('progressCircle');
-      const radius = 60;
-      const circumference = 2 * Math.PI * radius;
-      const offset = circumference - (pct / 100) * circumference;
-      circle.style.strokeDasharray = circumference;
-      circle.style.strokeDashoffset = offset;
-
-      const strong = [];
-      const weak = [];
-      let doneTotal = 0;
-
-      data.sections.forEach(sec => {
-        doneTotal += sec.solved;
-        if (sec.percentage >= 70) strong.push(sec);
-        else weak.push(sec);
-      });
-
-      strong.sort((a, b) => b.percentage - a.percentage);
-      weak.sort((a, b) => a.percentage - b.percentage);
-
-      document.getElementById('doneCount2').textContent = doneTotal;
-      document.getElementById('weakCount').textContent = weak.length;
-      document.getElementById('leftCount').textContent = data.totalPending;
-
-      const strongList = document.getElementById('strongAreasList');
-      if (strong.length === 0) {
-        strongList.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">No strong areas yet — keep solving! 💪</div>`;
-      } else {
-        strongList.innerHTML = strong.map(sec => {
-          const meta = areaIcons[sec.name] || { icon: '📘', class: 'ai-green' };
-          return `
-            <div class="area-item">
-              <div class="area-icon ${meta.class}">${meta.icon}</div>
-              <div class="area-name">${sec.name}</div>
-              <span class="area-pct pct-green">${sec.percentage}%</span>
-            </div>`;
-        }).join('');
-      }
-
-      const weakList = document.getElementById('weakAreasList');
-      if (weak.length === 0) {
-        weakList.innerHTML = `<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">Great! No weak areas right now 🎉</div>`;
-      } else {
-        weakList.innerHTML = weak.map(sec => {
-          const meta = areaIcons[sec.name] || { icon: '📘', class: 'ai-red' };
-          const pctClass = sec.percentage < 40 ? 'pct-red' : 'pct-orange';
-          return `
-            <div class="area-item">
-              <div class="area-icon ${meta.class}">${meta.icon}</div>
-              <div class="area-name">${sec.name}</div>
-              <span class="area-pct ${pctClass}">${sec.percentage}%</span>
-            </div>`;
-        }).join('');
-      }
-    })
-    .catch(() => {
-      console.log('Could not load overall progress');
-    });
-}
-
-  // ── Target Companies ──
-function loadCompanies() {
-  const companies = JSON.parse(localStorage.getItem('targetCompanies')) || ['TCS', 'Infosys'];
-  const list = document.getElementById('companiesList');
-  if (companies.length === 0) {
-    list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text-light);font-size:13px;">No companies added yet</div>';
-    return;
-  }
-  const colors = [
-    { bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)', border: 'rgba(26,86,219,0.15)', color: '#1d4ed8' },
-    { bg: 'linear-gradient(135deg,#f0fdf4,#dcfce7)', border: 'rgba(34,197,94,0.2)', color: '#15803d' },
-    { bg: 'linear-gradient(135deg,#fdf4ff,#f3e8ff)', border: 'rgba(168,85,247,0.2)', color: '#7e22ce' },
-    { bg: 'linear-gradient(135deg,#fff7ed,#ffedd5)', border: 'rgba(249,115,22,0.2)', color: '#c2410c' },
-    { bg: 'linear-gradient(135deg,#fef2f2,#fee2e2)', border: 'rgba(239,68,68,0.2)', color: '#991b1b' },
-  ];
-  list.innerHTML = companies.map((company, i) => {
-    const c = colors[i % colors.length];
-    return `
-      <div style="display:flex;align-items:center;gap:14px;background:${c.bg};border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1.5px solid ${c.border};">
-        <div style="width:44px;height:44px;border-radius:10px;background:white;display:flex;align-items:center;justify-content:center;font-weight:900;color:${c.color};font-size:11px;box-shadow:0 2px 8px rgba(0,0,0,0.08);text-align:center;flex-shrink:0;">
-          ${company.substring(0, 4).toUpperCase()}
-        </div>
-        <div style="flex:1;">
-          <div style="font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#0f172a;">${company}</div>
-        </div>
-        <div onclick="removeCompany('${company}')" style="cursor:pointer;font-size:16px;color:#94a3b8;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'">🗑️</div>
-      </div>
-    `;
-  }).join('');
-}
-
-function openAddCompany() {
-  const modal = document.getElementById('companyModal');
-  modal.style.display = 'flex';
-  document.getElementById('companyInput').focus();
-}
-
-function closeAddCompany() {
-  document.getElementById('companyModal').style.display = 'none';
-  document.getElementById('companyInput').value = '';
-}
-
-function saveCompany() {
-  const input = document.getElementById('companyInput').value.trim();
-  if (!input) return;
-  const companies = JSON.parse(localStorage.getItem('targetCompanies')) || ['TCS', 'Infosys'];
-  if (!companies.includes(input)) {
-    companies.push(input);
-    localStorage.setItem('targetCompanies', JSON.stringify(companies));
-  }
-  closeAddCompany();
-  loadCompanies();
-}
-
-function removeCompany(name) {
-  let companies = JSON.parse(localStorage.getItem('targetCompanies')) || [];
-  companies = companies.filter(c => c !== name);
-  localStorage.setItem('targetCompanies', JSON.stringify(companies));
-  loadCompanies();
-}
-
-// ── Streak Counter ──
-function loadStreak() {
-  const streak = JSON.parse(localStorage.getItem('studyStreak')) || { count: 0, lastDate: null, days: [] };
-  document.getElementById('streakCount').textContent = streak.count;
-
-  const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-  const today = new Date().getDay();
-  const streakDays = document.getElementById('streakDays');
-  streakDays.innerHTML = dayNames.map((day, i) => {
-    const isToday = i === today;
-    const isDone = streak.days && streak.days.includes(i);
-    const cls = isToday ? 'today' : isDone ? 'done' : 'pending';
-    return `<div class="day-dot ${cls}">${day}</div>`;
-  }).join('');
-}
-
-function updateStreak() {
-  const today = new Date().toISOString().split('T')[0];
-  const dayOfWeek = new Date().getDay();
-  let streak = JSON.parse(localStorage.getItem('studyStreak')) || { count: 0, lastDate: null, days: [] };
-
-  if (streak.lastDate === today) return; // already updated today
-
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().split('T')[0];
-
-  if (streak.lastDate === yesterdayStr) {
-    streak.count += 1; // consecutive day
-  } else if (streak.lastDate !== today) {
-    streak.count = 1; // streak broken, restart
-    streak.days = [];
-  }
-
-  if (!streak.days) streak.days = [];
-  if (!streak.days.includes(dayOfWeek)) streak.days.push(dayOfWeek);
-  streak.lastDate = today;
-
-  localStorage.setItem('studyStreak', JSON.stringify(streak));
-  loadStreak();
-}
-  loadDSASections();
-  loadCompanies();
-  loadStreak();
-  loadOverallProgress();
-
-</script>
 <!-- Add Company Modal -->
 <div id="companyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:100;align-items:center;justify-content:center;">
     <div style="background:white;border-radius:20px;padding:28px;width:320px;box-shadow:0 20px 60px rgba(0,0,0,0.2);">
@@ -913,5 +339,298 @@ function updateStreak() {
         </div>
     </div>
 </div>
+
+<script>
+    // ── Load user info ──
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        const initials = currentUser.name ? currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase() : 'U';
+        document.getElementById('sidebarAvatar').textContent = initials;
+        document.getElementById('sidebarName').textContent = currentUser.name || currentUser.email;
+    }
+
+    // ── Section icons map (all 26 sections) ──
+    const sectionIcons = {
+        'Arrays': { icon: '📐', bg: '#eff6ff' },
+        'Linked Lists': { icon: '🔗', bg: '#f0fdf4' },
+        'Trees': { icon: '🌳', bg: '#fefce8' },
+        'Graphs': { icon: '🌐', bg: '#fff1f2' },
+        'Dynamic Programming': { icon: '⚡', bg: '#fdf4ff' },
+        'SQL': { icon: '🗄️', bg: '#f0fdfa' },
+        'Stack & Queue': { icon: '📚', bg: '#fff7ed' },
+        'Binary Search': { icon: '🔍', bg: '#eff6ff' },
+        'Backtracking': { icon: '↩️', bg: '#fdf4ff' },
+        'Greedy Algorithms': { icon: '💡', bg: '#fefce8' },
+        'Bit Manipulation': { icon: '⚙️', bg: '#f0fdf4' },
+        'Recursion': { icon: '🔄', bg: '#fff1f2' },
+        'Sliding Window': { icon: '🪟', bg: '#eff6ff' },
+        'Two Pointers': { icon: '👉', bg: '#f0fdfa' },
+        'Heap & Priority Queue': { icon: '🏔️', bg: '#fff7ed' },
+        'String Problems': { icon: '🔤', bg: '#fdf4ff' },
+        'Math & Number Theory': { icon: '🔢', bg: '#eff6ff' },
+        'Matrix & 2D Arrays': { icon: '📊', bg: '#f0fdf4' },
+        'Hashing': { icon: '#️⃣', bg: '#fefce8' },
+        'Divide & Conquer': { icon: '✂️', bg: '#fff1f2' },
+        'Trie': { icon: '🌲', bg: '#f0fdf4' },
+        'Segment Tree': { icon: '🌿', bg: '#fefce8' },
+        'Game Theory': { icon: '🎮', bg: '#fdf4ff' },
+        'Intervals': { icon: '📏', bg: '#eff6ff' },
+        'Monotonic Stack': { icon: '📈', bg: '#fff7ed' },
+        'Design Problems': { icon: '🏗️', bg: '#f0fdfa' },
+    };
+
+    // ── Area icons for strong/weak ──
+    const areaIcons = {
+        'Arrays': { icon: '📐', class: 'ai-green' },
+        'Linked Lists': { icon: '🔗', class: 'ai-green' },
+        'Trees': { icon: '🌳', class: 'ai-orange' },
+        'Graphs': { icon: '🌐', class: 'ai-red' },
+        'Dynamic Programming': { icon: '⚡', class: 'ai-red' },
+        'SQL': { icon: '🗄️', class: 'ai-green' },
+        'Stack & Queue': { icon: '📚', class: 'ai-orange' },
+        'Binary Search': { icon: '🔍', class: 'ai-green' },
+        'Backtracking': { icon: '↩️', class: 'ai-red' },
+        'Greedy Algorithms': { icon: '💡', class: 'ai-orange' },
+        'Bit Manipulation': { icon: '⚙️', class: 'ai-orange' },
+        'Recursion': { icon: '🔄', class: 'ai-green' },
+        'Sliding Window': { icon: '🪟', class: 'ai-green' },
+        'Two Pointers': { icon: '👉', class: 'ai-green' },
+        'Heap & Priority Queue': { icon: '🏔️', class: 'ai-red' },
+        'String Problems': { icon: '🔤', class: 'ai-orange' },
+        'Math & Number Theory': { icon: '🔢', class: 'ai-green' },
+        'Matrix & 2D Arrays': { icon: '📊', class: 'ai-orange' },
+        'Hashing': { icon: '#️⃣', class: 'ai-green' },
+        'Divide & Conquer': { icon: '✂️', class: 'ai-red' },
+        'Trie': { icon: '🌲', class: 'ai-red' },
+        'Segment Tree': { icon: '🌿', class: 'ai-red' },
+        'Game Theory': { icon: '🎮', class: 'ai-orange' },
+        'Intervals': { icon: '📏', class: 'ai-orange' },
+        'Monotonic Stack': { icon: '📈', class: 'ai-orange' },
+        'Design Problems': { icon: '🏗️', class: 'ai-red' },
+    };
+    function loadDSASections() {
+        const container = document.getElementById('dsa-sections-container');
+        fetch('/api/dsa/sections')
+            .then(res => res.json())
+            .then(sections => {
+                if (!sections || sections.length === 0) {
+                    container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
+                    return;
+                }
+                const grid = document.createElement('div');
+                grid.className = 'dsa-sections-grid';
+                sections.forEach(section => {
+                    const meta = sectionIcons[section.name] || { icon: '💻', bg: '#eff6ff' };
+                    const card = document.createElement('a');
+                    card.className = 'dsa-section-card';
+                    card.href = `dsa-problems.html?sectionId=${section.id}&sectionName=${encodeURIComponent(section.name)}`;
+                    card.innerHTML = `
+                        <div class="dsa-section-icon" style="background:${meta.bg};">${meta.icon}</div>
+                        <div class="dsa-section-name">${section.name}</div>
+                        <div class="dsa-section-meta">Click to view problems →</div>
+                        <div class="dsa-section-bar"><div class="dsa-section-bar-fill" style="width:0%;"></div></div>
+                        <div class="dsa-section-pct">0% complete</div>
+                    `;
+                    grid.appendChild(card);
+                });
+                container.innerHTML = '';
+                container.appendChild(grid);
+            })
+            .catch(() => {
+                container.innerHTML = '<div class="dsa-loading">⚠️ Could not load sections.</div>';
+            });
+    }
+
+    // ── Overall Progress ──
+    function loadOverallProgress() {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        const userId = user ? user.id : 1;
+        fetch(`/api/dsa/progress/overall/${userId}`)
+            .then(res => res.json())
+            .then(data => {
+                const pct = data.overallPercentage || 0;
+                document.getElementById('overallPct').textContent = pct + '%';
+                const circle = document.getElementById('progressCircle');
+                const circumference = 2 * Math.PI * 60;
+                const offset = circumference - (pct / 100) * circumference;
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = offset;
+
+                const strong = [];
+                const weak = [];
+                let doneTotal = 0;
+                data.sections.forEach(sec => {
+                    doneTotal += sec.solved;
+                    if (sec.percentage >= 70) strong.push(sec);
+                    else weak.push(sec);
+                });
+                strong.sort((a, b) => b.percentage - a.percentage);
+                weak.sort((a, b) => a.percentage - b.percentage);
+
+                document.getElementById('doneCount2').textContent = doneTotal;
+                document.getElementById('weakCount').textContent = weak.length;
+                document.getElementById('leftCount').textContent = data.totalPending;
+
+                const strongList = document.getElementById('strongAreasList');
+                strongList.innerHTML = strong.length === 0
+                    ? '<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">No strong areas yet — keep solving! 💪</div>'
+                    : strong.map(sec => {
+                        const meta = areaIcons[sec.name] || { icon: '📘', class: 'ai-green' };
+                        return `<div class="area-item"><div class="area-icon ${meta.class}">${meta.icon}</div><div class="area-name">${sec.name}</div><span class="area-pct pct-green">${sec.percentage}%</span></div>`;
+                    }).join('');
+
+                const weakList = document.getElementById('weakAreasList');
+                weakList.innerHTML = weak.length === 0
+                    ? '<div style="padding:16px;text-align:center;color:var(--text-light);font-size:13px;">Great! No weak areas right now 🎉</div>'
+                    : weak.map(sec => {
+                        const meta = areaIcons[sec.name] || { icon: '📘', class: 'ai-red' };
+                        const pctClass = sec.percentage < 40 ? 'pct-red' : 'pct-orange';
+                        return `<div class="area-item"><div class="area-icon ${meta.class}">${meta.icon}</div><div class="area-name">${sec.name}</div><span class="area-pct ${pctClass}">${sec.percentage}%</span></div>`;
+                    }).join('');
+            })
+            .catch(() => console.log('Could not load overall progress'));
+    }
+
+    // ── Target Companies ──
+    function loadCompanies() {
+        const companies = JSON.parse(localStorage.getItem('targetCompanies')) || ['TCS', 'Infosys'];
+        const list = document.getElementById('companiesList');
+        if (companies.length === 0) {
+            list.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text-light);font-size:13px;">No companies added yet</div>';
+            return;
+        }
+        const colors = [
+            { bg: 'linear-gradient(135deg,#eff6ff,#dbeafe)', border: 'rgba(26,86,219,0.15)', color: '#1d4ed8' },
+            { bg: 'linear-gradient(135deg,#f0fdf4,#dcfce7)', border: 'rgba(34,197,94,0.2)', color: '#15803d' },
+            { bg: 'linear-gradient(135deg,#fdf4ff,#f3e8ff)', border: 'rgba(168,85,247,0.2)', color: '#7e22ce' },
+            { bg: 'linear-gradient(135deg,#fff7ed,#ffedd5)', border: 'rgba(249,115,22,0.2)', color: '#c2410c' },
+            { bg: 'linear-gradient(135deg,#fef2f2,#fee2e2)', border: 'rgba(239,68,68,0.2)', color: '#991b1b' },
+        ];
+        list.innerHTML = companies.map((company, i) => {
+            const c = colors[i % colors.length];
+            return `
+                <div style="display:flex;align-items:center;gap:14px;background:${c.bg};border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1.5px solid ${c.border};">
+                    <div style="width:44px;height:44px;border-radius:10px;background:white;display:flex;align-items:center;justify-content:center;font-weight:900;color:${c.color};font-size:11px;box-shadow:0 2px 8px rgba(0,0,0,0.08);text-align:center;flex-shrink:0;">
+                        ${company.substring(0, 4).toUpperCase()}
+                    </div>
+                    <div style="flex:1;font-family:'Sora',sans-serif;font-weight:700;font-size:15px;color:#0f172a;">${company}</div>
+                    <div onclick="removeCompany('${company}')" style="cursor:pointer;font-size:16px;color:#94a3b8;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'">🗑️</div>
+                </div>`;
+        }).join('');
+    }
+
+    function openAddCompany() {
+        document.getElementById('companyModal').style.display = 'flex';
+        document.getElementById('companyInput').focus();
+    }
+
+    function closeAddCompany() {
+        document.getElementById('companyModal').style.display = 'none';
+        document.getElementById('companyInput').value = '';
+    }
+
+    function saveCompany() {
+        const input = document.getElementById('companyInput').value.trim();
+        if (!input) return;
+        const companies = JSON.parse(localStorage.getItem('targetCompanies')) || ['TCS', 'Infosys'];
+        if (!companies.includes(input)) {
+            companies.push(input);
+            localStorage.setItem('targetCompanies', JSON.stringify(companies));
+        }
+        closeAddCompany();
+        loadCompanies();
+    }
+
+    function removeCompany(name) {
+        let companies = JSON.parse(localStorage.getItem('targetCompanies')) || [];
+        companies = companies.filter(c => c !== name);
+        localStorage.setItem('targetCompanies', JSON.stringify(companies));
+        loadCompanies();
+    }
+
+    // Close modal on Enter key
+    document.getElementById('companyInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') saveCompany();
+    });
+
+    // ── Streak Counter ──
+    function loadStreak() {
+        const streak = JSON.parse(localStorage.getItem('studyStreak')) || { count: 0, lastDate: null, days: [] };
+        document.getElementById('streakCount').textContent = streak.count;
+        const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        const todayDay = new Date().getDay();
+        document.getElementById('streakDays').innerHTML = dayNames.map((day, i) => {
+            const isToday = i === todayDay;
+            const isDone = streak.days && streak.days.includes(i);
+            const cls = isToday ? 'today' : isDone ? 'done' : 'pending';
+            return `<div class="day-dot ${cls}">${day}</div>`;
+        }).join('');
+    }
+
+    // ── Tab Switcher ──
+    function switchTab(tab, event) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-' + tab).classList.add('active');
+        event.target.classList.add('active');
+    }
+
+    // ── Daily Study Planner ──
+    function getPlannerKey() {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        const today = new Date().toISOString().split('T')[0];
+        return user ? 'tasks_' + user.email + '_' + today : 'tasks_guest_' + today;
+    }
+    function loadTasks() { return JSON.parse(localStorage.getItem(getPlannerKey())) || []; }
+    function saveTasks(tasks) { localStorage.setItem(getPlannerKey(), JSON.stringify(tasks)); }
+    function renderTasks() {
+        const tasks = loadTasks();
+        const list  = document.getElementById('tasksList');
+        const empty = document.getElementById('emptyState');
+        const done    = tasks.filter(t => t.done).length;
+        const pending = tasks.filter(t => !t.done).length;
+        document.getElementById('doneCount').textContent    = done;
+        document.getElementById('pendingCount').textContent = pending;
+        document.getElementById('totalCount').textContent   = tasks.length;
+        if (tasks.length === 0) { empty.style.display = 'block'; list.innerHTML = ''; return; }
+        empty.style.display = 'none';
+        list.innerHTML = tasks.map((t, i) => `
+            <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;margin-bottom:8px;background:${t.done?'#f0fdf4':'#f8faff'};border:1.5px solid ${t.done?'#bbf7d0':'#e2e8f0'};transition:all 0.2s;">
+                <div onclick="toggleTask(${i})" style="width:24px;height:24px;border-radius:7px;background:${t.done?'#22c55e':'white'};border:2px solid ${t.done?'#22c55e':'#e2e8f0'};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:13px;color:white;">${t.done?'✓':''}</div>
+                <div style="flex:1;font-size:14px;font-weight:500;color:${t.done?'#86efac':'#0f172a'};text-decoration:${t.done?'line-through':'none'};">${t.text}</div>
+                <div onclick="deleteTask(${i})" style="cursor:pointer;font-size:16px;color:#94a3b8;padding:4px 8px;border-radius:8px;" onmouseover="this.style.color='#ef4444'" onmouseout="this.style.color='#94a3b8'">🗑️</div>
+            </div>
+        `).join('');
+    }
+    function addTask() {
+        const input = document.getElementById('taskInput');
+        const text  = input.value.trim();
+        if (!text) { input.focus(); return; }
+        const tasks = loadTasks();
+        tasks.push({ text, done: false });
+        saveTasks(tasks);
+        input.value = '';
+        renderTasks();
+    }
+    function toggleTask(index) {
+        const tasks = loadTasks(); tasks[index].done = !tasks[index].done;
+        saveTasks(tasks); renderTasks();
+    }
+    function deleteTask(index) {
+        const tasks = loadTasks(); tasks.splice(index, 1);
+        saveTasks(tasks); renderTasks();
+    }
+
+    // ── Init ──
+    const todayDate = new Date();
+    const dateEl = document.getElementById('plannerDate');
+    if (dateEl) dateEl.textContent = todayDate.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long' });
+
+    renderTasks();
+    loadDSASections();
+    loadOverallProgress();
+    loadCompanies();
+    loadStreak();
+</script>
 </body>
 </html>
