@@ -15,11 +15,18 @@ public class ProblemController {
     @Autowired
     private ProblemService problemService;
 
-    // GET all DSA sections
+    // GET all DSA sections only
     @GetMapping("/sections")
     public ResponseEntity<List<Section>> getSections() {
         return ResponseEntity.ok(
                 problemService.getDSASections());
+    }
+
+    // GET ALL sections regardless of category (DSA + Aptitude + others)
+    @GetMapping("/sections/all")
+    public ResponseEntity<List<Section>> getAllSections() {
+        return ResponseEntity.ok(
+                problemService.getAllSections());
     }
 
     @GetMapping("/sections/{sectionId}/problems")
@@ -56,6 +63,7 @@ public class ProblemController {
                 .getSectionProgress(userId, sectionId);
         return ResponseEntity.ok(progress + "%");
     }
+
     @GetMapping("/progress/overall/{userId}")
     public ResponseEntity<?> getOverallProgress(@PathVariable Long userId) {
         return ResponseEntity.ok(problemService.getOverallProgress(userId));

@@ -122,8 +122,6 @@
     </style>
 </head>
 <body>
-
-<!-- Sidebar -->
 <aside class="sidebar">
     <div class="sidebar-logo">
         <div class="sidebar-logo-icon">🎯</div>
@@ -235,8 +233,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Daily Study Planner -->
     <div class="card" style="margin-bottom:24px;">
         <div class="card-title">📅 Daily Study Planner
             <span style="margin-left:auto;font-size:12px;color:var(--text-light);font-weight:500;" id="plannerDate"></span>
@@ -299,13 +295,10 @@
             </div>
         </div>
 
-        <!-- Aptitude -->
+        <!-- Aptitude Tab — Shows sections from API -->
         <div class="tab-content" id="tab-aptitude">
-            <div class="topics-grid">
-                <div class="topic-item completed"><div class="topic-check">✓</div><div class="topic-info"><div class="topic-name">Number System</div><div class="topic-sub">Completed</div></div></div>
-                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Time & Work</div><div class="topic-sub">Needs Attention</div></div></div>
-                <div class="topic-item weak"><div class="topic-check">!</div><div class="topic-info"><div class="topic-name">Logical Reasoning</div><div class="topic-sub">Needs Attention</div></div></div>
-                <div class="topic-item"><div class="topic-check"></div><div class="topic-info"><div class="topic-name">Data Interpretation</div><div class="topic-sub">In Progress</div></div></div>
+            <div id="aptitude-sections-container">
+                <div class="dsa-loading">⏳ Loading Aptitude sections...</div>
             </div>
         </div>
 
@@ -349,7 +342,7 @@
         document.getElementById('sidebarName').textContent = currentUser.name || currentUser.email;
     }
 
-    // ── Section icons map (all 26 sections) ──
+    // ── DSA Section icons map ──
     const sectionIcons = {
         'Arrays': { icon: '📐', bg: '#eff6ff' },
         'Linked Lists': { icon: '🔗', bg: '#f0fdf4' },
@@ -379,7 +372,19 @@
         'Design Problems': { icon: '🏗️', bg: '#f0fdfa' },
     };
 
-    // ── Area icons for strong/weak ──
+    // ── Aptitude Section icons map ──
+    const aptitudeIcons = {
+        'Number System': { icon: '🔢', bg: '#eff6ff' },
+        'Percentages': { icon: '💯', bg: '#f0fdf4' },
+        'Profit & Loss': { icon: '💰', bg: '#fefce8' },
+        'Time & Work': { icon: '⏱️', bg: '#fff7ed' },
+        'Time Speed Distance': { icon: '🚀', bg: '#fff1f2' },
+        'Simple & Compound Interest': { icon: '🏦', bg: '#f0fdfa' },
+        'Averages & Mixtures': { icon: '⚖️', bg: '#fdf4ff' },
+        'Ratio & Proportion': { icon: '📊', bg: '#eff6ff' },
+        'Logical Reasoning': { icon: '🧠', bg: '#fefce8' },
+        'Data Interpretation': { icon: '📈', bg: '#f0fdf4' },
+    };
     const areaIcons = {
         'Arrays': { icon: '📐', class: 'ai-green' },
         'Linked Lists': { icon: '🔗', class: 'ai-green' },
@@ -408,18 +413,21 @@
         'Monotonic Stack': { icon: '📈', class: 'ai-orange' },
         'Design Problems': { icon: '🏗️', class: 'ai-red' },
     };
+
+    // ── Load DSA Sections ──
     function loadDSASections() {
         const container = document.getElementById('dsa-sections-container');
         fetch('/api/dsa/sections')
             .then(res => res.json())
             .then(sections => {
-                if (!sections || sections.length === 0) {
+                const dsaSections = sections.filter(s => s.category === 'DSA');
+                if (!dsaSections || dsaSections.length === 0) {
                     container.innerHTML = '<div class="dsa-loading">No sections found.</div>';
                     return;
                 }
                 const grid = document.createElement('div');
                 grid.className = 'dsa-sections-grid';
-                sections.forEach(section => {
+                dsaSections.forEach(section => {
                     const meta = sectionIcons[section.name] || { icon: '💻', bg: '#eff6ff' };
                     const card = document.createElement('a');
                     card.className = 'dsa-section-card';
@@ -441,7 +449,44 @@
             });
     }
 
-    // ── Overall Progress ──
+    // ── Load Aptitude Sections ──
+    function loadAptitudeSections() {
+        const container = document.getElementById('aptitude-sections-container');
+        fetch('/api/dsa/sections/all')
+            .then(res => res.json())
+            .then(sections => {
+                const aptitudeSections = sections.filter(s =>
+                    s.category && s.category.toUpperCase() === 'APTITUDE'
+                );
+                if (!aptitudeSections || aptitudeSections.length === 0) {
+                    container.innerHTML = '<div class="dsa-loading">No aptitude sections found.</div>';
+                    return;
+                }
+                const grid = document.createElement('div');
+                grid.className = 'dsa-sections-grid';
+                aptitudeSections.forEach(section => {
+                    const meta = aptitudeIcons[section.name] || { icon: '📚', bg: '#eff6ff' };
+                    const card = document.createElement('a');
+                    card.className = 'dsa-section-card';
+                    card.href = `aptitude-problems.html?sectionId=${section.id}&sectionName=${encodeURIComponent(section.name)}`;
+                    card.innerHTML = `
+                        <div class="dsa-section-icon" style="background:${meta.bg};">${meta.icon}</div>
+                        <div class="dsa-section-name">${section.name}</div>
+                        <div class="dsa-section-meta">Click to view questions →</div>
+                        <div class="dsa-section-bar"><div class="dsa-section-bar-fill" style="width:0%;"></div></div>
+                        <div class="dsa-section-pct">0% complete</div>
+                    `;
+                    grid.appendChild(card);
+                });
+                container.innerHTML = '';
+                container.appendChild(grid);
+            })
+            .catch(() => {
+                container.innerHTML = '<div class="dsa-loading">⚠️ Could not load sections.</div>';
+            });
+    }
+
+    // ── Overall Progress (DSA only) ──
     function loadOverallProgress() {
         const user = JSON.parse(localStorage.getItem('currentUser'));
         const userId = user ? user.id : 1;
@@ -548,7 +593,6 @@
         loadCompanies();
     }
 
-    // Close modal on Enter key
     document.getElementById('companyInput').addEventListener('keydown', function(e) {
         if (e.key === 'Enter') saveCompany();
     });
@@ -620,14 +664,13 @@
         const tasks = loadTasks(); tasks.splice(index, 1);
         saveTasks(tasks); renderTasks();
     }
-
-    // ── Init ──
     const todayDate = new Date();
     const dateEl = document.getElementById('plannerDate');
     if (dateEl) dateEl.textContent = todayDate.toLocaleDateString('en-IN', { weekday:'long', day:'numeric', month:'long' });
 
     renderTasks();
     loadDSASections();
+    loadAptitudeSections();
     loadOverallProgress();
     loadCompanies();
     loadStreak();

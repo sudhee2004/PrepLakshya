@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PrepLakshya - DSA Problems</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a56db;
+      --primary-light: #3b82f6;
+      --primary-dark: #1e3a8a;
+      --accent: #06b6d4;
+      --bg: #f0f4ff;
+      --white: #ffffff;
+      --text-dark: #0f172a;
+      --text-mid: #334155;
+      --text-light: #64748b;
+      --card-bg: rgba(255,255,255,0.92);
+      --shadow: 0 4px 24px rgba(26,86,219,0.08);
+      --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
+      --green: #22c55e;
+      --orange: #f97316;
+      --red: #ef4444;
+      --sidebar-w: 240px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+    }
+    .sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%);
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      padding: 28px 16px;
+      position: fixed; left: 0; top: 0; bottom: 0;
+      z-index: 20;
+      box-shadow: 4px 0 24px rgba(26,86,219,0.18);
+    }
+    .sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; padding: 0 8px; }
+    .sidebar-logo-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+    .sidebar-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 17px; color: white; }
+    .sidebar-logo-sub { font-size: 9px; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; }
+    .nav-section { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 1.5px; text-transform: uppercase; padding: 0 12px; margin-bottom: 8px; margin-top: 16px; }
+    .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; margin-bottom: 4px; text-decoration: none; }
+    .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
+    .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
+    .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
+    .sidebar-bottom { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); }
+    .user-avatar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.1); }
+    .avatar-circle { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 14px; }
+    .user-name { font-size: 13px; font-weight: 600; color: white; }
+    .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
+
+    .main { margin-left: var(--sidebar-w); flex: 1; padding: 28px 32px; overflow-x: hidden; }
+
+    /* Topbar */
+    .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .topbar-left { display: flex; align-items: center; gap: 14px; }
+    .mini-logo { display: flex; align-items: center; gap: 8px; background: var(--card-bg); border: 1.5px solid rgba(26,86,219,0.12); border-radius: 12px; padding: 7px 12px; box-shadow: var(--shadow); text-decoration: none; }
+    .mini-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+    .mini-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 14px; color: var(--primary-dark); }
+    .topbar-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); }
+    .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+
+    /* Back button */
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 16px; border-radius: 12px;
+      background: var(--card-bg);
+      border: 1.5px solid rgba(26,86,219,0.12);
+      color: var(--primary); font-weight: 600; font-size: 14px;
+      cursor: pointer; text-decoration: none;
+      box-shadow: var(--shadow);
+      transition: all 0.2s;
+    }
+    .back-btn:hover { background: var(--primary); color: white; }
+
+    /* Stats row */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid rgba(26,86,219,0.07);
+      display: flex; align-items: center; gap: 14px;
+    }
+    .stat-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .stat-val { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); }
+    .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+
+    /* Filter row */
+    .filter-row {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 20px; flex-wrap: wrap;
+    }
+    .filter-btn {
+      padding: 7px 16px; border-radius: 10px;
+      font-size: 13px; font-weight: 600;
+      cursor: pointer; border: none;
+      transition: all 0.2s; font-family: 'Inter', sans-serif;
+    }
+    .filter-btn.active {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; box-shadow: 0 4px 12px rgba(26,86,219,0.25);
+    }
+    .filter-btn:not(.active) {
+      background: var(--white); color: var(--text-light);
+      border: 1.5px solid rgba(26,86,219,0.12);
+    }
+    .filter-btn:not(.active):hover { border-color: var(--primary); color: var(--primary); }
+    .filter-btn.easy { }
+    .filter-btn.medium { }
+    .filter-btn.hard { }
+
+    /* Problems list */
+    .problems-card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border: 1.5px solid rgba(26,86,219,0.07);
+      overflow: hidden;
+    }
+    .problems-card-header {
+      padding: 20px 24px;
+      border-bottom: 1.5px solid #f1f5f9;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .problems-card-title {
+      font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 16px; color: var(--text-dark);
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .problem-row {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f8faff;
+      transition: background 0.15s;
+    }
+    .problem-row:last-child { border-bottom: none; }
+    .problem-row:hover { background: #f8faff; }
+
+    .problem-status-btn {
+      width: 28px; height: 28px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; flex-shrink: 0;
+      border: 2px solid #e2e8f0;
+      cursor: pointer; transition: all 0.2s;
+      background: white;
+    }
+    .problem-status-btn.solved {
+      background: var(--green); border-color: var(--green); color: white;
+    }
+    .problem-status-btn.revisit {
+      background: #fff7ed; border-color: #fed7aa; color: var(--orange);
+    }
+
+    .problem-title {
+      flex: 1; font-size: 14px; font-weight: 600; color: var(--text-dark);
+    }
+    .problem-title a {
+      color: var(--text-dark); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .problem-title a:hover { color: var(--primary); }
+
+    .difficulty-badge {
+      padding: 4px 12px; border-radius: 8px;
+      font-size: 12px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .diff-easy { background: #d1fae5; color: #065f46; }
+    .diff-medium { background: #fff7ed; color: #92400e; }
+    .diff-hard { background: #fee2e2; color: #991b1b; }
+
+    .status-dropdown {
+      padding: 6px 12px; border-radius: 10px;
+      border: 1.5px solid #e2e8f0;
+      font-size: 12px; font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      background: white; color: var(--text-dark);
+      cursor: pointer; outline: none;
+      transition: border-color 0.2s;
+    }
+    .status-dropdown:focus { border-color: var(--primary); }
+    .status-dropdown.solved { background: #f0fdf4; border-color: #bbf7d0; color: #15803d; }
+    .status-dropdown.revisit { background: #fff7ed; border-color: #fed7aa; color: #c2410c; }
+
+    .empty-problems {
+      text-align: center; padding: 48px 24px;
+      color: var(--text-light); font-size: 14px;
+    }
+    .loading-problems {
+      text-align: center; padding: 48px 24px;
+      color: var(--text-light); font-size: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 16px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="sidebar-logo-icon">🎯</div>
+    <div>
+      <div class="sidebar-logo-text">PrepLakshya</div>
+      <div class="sidebar-logo-sub">Track. Practice. Achieve.</div>
+    </div>
+  </div>
+  <div class="nav-section">Main</div>
+  <a href="#" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+  <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Companies</a>
+  <a href="PrepLakshyaTopicTracker.html" class="nav-item active"><span class="nav-icon">📚</span> Topic Tracker</a>
+  <a href="#" class="nav-item"><span class="nav-icon">🤖</span> AI Roadmap</a>
+  <div class="nav-section">Practice</div>
+  <a href="#" class="nav-item"><span class="nav-icon">💻</span> DSA Problems</a>
+  <a href="#" class="nav-item"><span class="nav-icon">🧠</span> Aptitude</a>
+  <a href="#" class="nav-item"><span class="nav-icon">🎤</span> HR Questions</a>
+  <div class="sidebar-bottom">
+    <div class="user-avatar">
+      <div class="avatar-circle">SK</div>
+      <div>
+        <div class="user-name">Sudheer Kumar</div>
+        <div class="user-role">B.Tech IT • Final Year</div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <a href="PrepLakshyaTopicTracker.html" class="back-btn">← Back</a>
+      <a href="#" class="mini-logo">
+        <div class="mini-logo-icon">🎯</div>
+        <div class="mini-logo-text">PrepLakshya</div>
+      </a>
+      <div>
+        <div class="topbar-title" id="pageTitle">💻 DSA Problems</div>
+        <div class="topbar-sub" id="pageSubtitle">Loading problems...</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#eff6ff;">📋</div>
+      <div>
+        <div class="stat-val" id="totalProblems">0</div>
+        <div class="stat-lbl">Total Problems</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f0fdf4;">✅</div>
+      <div>
+        <div class="stat-val" id="solvedCount" style="color:var(--green);">0</div>
+        <div class="stat-lbl">Solved</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fff7ed;">🔁</div>
+      <div>
+        <div class="stat-val" id="revisitCount" style="color:var(--orange);">0</div>
+        <div class="stat-lbl">To Revisit</div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fdf4ff;">⏳</div>
+      <div>
+        <div class="stat-val" id="pendingCount" style="color:var(--text-light);">0</div>
+        <div class="stat-lbl">Pending</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filter Row -->
+  <div class="filter-row">
+    <span style="font-size:13px;font-weight:600;color:var(--text-light);">Filter:</span>
+    <button class="filter-btn active" onclick="filterProblems('ALL', event)">All</button>
+    <button class="filter-btn" onclick="filterProblems('EASY', event)">🟢 Easy</button>
+    <button class="filter-btn" onclick="filterProblems('MEDIUM', event)">🟡 Medium</button>
+    <button class="filter-btn" onclick="filterProblems('HARD', event)">🔴 Hard</button>
+    <button class="filter-btn" onclick="filterProblems('UNSOLVED', event)">⏳ Unsolved</button>
+    <button class="filter-btn" onclick="filterProblems('SOLVED', event)">✅ Solved</button>
+  </div>
+
+  <!-- Problems List -->
+  <div class="problems-card">
+    <div class="problems-card-header">
+      <div class="problems-card-title">
+        <span id="sectionIcon">💻</span>
+        <span id="sectionTitle">Problems</span>
+      </div>
+      <div style="font-size:13px;color:var(--text-light);" id="progressText">0 / 0 solved</div>
+    </div>
+    <div id="problemsList">
+      <div class="loading-problems">⏳ Loading problems...</div>
+    </div>
+  </div>
+</main>
+<script>
+  // Read URL params
+  const params = new URLSearchParams(window.location.search);
+  const sectionId = params.get('sectionId');
+  const sectionName = params.get('sectionName') || 'DSA';
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  const userId = user ? user.id : 1;
+
+  const sectionIcons = {
+    'Arrays': '📦', 'Strings': '🔤', 'Linked Lists': '🔗',
+    'Trees': '🌳', 'Graphs': '🕸️', 'Dynamic Programming': '🧩',
+    'Recursion': '🔄', 'Sorting': '📊', 'Searching': '🔍',
+    'Stack & Queue': '📚', 'Queue': '🗂️', 'Hashing': '#️⃣',
+    'Greedy Algorithms': '💡', 'Backtracking': '↩️', 'Heap & Priority Queue': '🏔️',
+    'Bit Manipulation': '⚙️', 'Binary Search': '🔍', 'Sliding Window': '🪟',
+    'Two Pointers': '👉', 'String Problems': '🔤', 'Math & Number Theory': '🔢',
+    'Matrix & 2D Arrays': '📐', 'Divide & Conquer': '✂️', 'Trie': '🌲',
+    'Segment Tree': '🌿', 'Game Theory': '🎮', 'Intervals': '📏',
+    'Monotonic Stack': '📈', 'Design Problems': '🏗️'
+  };
+
+  const icon = sectionIcons[sectionName] || '💻';
+  document.getElementById('pageTitle').textContent = icon + ' ' + sectionName;
+  document.getElementById('pageSubtitle').textContent = 'Practice ' + sectionName + ' questions';
+  document.getElementById('sectionIcon').textContent = icon;
+  document.getElementById('sectionTitle').textContent = sectionName + ' Problems';
+
+  let allProblems = [];
+  let currentFilter = 'ALL';
+
+  function loadProblems() {
+    if (!sectionId) {
+      document.getElementById('problemsList').innerHTML =
+        '<div class="empty-problems">⚠️ No section selected. <a href="PrepLakshyaTopicTracker.html">Go back</a></div>';
+      return;
+    }
+
+    fetch(`/api/dsa/sections/${sectionId}/problems?userId=${userId}`)
+      .then(res => res.json())
+      .then(problems => {
+        allProblems = problems;
+        updateStats();
+        renderProblems();
+      })
+      .catch(() => {
+        document.getElementById('problemsList').innerHTML =
+          '<div class="empty-problems">⚠️ Could not load problems. Make sure Spring Boot is running.</div>';
+      });
+  }
+
+  function updateStats() {
+    const solved  = allProblems.filter(p => p.userStatus === 'SOLVED').length;
+    const revisit = allProblems.filter(p => p.userStatus === 'REVISIT').length;
+    const pending = allProblems.filter(p => !p.userStatus || p.userStatus === 'UNSOLVED').length;
+    document.getElementById('totalProblems').textContent = allProblems.length;
+    document.getElementById('solvedCount').textContent   = solved;
+    document.getElementById('revisitCount').textContent  = revisit;
+    document.getElementById('pendingCount').textContent  = pending;
+    document.getElementById('progressText').textContent  = solved + ' / ' + allProblems.length + ' solved';
+  }
+
+  function filterProblems(filter, event) {
+    currentFilter = filter;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+    renderProblems();
+  }
+
+  function renderProblems() {
+    let filtered = allProblems;
+    if (currentFilter === 'EASY')         filtered = allProblems.filter(p => p.difficulty === 'EASY');
+    else if (currentFilter === 'MEDIUM')  filtered = allProblems.filter(p => p.difficulty === 'MEDIUM');
+    else if (currentFilter === 'HARD')    filtered = allProblems.filter(p => p.difficulty === 'HARD');
+    else if (currentFilter === 'SOLVED')  filtered = allProblems.filter(p => p.userStatus === 'SOLVED');
+    else if (currentFilter === 'UNSOLVED') filtered = allProblems.filter(p => !p.userStatus || p.userStatus === 'UNSOLVED');
+
+    const container = document.getElementById('problemsList');
+    if (filtered.length === 0) {
+      container.innerHTML = '<div class="empty-problems">📭 No problems found for this filter.</div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map((problem, index) => {
+      const status = problem.userStatus || 'UNSOLVED';
+      const diffClass = problem.difficulty === 'EASY' ? 'diff-easy' : problem.difficulty === 'MEDIUM' ? 'diff-medium' : 'diff-hard';
+      const statusClass = status === 'SOLVED' ? 'solved' : status === 'REVISIT' ? 'revisit' : '';
+      const checkIcon = status === 'SOLVED' ? '✓' : status === 'REVISIT' ? '↩' : '';
+
+      return `
+        <div class="problem-row" id="row-${problem.id}">
+          <div class="problem-status-btn ${statusClass}" onclick="cycleStatus(${problem.id})">
+            ${checkIcon}
+          </div>
+          <div class="problem-title">
+            <span style="color:var(--text-light);font-size:12px;margin-right:8px;">#${index + 1}</span>
+            ${problem.link
+              ? `<a href="${problem.link}" target="_blank">${problem.title} ↗</a>`
+              : problem.title}
+          </div>
+          <span class="difficulty-badge ${diffClass}">${problem.difficulty}</span>
+          <select class="status-dropdown ${statusClass.toLowerCase()}"
+                  onchange="updateStatus(${problem.id}, this.value, this)">
+            <option value="UNSOLVED" ${status==='UNSOLVED'?'selected':''}>⏳ Unsolved</option>
+            <option value="SOLVED"   ${status==='SOLVED'?'selected':''}>✅ Solved</option>
+            <option value="REVISIT"  ${status==='REVISIT'?'selected':''}>🔁 Revisit</option>
+          </select>
+        </div>
+      `;
+    }).join('');
+  }
+
+  function cycleStatus(problemId) {
+
+    const problem = allProblems.find(p => p.id === problemId);
+    if (!problem) return;
+    const current = problem.userStatus || 'UNSOLVED';
+    const next = current === 'UNSOLVED' ? 'SOLVED' : current === 'SOLVED' ? 'REVISIT' : 'UNSOLVED';
+    updateStatus(problemId, next, null);
+  }
+
+  function updateStatus(problemId, newStatus, selectEl) {
+    fetch(`/api/dsa/progress/update?userId=${userId}&problemId=${problemId}&status=${newStatus}`, {
+      method: 'PUT'
+    })
+    .then(res => res.json())
+    .then(() => {
+      if (newStatus === 'SOLVED') {
+const today = new Date().toISOString().split('T')[0];
+const dayOfWeek = new Date().getDay();
+let streak = JSON.parse(localStorage.getItem('studyStreak')) || { count: 0, lastDate: null, days: [] };
+const yesterday = new Date();
+yesterday.setDate(yesterday.getDate() - 1);
+const yesterdayStr = yesterday.toISOString().split('T')[0];
+if (streak.lastDate !== today) {
+  if (streak.lastDate === yesterdayStr) { streak.count += 1; }
+  else { streak.count = 1; streak.days = []; }
+  if (!streak.days) streak.days = [];
+  if (!streak.days.includes(dayOfWeek)) streak.days.push(dayOfWeek);
+  streak.lastDate = today;
+  localStorage.setItem('studyStreak', JSON.stringify(streak));
+}
+}
+      const problem = allProblems.find(p => p.id === problemId);
+      if (problem) problem.userStatus = newStatus;
+      updateStats();
+      renderProblems();
+    })
+    .catch(() => alert('Failed to update status.'));
+  }
+
+  loadProblems();
+</script>
+</body>
+</html>

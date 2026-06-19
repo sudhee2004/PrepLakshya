@@ -29,6 +29,11 @@ public class ProblemService {
         return sectionRepository.findByCategory("DSA");
     }
 
+    // Get ALL sections regardless of category (DSA + Aptitude + others)
+    public List<Section> getAllSections() {
+        return sectionRepository.findAll();
+    }
+
     // Get problems by section
     public List<Problem> getProblemsBySection(Long sectionId, Long userId) {
         List<Problem> problems = problemRepository.findBySectionId(sectionId);
@@ -88,6 +93,7 @@ public class ProblemService {
 
         return (int) ((solved * 100) / problems.size());
     }
+
     public Map<String, Object> getOverallProgress(Long userId) {
         List<Section> sections = sectionRepository.findByCategory("DSA");
         List<UserProgress> progressList = userProgressRepository.findByUserId(userId);
