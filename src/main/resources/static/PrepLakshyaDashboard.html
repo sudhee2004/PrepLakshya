@@ -1035,6 +1035,8 @@ function showRoadmapMsg() {
 }
 
 // Load user name from localStorage
+
+// Load user name and real progress data
 window.onload = function() {
   const user = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -1056,32 +1058,45 @@ window.onload = function() {
   document.querySelector('.avatar-circle').textContent =
     user.name.substring(0, 2).toUpperCase();
 
-  // Load this user's progress from localStorage (keyed by email)
-  const key = 'progress_' + user.email;
-  const progress = JSON.parse(localStorage.getItem(key)) || {
-    overall: 0, completed: 0, pending: 50, streak: 0,
-    arrays: 0, linkedLists: 0, trees: 0,
-    graphs: 0, dp: 0, sql: 0
-  };
+  // Real streak from localStorage (same key used in Topic Tracker)
+  const streak = JSON.parse(localStorage.getItem('studyStreak')) || { count: 0 };
 
-  // Stats cards
-  document.querySelectorAll('.stat-val')[0].textContent = progress.overall + '%';
-  document.querySelectorAll('.stat-val')[1].textContent = progress.completed;
-  document.querySelectorAll('.stat-val')[2].textContent = progress.pending;
-  document.querySelectorAll('.stat-val')[3].textContent = progress.streak;
+  // Fetch real DSA progress from backend
+  fetch(`/api/dsa/progress/overall/${user.id}`)
+    .then(res => res.json())
+    .then(data => {
+      const overallPct = data.overallPercentage || 0;
+      const totalSolved = data.totalSolved || 0;
+      const totalPending = data.totalPending || 0;
 
-  // DSA progress bars
-  const bars = document.querySelectorAll('.progress-bar-fill');
-  const pcts = document.querySelectorAll('.progress-pct');
-  const topics = [
-    progress.arrays, progress.linkedLists, progress.trees,
-    progress.graphs, progress.dp, progress.sql
-  ];
-  topics.forEach((val, i) => {
-    bars[i].style.width = val + '%';
-    pcts[i].textContent = val + '%';
-  });
+      // Stats cards
+      document.querySelectorAll('.stat-val')[0].textContent = overallPct + '%';
+      document.querySelectorAll('.stat-val')[1].textContent = totalSolved;
+      document.querySelectorAll('.stat-val')[2].textContent = totalPending;
+      document.querySelectorAll('.stat-val')[3].textContent = streak.count;
+
+      // Update topbar pending message
+      document.querySelector('.topbar-sub').textContent =
+        `You have ${totalPending} topics pending today. Keep going!`;
+
+      // DSA progress bars — map first 6 sections from API to existing bars
+      const bars = document.querySelectorAll('.progress-bar-fill');
+      const pcts = document.querySelectorAll('.progress-pct');
+      const topicNames = document.querySelectorAll('.topic-name');
+
+      const sectionOrder = ['Arrays', 'Linked Lists', 'Trees', 'Graphs', 'Dynamic Programming', 'SQL'];
+      sectionOrder.forEach((name, i) => {
+        const sec = data.sections.find(s => s.name === name);
+        const pct = sec ? sec.percentage : 0;
+        if (bars[i]) bars[i].style.width = pct + '%';
+        if (pcts[i]) pcts[i].textContent = pct + '%';
+      });
+    })
+    .catch(() => {
+      console.log('Could not load progress data');
+    });
 }
+
 async function fetchLeetCode() {
   const username = document.getElementById('lcUsername').value.trim();
   if (!username) { alert('Please enter LeetCode username!'); return; }
