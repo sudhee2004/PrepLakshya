@@ -68,4 +68,53 @@ public class ProblemController {
     public ResponseEntity<?> getOverallProgress(@PathVariable Long userId) {
         return ResponseEntity.ok(problemService.getOverallProgress(userId));
     }
+    // POST add new section
+    @PostMapping("/sections/add")
+    public ResponseEntity<?> addSection(
+            @RequestParam String name,
+            @RequestParam String category) {
+        try {
+            Section section = problemService.addSection(name, category);
+            return ResponseEntity.ok(section);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // DELETE section
+    @DeleteMapping("/sections/{sectionId}")
+    public ResponseEntity<?> deleteSection(@PathVariable Long sectionId) {
+        try {
+            problemService.deleteSection(sectionId);
+            return ResponseEntity.ok("Section deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // POST add new problem
+    @PostMapping("/problems/add")
+    public ResponseEntity<?> addProblem(
+            @RequestParam String title,
+            @RequestParam String difficulty,
+            @RequestParam String link,
+            @RequestParam Long sectionId) {
+        try {
+            Problem problem = problemService.addProblem(title, difficulty, link, sectionId);
+            return ResponseEntity.ok(problem);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    // DELETE problem
+    @DeleteMapping("/problems/{problemId}")
+    public ResponseEntity<?> deleteProblem(@PathVariable Long problemId) {
+        try {
+            problemService.deleteProblem(problemId);
+            return ResponseEntity.ok("Problem deleted");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 }

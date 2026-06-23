@@ -141,4 +141,33 @@ public class ProblemService {
 
         return result;
     }
+    // Add new section
+    public Section addSection(String name, String category) {
+        Section section = new Section();
+        section.setName(name);
+        section.setCategory(category);
+        return sectionRepository.save(section);
+    }
+
+    // Delete section
+    public void deleteSection(Long sectionId) {
+        sectionRepository.deleteById(sectionId);
+    }
+
+    // Add new problem
+    public Problem addProblem(String title, String difficulty, String link, Long sectionId) {
+        Section section = sectionRepository.findById(sectionId)
+                .orElseThrow(() -> new RuntimeException("Section not found"));
+        Problem problem = new Problem();
+        problem.setTitle(title);
+        problem.setDifficulty(Problem.Difficulty.valueOf(difficulty.toUpperCase()));
+        problem.setLink(link);
+        problem.setSection(section);
+        return problemRepository.save(problem);
+    }
+
+    // Delete problem
+    public void deleteProblem(Long problemId) {
+        problemRepository.deleteById(problemId);
+    }
 }
