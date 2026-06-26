@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Mock Interview - PrepLakshya</title>
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #0f0f1a;
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .interview-wrapper {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header */
+        .interview-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .interview-header h1 {
+            font-size: 2.2rem;
+            color: #a78bfa;
+        }
+
+        .interview-header p {
+            color: #888;
+            margin-top: 6px;
+        }
+
+        /* Setup Screen */
+        .setup-screen h2 {
+            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            color: #e2e8f0;
+        }
+
+        .type-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .type-card {
+            background: #1e1e2e;
+            border: 2px solid #2d2d3d;
+            border-radius: 16px;
+            padding: 30px 25px;
+            width: 220px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .type-card:hover {
+            border-color: #a78bfa;
+            transform: translateY(-4px);
+        }
+
+        .type-card.selected {
+            border-color: #a78bfa;
+            background: #2d1f4e;
+        }
+
+        .type-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .type-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: #a78bfa;
+        }
+
+        .type-card p {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .question-count-selector {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .question-count-selector label {
+            color: #aaa;
+            margin-right: 10px;
+        }
+
+        .question-count-selector select {
+            background: #1e1e2e;
+            color: #fff;
+            border: 1px solid #3d3d5c;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+
+        .start-btn {
+            display: block;
+            margin: 0 auto;
+            background: #a78bfa;
+            color: #fff;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .start-btn:disabled {
+            background: #3d3d5c;
+            cursor: not-allowed;
+        }
+
+        .start-btn:hover:not(:disabled) {
+            background: #7c5ce0;
+        }
+
+        /* Interview Screen */
+        .interview-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e1e2e;
+            padding: 12px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #a78bfa;
+        }
+
+        .chat-box {
+            background: #1e1e2e;
+            border-radius: 16px;
+            padding: 20px;
+            min-height: 380px;
+            max-height: 420px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* AI message bubble */
+        .msg-ai {
+            background: #2d1f4e;
+            border-left: 4px solid #a78bfa;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 85%;
+            align-self: flex-start;
+        }
+
+        .msg-ai .msg-label {
+            font-size: 0.75rem;
+            color: #a78bfa;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        /* User message bubble */
+        .msg-user {
+            background: #1a2e1a;
+            border-left: 4px solid #4ade80;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            max-width: 85%;
+            align-self: flex-end;
+        }
+
+        .msg-user .msg-label {
+            font-size: 0.75rem;
+            color: #4ade80;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        /* Evaluation bubble */
+        .msg-eval {
+            background: #1a2535;
+            border-left: 4px solid #60a5fa;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            align-self: flex-start;
+            max-width: 95%;
+            white-space: pre-line;
+        }
+
+        .msg-eval .msg-label {
+            font-size: 0.75rem;
+            color: #60a5fa;
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        /* Loading bubble */
+        .msg-loading {
+            background: #2d2d3d;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #888;
+            font-size: 0.9rem;
+            align-self: flex-start;
+            animation: pulse 1.2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Answer Area */
+        .answer-area {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .answer-area textarea {
+            background: #1e1e2e;
+            border: 2px solid #3d3d5c;
+            border-radius: 12px;
+            color: #fff;
+            padding: 14px;
+            font-size: 0.95rem;
+            min-height: 120px;
+            resize: vertical;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .answer-area textarea:focus {
+            border-color: #a78bfa;
+        }
+
+        .submit-btn {
+            background: #4ade80;
+            color: #0f0f1a;
+            border: none;
+            padding: 13px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #22c55e;
+        }
+
+        .submit-btn:disabled {
+            background: #3d3d5c;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        /* Result Screen */
+        .result-screen {
+            text-align: center;
+        }
+
+        .result-screen h2 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: #a78bfa;
+        }
+
+        .final-score-card {
+            background: #1e1e2e;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 2px solid #a78bfa;
+        }
+
+        .final-score {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #a78bfa;
+        }
+
+        .final-label {
+            font-size: 1.2rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+
+        .score-breakdown {
+            background: #1e1e2e;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: left;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .score-breakdown p {
+            padding: 6px 0;
+            border-bottom: 1px solid #2d2d3d;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        .restart-btn, .home-btn {
+            padding: 12px 30px;
+            border-radius: 12px;
+            border: none;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 0 8px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .restart-btn {
+            background: #a78bfa;
+            color: #fff;
+        }
+
+        .restart-btn:hover {
+            background: #7c5ce0;
+        }
+
+        .home-btn {
+            background: #1e1e2e;
+            color: #a78bfa;
+            border: 2px solid #a78bfa;
+        }
+
+        .home-btn:hover {
+            background: #2d1f4e;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="interview-wrapper">
+
+    <!-- Header -->
+    <div class="interview-header">
+        <h1>🎯 AI Mock Interview</h1>
+        <p>Powered by Groq AI • PrepLakshya</p>
+    </div>
+
+    <!-- Setup Screen -->
+    <div class="setup-screen" id="setupScreen">
+        <h2>Select Interview Type</h2>
+        <div class="type-cards">
+            <div class="type-card" onclick="selectType('DSA')" id="card-DSA">
+                <span class="type-icon">💻</span>
+                <h3>DSA / Coding</h3>
+                <p>Arrays, Trees, DP, Sorting, Searching</p>
+            </div>
+            <div class="type-card" onclick="selectType('Core CS')" id="card-CoreCS">
+                <span class="type-icon">🖥️</span>
+                <h3>Core CS</h3>
+                <p>OS, DBMS, Networks, OOPs</p>
+            </div>
+        </div>
+        <div class="question-count-selector">
+            <label>Number of Questions:</label>
+            <select id="questionCount">
+                <option value="5">5 Questions</option>
+                <option value="10" selected>10 Questions</option>
+                <option value="15">15 Questions</option>
+            </select>
+        </div>
+        <button class="start-btn" id="startBtn" onclick="startInterview()" disabled>
+            Start Interview 🚀
+        </button>
+    </div>
+
+    <!-- Interview Screen -->
+    <div class="interview-screen" id="interviewScreen" style="display:none;">
+        <div class="interview-meta">
+            <span id="interviewTypeLabel">DSA Interview</span>
+            <span id="progressLabel">Question 1 / 10</span>
+            <span id="totalScoreLabel">Score: 0/0</span>
+        </div>
+
+        <div class="chat-box" id="chatBox">
+            <!-- messages appear here -->
+        </div>
+
+        <div class="answer-area" id="answerArea">
+            <textarea id="userAnswer" placeholder="Type your answer here..."></textarea>
+            <button class="submit-btn" onclick="submitAnswer()" id="submitBtn">
+                Submit Answer ✅
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div class="result-screen" id="resultScreen" style="display:none;">
+        <h2>🎉 Interview Complete!</h2>
+        <div class="final-score-card">
+            <div class="final-score" id="finalScore">0/100</div>
+            <div class="final-label" id="finalLabel">Keep Practicing!</div>
+        </div>
+        <div class="score-breakdown" id="scoreBreakdown"></div>
+        <button class="restart-btn" onclick="restartInterview()">Try Again 🔄</button>
+        <button class="home-btn" onclick="window.location.href='index.html'">Back to Dashboard 🏠</button>
+    </div>
+
+</div>
+
+<script>
+    let selectedType = '';
+    let totalQuestions = 10;
+    let currentQuestion = 1;
+    let currentQuestionText = '';
+    let totalScore = 0;
+    let scoreHistory = [];
+
+    function selectType(type) {
+        selectedType = type;
+        document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('card-' + type.replace(' ', '')).classList.add('selected');
+        document.getElementById('startBtn').disabled = false;
+    }
+
+    function startInterview() {
+        totalQuestions = parseInt(document.getElementById('questionCount').value);
+        currentQuestion = 1;
+        totalScore = 0;
+        scoreHistory = [];
+
+        document.getElementById('setupScreen').style.display = 'none';
+        document.getElementById('interviewScreen').style.display = 'block';
+        document.getElementById('interviewTypeLabel').textContent = selectedType + ' Interview';
+        document.getElementById('progressLabel').textContent = 'Question 1 / ' + totalQuestions;
+        document.getElementById('totalScoreLabel').textContent = 'Score: 0/0';
+        document.getElementById('chatBox').innerHTML = '';
+
+        fetchQuestion();
+    }
+
+    function fetchQuestion() {
+        showLoading('Generating question...');
+        document.getElementById('submitBtn').disabled = true;
+
+        fetch('/api/ai/interview/start', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ interviewType: selectedType })
+        })
+        .then(res => res.json())
+        .then(data => {
+            removeLoading();
+            currentQuestionText = data.question;
+            addMessage('ai', '🤖 Interviewer', 'Q' + currentQuestion + ': ' + data.question);
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('userAnswer').value = '';
+            document.getElementById('userAnswer').focus();
+        })
+        .catch(() => {
+            removeLoading();
+            addMessage('ai', '❌ Error', 'Failed to load question. Please try again.');
+        });
+    }
+
+    function submitAnswer() {
+        const answer = document.getElementById('userAnswer').value.trim();
+        if (!answer) {
+            alert('Please type your answer first!');
+            return;
+        }
+
+        addMessage('user', '👤 You', answer);
+        document.getElementById('submitBtn').disabled = true;
+        document.getElementById('userAnswer').value = '';
+
+        const isLastQuestion = currentQuestion >= totalQuestions;
+        const nextQuestionNumber = currentQuestion + 1;
+
+        showLoading('Evaluating your answer...');
+
+        fetch('/api/ai/interview/answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                question: currentQuestionText,
+                answer: answer,
+                interviewType: selectedType,
+                nextQuestionNumber: String(nextQuestionNumber)
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            removeLoading();
+
+            // Show evaluation
+            addMessage('eval', '📊 Feedback', data.evaluation);
+
+            // Extract score
+            const scoreMatch = data.evaluation.match(/SCORE:\s*(\d+)\/10/);
+            if (scoreMatch) {
+                const score = parseInt(scoreMatch[1]);
+                totalScore += score;
+                scoreHistory.push({ q: currentQuestion, score: score });
+                const answered = scoreHistory.length;
+                document.getElementById('totalScoreLabel').textContent =
+                    'Score: ' + totalScore + '/' + (answered * 10);
+            }
+
+            currentQuestion++;
+
+            if (isLastQuestion) {
+                setTimeout(() => showResults(), 1500);
+            } else {
+                document.getElementById('progressLabel').textContent =
+                    'Question ' + currentQuestion + ' / ' + totalQuestions;
+                currentQuestionText = data.nextQuestion;
+                addMessage('ai', '🤖 Interviewer', 'Q' + currentQuestion + ': ' + data.nextQuestion);
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('userAnswer').focus();
+                scrollChat();
+            }
+        })
+        .catch(() => {
+            removeLoading();
+            addMessage('eval', '❌ Error', 'Failed to evaluate. Please try again.');
+            document.getElementById('submitBtn').disabled = false;
+        });
+    }
+
+    function showResults() {
+        document.getElementById('interviewScreen').style.display = 'none';
+        document.getElementById('resultScreen').style.display = 'block';
+
+        const maxScore = totalQuestions * 10;
+        const percentage = Math.round((totalScore / maxScore) * 100);
+
+        document.getElementById('finalScore').textContent = totalScore + '/' + maxScore;
+
+        let label = '';
+        if (percentage >= 80) label = '🔥 Excellent! You\'re placement ready!';
+        else if (percentage >= 60) label = '👍 Good job! Keep practicing!';
+        else if (percentage >= 40) label = '📚 Fair attempt. Review weak areas!';
+        else label = '💪 Keep going! Practice makes perfect!';
+
+        document.getElementById('finalLabel').textContent = label;
+
+        const breakdown = document.getElementById('scoreBreakdown');
+        breakdown.innerHTML = '<p style="color:#a78bfa; font-weight:700; margin-bottom:8px;">Question-wise Score:</p>';
+        scoreHistory.forEach(item => {
+            const color = item.score >= 7 ? '#4ade80' : item.score >= 4 ? '#facc15' : '#f87171';
+            breakdown.innerHTML += `<p>Q${item.q}: <span style="color:${color}; font-weight:700;">${item.score}/10</span></p>`;
+        });
+    }
+
+    function addMessage(type, label, text) {
+        const chatBox = document.getElementById('chatBox');
+        const div = document.createElement('div');
+        div.className = 'msg-' + type;
+        div.innerHTML = `<div class="msg-label">${label}</div><div>${text}</div>`;
+        chatBox.appendChild(div);
+        scrollChat();
+    }
+
+    function showLoading(text) {
+        const chatBox = document.getElementById('chatBox');
+        const div = document.createElement('div');
+        div.className = 'msg-loading';
+        div.id = 'loadingMsg';
+        div.textContent = '⏳ ' + text;
+        chatBox.appendChild(div);
+        scrollChat();
+    }
+
+    function removeLoading() {
+        const el = document.getElementById('loadingMsg');
+        if (el) el.remove();
+    }
+
+    function scrollChat() {
+        const chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    function restartInterview() {
+        document.getElementById('resultScreen').style.display = 'none';
+        document.getElementById('setupScreen').style.display = 'block';
+        document.getElementById('chatBox').innerHTML = '';
+        selectedType = '';
+        document.querySelectorAll('.type-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('startBtn').disabled = true;
+    }
+</script>
+</body>
+</html>
