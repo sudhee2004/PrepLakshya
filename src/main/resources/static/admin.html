@@ -1,107 +1,138 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PrepLakshya - Admin Panel</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
-    [data-theme="dark"] {
-      --primary: #3b82f6; --primary-light: #60a5fa; --accent: #06b6d4;
-      --bg: #060c1f; --white: #0d1535; --text-dark: #f0f4ff;
-      --text-mid: rgba(200,210,255,0.75); --text-light: rgba(150,170,220,0.55);
-      --card-bg: rgba(255,255,255,0.04); --shadow: 0 4px 24px rgba(0,0,0,0.3);
-      --shadow-lg: 0 12px 40px rgba(0,0,0,0.45);
-      --card-border: rgba(255,255,255,0.09); --input-bg: rgba(255,255,255,0.06);
-      --row-bg: rgba(255,255,255,0.04);
-    }
-    [data-theme="light"] {
-      --primary: #1a56db; --primary-light: #3b82f6; --accent: #06b6d4;
-      --bg: #f0f4ff; --white: #ffffff; --text-dark: #0f172a;
-      --text-mid: #334155; --text-light: #64748b;
+    :root {
+      --primary: #1a56db; --primary-light: #3b82f6; --primary-dark: #1e3a8a;
+      --accent: #06b6d4; --bg: #f0f4ff; --white: #ffffff;
+      --text-dark: #0f172a; --text-mid: #334155; --text-light: #64748b;
       --card-bg: rgba(255,255,255,0.92); --shadow: 0 4px 24px rgba(26,86,219,0.08);
       --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
-      --card-border: rgba(26,86,219,0.07); --input-bg: var(--white); --row-bg: #f8faff;
+      --border: rgba(26,86,219,0.07); --input-bg: #f8faff; --input-border: #e2e8f0;
+      --row-bg: #f8faff; --green: #22c55e; --orange: #f97316; --red: #ef4444;
+    }
+    [data-theme="dark"] {
+      --primary: #3b82f6; --primary-light: #60a5fa; --primary-dark: #1e3a8a;
+      --accent: #06b6d4; --bg: #0f172a; --white: #1e293b;
+      --text-dark: #f1f5f9; --text-mid: #cbd5e1; --text-light: #94a3b8;
+      --card-bg: rgba(30,41,59,0.95); --shadow: 0 4px 24px rgba(0,0,0,0.3);
+      --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
+      --border: rgba(255,255,255,0.07); --input-bg: #1e293b; --input-border: #334155;
+      --row-bg: #1e293b;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); min-height: 100vh; transition: background 0.4s, color 0.4s; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); min-height: 100vh; transition: background 0.3s, color 0.3s; }
 
-    /* Login Screen */
-    .login-screen {
-      min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    }
-    .login-card {
-      background: var(--card-bg); border: 1.5px solid var(--card-border);
-      border-radius: 24px; padding: 40px; width: 380px;
-      box-shadow: var(--shadow-lg);
-    }
-    .login-title { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
-    .login-sub { font-size: 13px; color: var(--text-light); margin-bottom: 28px; }
+    /* ── Login Screen ── */
+    .login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #f0f4ff 0%, #dbeafe 100%); }
+    [data-theme="dark"] .login-screen { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a22 100%); }
+    .login-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 24px; padding: 40px; width: 400px; box-shadow: var(--shadow-lg); }
+    .login-icon { font-size: 40px; margin-bottom: 16px; text-align: center; }
+    .login-title { font-family: 'Sora', sans-serif; font-size: 24px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; text-align: center; }
+    .login-sub { font-size: 13px; color: var(--text-light); margin-bottom: 28px; text-align: center; }
     .form-group { margin-bottom: 16px; }
     .form-label { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 7px; }
-    .form-input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--card-border); background: var(--input-bg); color: var(--text-dark); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: all 0.2s; }
-    .form-input:focus { border-color: var(--primary); }
+    .form-input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--input-border); background: var(--input-bg); color: var(--text-dark); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: all 0.2s; }
+    .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,86,219,0.08); }
     .form-input::placeholder { color: var(--text-light); }
-    .btn-primary { width: 100%; padding: 13px; border-radius: 12px; border: none; background: linear-gradient(135deg, #1a56db, #3b82f6); color: white; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; margin-top: 8px; }
+    .btn-primary { width: 100%; padding: 14px; border-radius: 13px; border: none; background: linear-gradient(135deg, #1a56db, #3b82f6); color: white; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; box-shadow: 0 4px 14px rgba(26,86,219,0.3); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,86,219,0.4); }
     .login-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 16px; display: none; }
 
-    /* Admin Panel */
+    /* ── Admin Panel ── */
     .admin-panel { display: none; }
-    .topbar { background: var(--card-bg); border-bottom: 1.5px solid var(--card-border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); }
+    .topbar { background: var(--card-bg); border-bottom: 1.5px solid var(--border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); box-shadow: var(--shadow); }
     .topbar-brand { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 18px; color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
     .admin-badge { background: linear-gradient(135deg, #ef4444, #f97316); color: white; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.5px; }
-    .topbar-actions { display: flex; align-items: center; gap: 12px; }
-    .btn-sm { padding: 8px 16px; border-radius: 10px; border: 1.5px solid var(--card-border); background: var(--input-bg); color: var(--text-dark); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; }
+    .btn-sm { padding: 8px 16px; border-radius: 10px; border: 1.5px solid var(--border); background: var(--card-bg); color: var(--text-dark); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; }
     .btn-sm:hover { border-color: var(--primary); color: var(--primary); }
-    .btn-danger-sm { padding: 8px 16px; border-radius: 10px; border: none; background: rgba(239,68,68,0.1); color: #ef4444; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .btn-danger-sm { padding: 8px 16px; border-radius: 10px; border: none; background: rgba(239,68,68,0.1); color: #ef4444; font-size: 13px; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; }
     .btn-danger-sm:hover { background: rgba(239,68,68,0.2); }
 
-    .content { padding: 28px 32px; max-width: 1200px; margin: 0 auto; }
-    .page-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 6px; }
+    .content { padding: 28px 32px; max-width: 1300px; margin: 0 auto; }
+    .page-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); margin-bottom: 4px; }
     .page-sub { font-size: 13px; color: var(--text-light); margin-bottom: 28px; }
 
-    /* Stats row */
-    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
-    .stat-card { background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); }
-    .stat-num { font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800; color: var(--text-dark); }
-    .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; }
+    /* ── Stats ── */
+    .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); text-align: center; transition: all 0.25s; }
+    .stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+    .stat-num { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
 
-    /* Grid layout */
+    /* ── Tabs ── */
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 24px; background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 16px; padding: 8px; box-shadow: var(--shadow); width: fit-content; }
+    .tab-btn { padding: 10px 20px; border-radius: 10px; border: none; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; background: transparent; color: var(--text-light); }
+    .tab-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; box-shadow: 0 4px 12px rgba(26,86,219,0.25); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ── Cards ── */
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
-    .card { background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); }
+    .card { background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); margin-bottom: 24px; }
     .card-title { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
 
-    /* Table */
-    .table-wrap { overflow-x: auto; }
+    /* ── Form Elements ── */
+    .form-select { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--input-border); background: var(--input-bg); color: var(--text-dark); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: all 0.2s; }
+    .form-select:focus { border-color: var(--primary); }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; border-radius: 12px; border: 1.5px solid var(--border); }
     table { width: 100%; border-collapse: collapse; }
-    th { text-align: left; font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; padding: 10px 12px; border-bottom: 1.5px solid var(--card-border); }
-    td { padding: 12px; border-bottom: 1px solid var(--card-border); font-size: 13px; color: var(--text-mid); vertical-align: middle; }
+    th { text-align: left; font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; padding: 12px 16px; border-bottom: 1.5px solid var(--border); background: var(--input-bg); }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-mid); vertical-align: middle; }
     tr:last-child td { border-bottom: none; }
     tr:hover td { background: var(--row-bg); }
 
+    /* ── Badges ── */
     .badge { padding: 3px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
-    .badge-dsa { background: rgba(59,130,246,0.15); color: #3b82f6; }
-    .badge-apt { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .badge-dsa { background: rgba(59,130,246,0.12); color: #1d4ed8; }
+    .badge-apt { background: rgba(34,197,94,0.12); color: #15803d; }
     .badge-easy { background: #d1fae5; color: #065f46; }
     .badge-medium { background: #fef3c7; color: #92400e; }
     .badge-hard { background: #fee2e2; color: #991b1b; }
+    .badge-pending { background: #fff7ed; color: #c2410c; }
+    .badge-approved { background: #d1fae5; color: #065f46; }
+    .badge-selected { background: #d1fae5; color: #065f46; }
+    .badge-rejected { background: #fee2e2; color: #991b1b; }
 
-    .delete-btn { width: 28px; height: 28px; border-radius: 8px; border: none; background: rgba(239,68,68,0.1); color: #ef4444; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+    /* ── Action Buttons ── */
+    .delete-btn { width: 30px; height: 30px; border-radius: 8px; border: none; background: rgba(239,68,68,0.1); color: #ef4444; cursor: pointer; font-size: 14px; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s; }
     .delete-btn:hover { background: rgba(239,68,68,0.25); }
+    .approve-btn { padding: 5px 12px; border-radius: 8px; border: none; background: rgba(34,197,94,0.12); color: #15803d; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .approve-btn:hover { background: rgba(34,197,94,0.25); }
+    .reject-btn { padding: 5px 12px; border-radius: 8px; border: none; background: rgba(239,68,68,0.1); color: #ef4444; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .reject-btn:hover { background: rgba(239,68,68,0.2); }
 
-    /* Select dropdown */
-    .form-select { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1.5px solid var(--card-border); background: var(--input-bg); color: var(--text-dark); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: all 0.2s; }
-    .form-select:focus { border-color: var(--primary); }
-
-    .success-msg { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #22c55e; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
-    .error-msg { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
-
+    /* ── Section Filter ── */
     .section-filter { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
-    .filter-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--card-border); background: var(--input-bg); color: var(--text-light); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-    .filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .filter-btn { padding: 6px 14px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--input-bg); color: var(--text-light); font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .filter-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border-color: transparent; }
 
+    /* ── Messages ── */
+    .success-msg { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); color: #15803d; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
+    .error-msg { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-top: 12px; display: none; }
     .loading { text-align: center; padding: 32px; color: var(--text-light); font-size: 14px; }
+
+    /* ── Experience Card in Admin ── */
+    .exp-admin-card { background: var(--input-bg); border: 1.5px solid var(--border); border-radius: 14px; padding: 18px; margin-bottom: 14px; }
+    .exp-admin-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
+    .exp-admin-company { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 800; color: var(--primary); }
+    .exp-admin-role { font-size: 12px; color: var(--text-light); margin-top: 2px; }
+    .exp-admin-body { font-size: 13px; color: var(--text-mid); line-height: 1.6; margin-bottom: 10px; }
+    .exp-admin-meta { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+    .exp-admin-actions { display: flex; gap: 8px; }
+
+    /* ── Toast ── */
+    .toast { position: fixed; bottom: 28px; right: 28px; background: #0f172a; color: white; padding: 14px 22px; border-radius: 14px; font-size: 14px; font-weight: 600; z-index: 999; display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+    [data-theme="dark"] .toast { background: #f1f5f9; color: #0f172a; }
+    .toast.show { display: block; animation: slideUp 0.3s ease; }
+    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
     @media (max-width: 900px) {
       .stats-grid { grid-template-columns: 1fr 1fr; }
@@ -116,9 +147,9 @@
 <!-- Login Screen -->
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
-    <div style="font-size:36px;margin-bottom:16px;">🛡️</div>
+    <div class="login-icon">🛡️</div>
     <div class="login-title">Admin Panel</div>
-    <div class="login-sub">PrepLakshya — Restricted Access</div>
+    <div class="login-sub">PrepLakshya — Restricted Access Only</div>
     <div class="login-error" id="loginError">❌ Invalid admin credentials!</div>
     <div class="form-group">
       <label class="form-label">Admin Username</label>
@@ -134,24 +165,27 @@
     </div>
   </div>
 </div>
-!-- Admin Panel -->
+
+<!-- Admin Panel -->
 <div class="admin-panel" id="adminPanel">
+
+  <!-- Topbar -->
   <div class="topbar">
     <div class="topbar-brand">
       🎯 PrepLakshya
       <span class="admin-badge">ADMIN</span>
     </div>
     <div class="topbar-actions">
-      <button class="btn-sm" onclick="toggleTheme()" id="themeBtn">🌙</button>
+      <button class="btn-sm" onclick="toggleTheme()" id="themeBtn">🌙 Dark</button>
       <button class="btn-sm" onclick="loadAllData()">🔄 Refresh</button>
-      <a href="PrepLakshyaDashboard.html" style="text-decoration:none;"><button class="btn-sm">← Dashboard</button></a>
+      <a href="PrepLakshyaDashboard.html" class="btn-sm">🏠 Dashboard</a>
       <button class="btn-danger-sm" onclick="adminLogout()">🚪 Logout</button>
     </div>
   </div>
 
   <div class="content">
     <div class="page-title">📊 Admin Dashboard</div>
-    <div class="page-sub">Manage sections and problems for PrepLakshya</div>
+    <div class="page-sub">Manage sections, problems and interview experiences</div>
 
     <!-- Stats -->
     <div class="stats-grid">
@@ -171,399 +205,573 @@
         <div class="stat-num" id="statTotalProblems">—</div>
         <div class="stat-lbl">Total Problems</div>
       </div>
+      <div class="stat-card">
+        <div class="stat-num" id="statPendingExp">—</div>
+        <div class="stat-lbl">Pending Experiences</div>
+      </div>
     </div>
 
-    <!-- Add Section + Sections Table -->
-    <div class="grid-2">
+    <!-- Tabs -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('sections', this)">📚 Sections</button>
+      <button class="tab-btn" onclick="switchTab('problems', this)">💻 Problems</button>
+      <button class="tab-btn" onclick="switchTab('experiences', this)">🏆 Experiences</button>
+    </div>
+
+    <!-- Tab: Sections -->
+    <div class="tab-content active" id="tab-sections">
+      <div class="grid-2">
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">➕ Add New Section</div>
+          <div class="form-group">
+            <label class="form-label">Section Name</label>
+            <input class="form-input" type="text" id="newSectionName" placeholder="e.g. Two Pointers">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Category</label>
+            <select class="form-select" id="newSectionCategory">
+              <option value="DSA">DSA</option>
+              <option value="Aptitude">Aptitude</option>
+            </select>
+          </div>
+          <button class="btn-primary" onclick="addSection()">+ Add Section</button>
+          <div class="success-msg" id="sectionSuccess">✅ Section added successfully!</div>
+          <div class="error-msg" id="sectionError"></div>
+        </div>
+        <div class="card" style="margin-bottom:0;">
+          <div class="card-title">📚 All Sections</div>
+          <div class="section-filter">
+            <button class="filter-btn active" onclick="filterSections('ALL', this)">All</button>
+            <button class="filter-btn" onclick="filterSections('DSA', this)">DSA</button>
+            <button class="filter-btn" onclick="filterSections('Aptitude', this)">Aptitude</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Action</th></tr></thead>
+              <tbody id="sectionsTableBody">
+              <tr><td colspan="4" class="loading">Loading...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Problems -->
+    <div class="tab-content" id="tab-problems">
       <div class="card">
-        <div class="card-title">➕ Add New Section</div>
-        <div class="form-group">
-          <label class="form-label">Section Name</label>
-          <input class="form-input" type="text" id="newSectionName" placeholder="e.g. Two Pointers">
+        <div class="card-title">➕ Add New Problem</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;align-items:end;">
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">Problem Title</label>
+            <input class="form-input" type="text" id="newProblemTitle" placeholder="e.g. Two Sum">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">Difficulty</label>
+            <select class="form-select" id="newProblemDifficulty">
+              <option value="EASY">Easy</option>
+              <option value="MEDIUM">Medium</option>
+              <option value="HARD">Hard</option>
+            </select>
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">LeetCode Link</label>
+            <input class="form-input" type="text" id="newProblemLink" placeholder="https://leetcode.com/...">
+          </div>
+          <div class="form-group" style="margin:0;">
+            <label class="form-label">Section</label>
+            <select class="form-select" id="newProblemSection">
+              <option value="">Select section...</option>
+            </select>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="form-label">Category</label>
-          <select class="form-select" id="newSectionCategory">
-            <option value="DSA">DSA</option>
-            <option value="Aptitude">Aptitude</option>
-          </select>
-        </div>
-        <button class="btn-primary" onclick="addSection()">+ Add Section</button>
-        <div class="success-msg" id="sectionSuccess">✅ Section added successfully!</div>
-        <div class="error-msg" id="sectionError"></div>
+        <button class="btn-primary" style="margin-top:16px;width:auto;padding:12px 28px;" onclick="addProblem()">+ Add Problem</button>
+        <div class="success-msg" id="problemSuccess">✅ Problem added! Stats updated in real time.</div>
+        <div class="error-msg" id="problemError"></div>
       </div>
 
       <div class="card">
-        <div class="card-title">📚 All Sections</div>
-        <div class="section-filter">
-          <button class="filter-btn active" onclick="filterSections('ALL', this)">All</button>
-          <button class="filter-btn" onclick="filterSections('DSA', this)">DSA</button>
-          <button class="filter-btn" onclick="filterSections('Aptitude', this)">Aptitude</button>
+        <div class="card-title">💻 Problems by Section</div>
+        <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
+          <select class="form-select" style="width:260px;" id="problemSectionFilter" onchange="loadProblemsBySection()">
+            <option value="">Select a section...</option>
+          </select>
+          <span id="problemCount" style="font-size:13px;color:var(--text-light);font-weight:600;"></span>
         </div>
         <div class="table-wrap">
           <table>
-            <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Category</th>
-              <th>Action</th>
-            </tr>
-            </thead>
-            <tbody id="sectionsTableBody">
-            <tr><td colspan="4" class="loading">Loading...</td></tr>
+            <thead><tr><th>ID</th><th>Title</th><th>Difficulty</th><th>Link</th><th>Action</th></tr></thead>
+            <tbody id="problemsTableBody">
+            <tr><td colspan="5" class="loading">Select a section to view problems</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </div>
 
-    <!-- Add Problem + Problems Table -->
-    <div class="card" style="margin-bottom:24px;">
-      <div class="card-title">➕ Add New Problem</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:16px;align-items:end;">
-        <div class="form-group" style="margin:0;">
-          <label class="form-label">Problem Title</label>
-          <input class="form-input" type="text" id="newProblemTitle" placeholder="e.g. Two Sum">
-        </div>
-        <div class="form-group" style="margin:0;">
-          <label class="form-label">Difficulty</label>
-          <select class="form-select" id="newProblemDifficulty">
-            <option value="EASY">Easy</option>
-            <option value="MEDIUM">Medium</option>
-            <option value="HARD">Hard</option>
-          </select>
-        </div>
-        <div class="form-group" style="margin:0;">
-          <label class="form-label">LeetCode Link</label>
-          <input class="form-input" type="text" id="newProblemLink" placeholder="https://leetcode.com/...">
-        </div>
-        <div class="form-group" style="margin:0;">
-          <label class="form-label">Section</label>
-          <select class="form-select" id="newProblemSection">
-            <option value="">Select section...</option>
-          </select>
+    <!-- Tab: Experiences -->
+    <div class="tab-content" id="tab-experiences">
+      <div class="card">
+        <div class="card-title">⏳ Pending Experiences — Needs Approval</div>
+        <div id="pendingExperiencesList">
+          <div class="loading">Loading pending experiences...</div>
         </div>
       </div>
-      <button class="btn-primary" style="margin-top:16px;width:auto;padding:12px 28px;" onclick="addProblem()">+ Add Problem</button>
-      <div class="success-msg" id="problemSuccess">✅ Problem added successfully!</div>
-      <div class="error-msg" id="problemError"></div>
+      <div class="card">
+        <div class="card-title">✅ Approved Experiences</div>
+        <div id="approvedExperiencesList">
+          <div class="loading">Loading approved experiences...</div>
+        </div>
+      </div>
     </div>
 
-    <div class="card">
-      <div class="card-title">💻 Problems by Section</div>
-      <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;flex-wrap:wrap;">
-        <select class="form-select" style="width:240px;" id="problemSectionFilter" onchange="loadProblemsBySection()">
-          <option value="">Select a section to view problems...</option>
-        </select>
-        <span id="problemCount" style="font-size:13px;color:var(--text-light);"></span>
-      </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Difficulty</th>
-            <th>Link</th>
-            <th>Action</th>
-          </tr>
-          </thead>
-          <tbody id="problemsTableBody">
-          <tr><td colspan="5" class="loading">Select a section to view problems</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div>
 </div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
 <script>
-  // ── Admin Credentials (change these!) ──
+  // ── Admin Credentials ──
   const ADMIN_USER = 'admin';
   const ADMIN_PASS = 'preplakshya@2024';
 
   // ── Theme ──
   function toggleTheme() {
-      const html = document.documentElement;
-      const btn = document.getElementById('themeBtn');
-      if (html.getAttribute('data-theme') === 'dark') {
-          html.setAttribute('data-theme', 'light');
-          btn.textContent = '🌙';
-      } else {
-          html.setAttribute('data-theme', 'dark');
-          btn.textContent = '☀️';
-      }
-      localStorage.setItem('theme', html.getAttribute('data-theme'));
+    const html = document.documentElement;
+    const btn = document.getElementById('themeBtn');
+    if (html.getAttribute('data-theme') === 'light') {
+      html.setAttribute('data-theme', 'dark');
+      btn.textContent = '☀️ Light';
+      localStorage.setItem('theme', 'dark');
+    } else {
+      html.setAttribute('data-theme', 'light');
+      btn.textContent = '🌙 Dark';
+      localStorage.setItem('theme', 'light');
+    }
   }
-  const savedTheme = localStorage.getItem('theme') || 'dark';
+  const savedTheme = localStorage.getItem('theme') || 'light';
   document.documentElement.setAttribute('data-theme', savedTheme);
+  const themeBtn = document.getElementById('themeBtn');
+  if (themeBtn) themeBtn.textContent = savedTheme === 'dark' ? '☀️ Light' : '🌙 Dark';
 
   // ── Login ──
   function adminLogin() {
-      const user = document.getElementById('adminUser').value.trim();
-      const pass = document.getElementById('adminPass').value.trim();
-      if (user === ADMIN_USER && pass === ADMIN_PASS) {
-          sessionStorage.setItem('adminLoggedIn', 'true');
-          document.getElementById('loginScreen').style.display = 'none';
-          document.getElementById('adminPanel').style.display = 'block';
-          document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-          loadAllData();
-      } else {
-          document.getElementById('loginError').style.display = 'block';
-      }
+    const user = document.getElementById('adminUser').value.trim();
+    const pass = document.getElementById('adminPass').value.trim();
+    if (user === ADMIN_USER && pass === ADMIN_PASS) {
+      sessionStorage.setItem('adminLoggedIn', 'true');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminPanel').style.display = 'block';
+      loadAllData();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
   }
 
   function adminLogout() {
-      sessionStorage.removeItem('adminLoggedIn');
-      document.getElementById('loginScreen').style.display = 'flex';
-      document.getElementById('adminPanel').style.display = 'none';
-      document.getElementById('adminUser').value = '';
-      document.getElementById('adminPass').value = '';
+    sessionStorage.removeItem('adminLoggedIn');
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('adminPanel').style.display = 'none';
+    document.getElementById('adminUser').value = '';
+    document.getElementById('adminPass').value = '';
   }
 
-  // Check if already logged in
+  // Auto login if session exists
   if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-      document.getElementById('loginScreen').style.display = 'none';
-      document.getElementById('adminPanel').style.display = 'block';
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminPanel').style.display = 'block';
+    loadAllData();
   }
 
   // Enter key login
   document.addEventListener('keypress', e => {
-      if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
-          adminLogin();
-      }
+    if (e.key === 'Enter' && document.getElementById('loginScreen').style.display !== 'none') {
+      adminLogin();
+    }
   });
 
-  // ── Data ──
+  // ── Tab Switcher ──
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + tab).classList.add('active');
+    btn.classList.add('active');
+    if (tab === 'experiences') loadExperiences();
+  }
+
+  // ── State ──
   let allSections = [];
-  let currentSectionFilter = 'ALL';
+  let totalProblemsCount = 0;
 
+  // ── Load All Data ──
   async function loadAllData() {
-      await loadSections();
-      updateStats();
+    await loadSections();
+    await loadTotalProblems();
+    await loadPendingCount();
   }
 
+  // ── Load Sections ──
   async function loadSections() {
-      try {
-          const res = await fetch('/api/dsa/sections/all');
-          allSections = await res.json();
-          renderSectionsTable(allSections);
-          populateSectionDropdowns(allSections);
-      } catch (e) {
-          console.error('Failed to load sections', e);
-      }
+    try {
+      const res = await fetch('/api/dsa/sections/all');
+      allSections = await res.json();
+      renderSectionsTable(allSections);
+      populateSectionDropdowns(allSections);
+      updateSectionStats();
+    } catch (e) {
+      console.error('Failed to load sections', e);
+    }
   }
 
-  function updateStats() {
-      const dsa = allSections.filter(s => s.category === 'DSA').length;
-      const apt = allSections.filter(s => s.category === 'Aptitude' || s.category === 'APTITUDE').length;
-      document.getElementById('statTotalSections').textContent = allSections.length;
-      document.getElementById('statDSASections').textContent = dsa;
-      document.getElementById('statAptSections').textContent = apt;
-
-      // Load total problem count
-      fetch('/api/dsa/sections/all')
-          .then(r => r.json())
-          .then(sections => {
-              document.getElementById('statTotalProblems').textContent = '...';
-              // Just show section count for now
-          });
-
-      // Fetch a rough problem count via overall progress
-      fetch('/api/dsa/progress/overall/1')
-          .then(r => r.json())
-          .then(data => {
-              document.getElementById('statTotalProblems').textContent = data.totalProblems || '—';
-          })
-          .catch(() => document.getElementById('statTotalProblems').textContent = '—');
+  // ── Load Total Problems (real-time) ──
+  async function loadTotalProblems() {
+    try {
+      const res = await fetch('/api/dsa/progress/overall/1');
+      const data = await res.json();
+      totalProblemsCount = data.totalProblems || 0;
+      document.getElementById('statTotalProblems').textContent = totalProblemsCount;
+    } catch (e) {
+      document.getElementById('statTotalProblems').textContent = '—';
+    }
   }
 
+  // ── Load Pending Experiences Count ──
+  async function loadPendingCount() {
+    try {
+      const res = await fetch('/api/experiences/pending');
+      const data = await res.json();
+      document.getElementById('statPendingExp').textContent = data.length;
+    } catch (e) {
+      document.getElementById('statPendingExp').textContent = '—';
+    }
+  }
+
+  // ── Update Section Stats ──
+  function updateSectionStats() {
+    const dsa = allSections.filter(s => s.category === 'DSA').length;
+    const apt = allSections.filter(s =>
+      s.category === 'Aptitude' || s.category === 'APTITUDE'
+    ).length;
+    document.getElementById('statTotalSections').textContent = allSections.length;
+    document.getElementById('statDSASections').textContent = dsa;
+    document.getElementById('statAptSections').textContent = apt;
+  }
+
+  // ── Filter Sections ──
   function filterSections(category, btn) {
-      currentSectionFilter = category;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      if (category === 'ALL') {
-          renderSectionsTable(allSections);
-      } else {
-          renderSectionsTable(allSections.filter(s =>
-              s.category === category || s.category.toUpperCase() === category.toUpperCase()
-          ));
-      }
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    if (category === 'ALL') {
+      renderSectionsTable(allSections);
+    } else {
+      renderSectionsTable(allSections.filter(s =>
+        s.category.toUpperCase() === category.toUpperCase()
+      ));
+    }
   }
 
+  // ── Render Sections Table ──
   function renderSectionsTable(sections) {
-      const tbody = document.getElementById('sectionsTableBody');
-      if (sections.length === 0) {
-          tbody.innerHTML = '<tr><td colspan="4" class="loading">No sections found</td></tr>';
-          return;
-      }
-      tbody.innerHTML = sections.map(s => `
-          <tr>
-              <td style="color:var(--text-light);">#${s.id}</td>
-              <td style="font-weight:600;color:var(--text-dark);">${s.name}</td>
-              <td><span class="badge ${s.category === 'DSA' ? 'badge-dsa' : 'badge-apt'}">${s.category}</span></td>
-              <td>
-                  <button class="delete-btn" onclick="deleteSection(${s.id}, '${s.name}')" title="Delete section">🗑️</button>
-              </td>
-          </tr>
-      `).join('');
+    const tbody = document.getElementById('sectionsTableBody');
+    if (sections.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" class="loading">No sections found</td></tr>';
+      return;
+    }
+    tbody.innerHTML = sections.map(s => `
+      <tr>
+        <td style="color:var(--text-light);">#${s.id}</td>
+        <td style="font-weight:600;color:var(--text-dark);">${s.name}</td>
+        <td><span class="badge ${s.category === 'DSA' ? 'badge-dsa' : 'badge-apt'}">${s.category}</span></td>
+        <td>
+          <button class="delete-btn" onclick="deleteSection(${s.id}, '${s.name.replace(/'/g, "\\'")}')">🗑️</button>
+        </td>
+      </tr>
+    `).join('');
   }
 
+  // ── Populate Section Dropdowns ──
   function populateSectionDropdowns(sections) {
-      const addDropdown = document.getElementById('newProblemSection');
-      const filterDropdown = document.getElementById('problemSectionFilter');
-
-      const options = sections.map(s => `<option value="${s.id}">${s.name} (${s.category})</option>`).join('');
-
-      addDropdown.innerHTML = '<option value="">Select section...</option>' + options;
-      filterDropdown.innerHTML = '<option value="">Select a section to view problems...</option>' + options;
+    const opts = sections.map(s =>
+      `<option value="${s.id}">${s.name} (${s.category})</option>`
+    ).join('');
+    document.getElementById('newProblemSection').innerHTML =
+      '<option value="">Select section...</option>' + opts;
+    document.getElementById('problemSectionFilter').innerHTML =
+      '<option value="">Select a section...</option>' + opts;
   }
 
   // ── Add Section ──
   async function addSection() {
-      const name = document.getElementById('newSectionName').value.trim();
-      const category = document.getElementById('newSectionCategory').value;
-
-      if (!name) { showMsg('sectionError', 'Please enter section name!'); return; }
-
-      try {
-          const res = await fetch(`/api/dsa/sections/add?name=${encodeURIComponent(name)}&category=${encodeURIComponent(category)}`, {
-              method: 'POST'
-          });
-          if (res.ok) {
-              document.getElementById('newSectionName').value = '';
-              showSuccess('sectionSuccess');
-              await loadAllData();
-          } else {
-              const err = await res.text();
-              showMsg('sectionError', '❌ ' + err);
-          }
-      } catch (e) {
-          showMsg('sectionError', '❌ Failed to add section!');
+    const name = document.getElementById('newSectionName').value.trim();
+    const category = document.getElementById('newSectionCategory').value;
+    if (!name) { showMsg('sectionError', 'Please enter section name!'); return; }
+    try {
+      const res = await fetch(
+        `/api/dsa/sections/add?name=${encodeURIComponent(name)}&category=${encodeURIComponent(category)}`,
+        { method: 'POST' }
+      );
+      if (res.ok) {
+        document.getElementById('newSectionName').value = '';
+        showSuccess('sectionSuccess');
+        await loadSections();
+        showToast('✅ Section "' + name + '" added!');
+      } else {
+        showMsg('sectionError', '❌ ' + await res.text());
       }
+    } catch (e) {
+      showMsg('sectionError', '❌ Failed to add section!');
+    }
   }
+
+  // ── Delete Section ──
   async function deleteSection(id, name) {
-        if (!confirm(`Delete section "${name}"?\n\nThis will also delete ALL problems in this section!`)) return;
-        try {
-            const res = await fetch(`/api/dsa/sections/${id}`, { method: 'DELETE' });
-            if (res.ok) {
-                await loadAllData();
-                alert('✅ Section deleted!');
-            } else {
-                alert('❌ Could not delete section. It may have problems linked.');
-            }
-        } catch (e) {
-            alert('❌ Error deleting section!');
-        }
+    if (!confirm(`Delete section "${name}"?\nThis will also delete ALL problems in this section!`)) return;
+    try {
+      const res = await fetch(`/api/dsa/sections/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        await loadAllData();
+        showToast('🗑️ Section deleted!');
+      } else {
+        showToast('❌ Could not delete section!');
+      }
+    } catch (e) {
+      showToast('❌ Error deleting section!');
+    }
+  }
+  // ── Add Problem (with real-time count update) ──
+  async function addProblem() {
+    const title = document.getElementById('newProblemTitle').value.trim();
+    const difficulty = document.getElementById('newProblemDifficulty').value;
+    const link = document.getElementById('newProblemLink').value.trim();
+    const sectionId = document.getElementById('newProblemSection').value;
+
+    if (!title) { showMsg('problemError', 'Please enter problem title!'); return; }
+    if (!sectionId) { showMsg('problemError', 'Please select a section!'); return; }
+
+    try {
+      const res = await fetch(
+        `/api/dsa/problems/add?title=${encodeURIComponent(title)}&difficulty=${difficulty}&link=${encodeURIComponent(link)}&sectionId=${sectionId}`,
+        { method: 'POST' }
+      );
+      if (res.ok) {
+        document.getElementById('newProblemTitle').value = '';
+        document.getElementById('newProblemLink').value = '';
+        showSuccess('problemSuccess');
+
+        // ── Real-time count update ──
+        totalProblemsCount++;
+        document.getElementById('statTotalProblems').textContent = totalProblemsCount;
+
+        // Reload problems table if same section open
+        const filterSection = document.getElementById('problemSectionFilter').value;
+        if (filterSection === sectionId) loadProblemsBySection();
+
+        showToast('✅ Problem "' + title + '" added! Total: ' + totalProblemsCount);
+      } else {
+        showMsg('problemError', '❌ ' + await res.text());
+      }
+    } catch (e) {
+      showMsg('problemError', '❌ Failed to add problem!');
+    }
+  }
+
+  // ── Load Problems by Section ──
+  async function loadProblemsBySection() {
+    const sectionId = document.getElementById('problemSectionFilter').value;
+    const tbody = document.getElementById('problemsTableBody');
+    const countEl = document.getElementById('problemCount');
+
+    if (!sectionId) {
+      tbody.innerHTML = '<tr><td colspan="5" class="loading">Select a section to view problems</td></tr>';
+      countEl.textContent = '';
+      return;
     }
 
-    // ── Add Problem ──
-    async function addProblem() {
-        const title = document.getElementById('newProblemTitle').value.trim();
-        const difficulty = document.getElementById('newProblemDifficulty').value;
-        const link = document.getElementById('newProblemLink').value.trim();
-        const sectionId = document.getElementById('newProblemSection').value;
+    tbody.innerHTML = '<tr><td colspan="5" class="loading">⏳ Loading...</td></tr>';
 
-        if (!title) { showMsg('problemError', 'Please enter problem title!'); return; }
-        if (!sectionId) { showMsg('problemError', 'Please select a section!'); return; }
+    try {
+      const res = await fetch(`/api/dsa/sections/${sectionId}/problems?userId=1`);
+      const problems = await res.json();
+      countEl.textContent = problems.length + ' problems in this section';
 
-        try {
-            const res = await fetch(`/api/dsa/problems/add?title=${encodeURIComponent(title)}&difficulty=${difficulty}&link=${encodeURIComponent(link)}&sectionId=${sectionId}`, {
-                method: 'POST'
-            });
-            if (res.ok) {
-                document.getElementById('newProblemTitle').value = '';
-                document.getElementById('newProblemLink').value = '';
-                showSuccess('problemSuccess');
-                updateStats();
-                // Reload problems table if same section selected
-                const filterSection = document.getElementById('problemSectionFilter').value;
-                if (filterSection === sectionId) loadProblemsBySection();
-            } else {
-                const err = await res.text();
-                showMsg('problemError', '❌ ' + err);
-            }
-        } catch (e) {
-            showMsg('problemError', '❌ Failed to add problem!');
-        }
+      if (problems.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="loading">No problems in this section yet</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = problems.map(p => `
+        <tr>
+          <td style="color:var(--text-light);">#${p.id}</td>
+          <td style="font-weight:600;color:var(--text-dark);">${p.title}</td>
+          <td><span class="badge badge-${p.difficulty.toLowerCase()}">${p.difficulty}</span></td>
+          <td>${p.link
+            ? `<a href="${p.link}" target="_blank" style="color:var(--primary);font-size:12px;text-decoration:none;font-weight:600;">LeetCode ↗</a>`
+            : '<span style="color:var(--text-light);">—</span>'
+          }</td>
+          <td>
+            <button class="delete-btn" onclick="deleteProblem(${p.id}, '${p.title.replace(/'/g, "\\'")}')">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
+    } catch (e) {
+      tbody.innerHTML = '<tr><td colspan="5" class="loading">❌ Failed to load problems</td></tr>';
     }
+  }
 
-    // ── Load Problems by Section ──
-    async function loadProblemsBySection() {
-        const sectionId = document.getElementById('problemSectionFilter').value;
-        const tbody = document.getElementById('problemsTableBody');
-        const countEl = document.getElementById('problemCount');
-
-        if (!sectionId) {
-            tbody.innerHTML = '<tr><td colspan="5" class="loading">Select a section to view problems</td></tr>';
-            countEl.textContent = '';
-            return;
-        }
-
-        tbody.innerHTML = '<tr><td colspan="5" class="loading">Loading...</td></tr>';
-
-        try {
-            const res = await fetch(`/api/dsa/sections/${sectionId}/problems?userId=1`);
-            const problems = await res.json();
-            countEl.textContent = problems.length + ' problems';
-
-            if (problems.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="loading">No problems in this section</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = problems.map(p => `
-                <tr>
-                    <td style="color:var(--text-light);">#${p.id}</td>
-                    <td style="font-weight:600;color:var(--text-dark);">${p.title}</td>
-                    <td><span class="badge badge-${p.difficulty.toLowerCase()}">${p.difficulty}</span></td>
-                    <td>${p.link ? `<a href="${p.link}" target="_blank" style="color:var(--primary);font-size:12px;text-decoration:none;">LeetCode ↗</a>` : '—'}</td>
-                    <td>
-                        <button class="delete-btn" onclick="deleteProblem(${p.id}, '${p.title.replace(/'/g, "\\'")}')" title="Delete problem">🗑️</button>
-                    </td>
-                </tr>
-            `).join('');
-        } catch (e) {
-            tbody.innerHTML = '<tr><td colspan="5" class="loading">❌ Failed to load problems</td></tr>';
-        }
+  // ── Delete Problem ──
+  async function deleteProblem(id, title) {
+    if (!confirm(`Delete problem "${title}"?`)) return;
+    try {
+      const res = await fetch(`/api/dsa/problems/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        totalProblemsCount = Math.max(0, totalProblemsCount - 1);
+        document.getElementById('statTotalProblems').textContent = totalProblemsCount;
+        loadProblemsBySection();
+        showToast('🗑️ Problem deleted! Total: ' + totalProblemsCount);
+      } else {
+        showToast('❌ Could not delete problem!');
+      }
+    } catch (e) {
+      showToast('❌ Error deleting problem!');
     }
+  }
 
-    // ── Delete Problem ──
-    async function deleteProblem(id, title) {
-        if (!confirm(`Delete problem "${title}"?`)) return;
-        try {
-            const res = await fetch(`/api/dsa/problems/${id}`, { method: 'DELETE' });
-            if (res.ok) {
-                loadProblemsBySection();
-                updateStats();
-            } else {
-                alert('❌ Could not delete problem!');
-            }
-        } catch (e) {
-            alert('❌ Error deleting problem!');
-        }
-    }
+  // ── Load Experiences ──
+  async function loadExperiences() {
+    await loadPendingExperiences();
+    await loadApprovedExperiences();
+    await loadPendingCount();
+  }
 
-    // ── Helpers ──
-    function showSuccess(id) {
-        const el = document.getElementById(id);
-        el.style.display = 'block';
-        setTimeout(() => el.style.display = 'none', 3000);
-    }
+  // ── Load Pending Experiences ──
+  async function loadPendingExperiences() {
+    const container = document.getElementById('pendingExperiencesList');
+    try {
+      const res = await fetch('/api/experiences/pending');
+      const data = await res.json();
+      document.getElementById('statPendingExp').textContent = data.length;
 
-    function showMsg(id, msg) {
-        const el = document.getElementById(id);
-        el.textContent = msg;
-        el.style.display = 'block';
-        setTimeout(() => el.style.display = 'none', 3000);
-    }
+      if (data.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-light);font-size:14px;">🎉 No pending experiences!</div>';
+        return;
+      }
 
-    // Load data if already logged in
-    if (sessionStorage.getItem('adminLoggedIn') === 'true') {
-        loadAllData();
-        document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+      container.innerHTML = data.map(exp => `
+        <div class="exp-admin-card">
+          <div class="exp-admin-header">
+            <div>
+              <div class="exp-admin-company">${exp.company}</div>
+              <div class="exp-admin-role">${exp.role || 'Software Engineer'} • by ${exp.studentName || 'Anonymous'}</div>
+            </div>
+            <span class="badge badge-pending">⏳ Pending</span>
+          </div>
+          <div class="exp-admin-meta">
+            <span class="badge badge-dsa">${exp.interviewType || 'Mixed'}</span>
+            <span class="badge ${exp.difficulty === 'Easy' ? 'badge-easy' : exp.difficulty === 'Hard' ? 'badge-hard' : 'badge-medium'}">${exp.difficulty || 'Medium'}</span>
+            <span class="badge ${exp.result === 'Selected' ? 'badge-selected' : 'badge-rejected'}">${exp.result}</span>
+          </div>
+          <div class="exp-admin-body">${exp.experience || ''}</div>
+          ${exp.questionsAsked ? `<div style="font-size:12px;color:var(--text-light);margin-bottom:8px;"><b>Questions:</b> ${exp.questionsAsked}</div>` : ''}
+          ${exp.tips ? `<div style="font-size:12px;color:var(--text-light);margin-bottom:10px;"><b>Tips:</b> ${exp.tips}</div>` : ''}
+          <div class="exp-admin-actions">
+            <button class="approve-btn" onclick="approveExperience(${exp.id})">✅ Approve</button>
+            <button class="reject-btn" onclick="rejectExperience(${exp.id})">❌ Reject</button>
+          </div>
+        </div>
+      `).join('');
+    } catch (e) {
+      container.innerHTML = '<div class="loading">❌ Failed to load pending experiences</div>';
     }
+  }
+
+  // ── Load Approved Experiences ──
+  async function loadApprovedExperiences() {
+    const container = document.getElementById('approvedExperiencesList');
+    try {
+      const res = await fetch('/api/experiences/approved');
+      const data = await res.json();
+
+      if (data.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-light);font-size:14px;">No approved experiences yet.</div>';
+        return;
+      }
+
+      container.innerHTML = data.map(exp => `
+        <div class="exp-admin-card">
+          <div class="exp-admin-header">
+            <div>
+              <div class="exp-admin-company">${exp.company}</div>
+              <div class="exp-admin-role">${exp.role || 'Software Engineer'} • by ${exp.studentName || 'Anonymous'}</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span class="badge badge-approved">✅ Approved</span>
+              <button class="delete-btn" onclick="rejectExperience(${exp.id})" title="Remove">🗑️</button>
+            </div>
+          </div>
+          <div class="exp-admin-meta">
+            <span class="badge badge-dsa">${exp.interviewType || 'Mixed'}</span>
+            <span class="badge ${exp.result === 'Selected' ? 'badge-selected' : 'badge-rejected'}">${exp.result}</span>
+          </div>
+          <div class="exp-admin-body">${exp.experience ? exp.experience.substring(0, 150) + '...' : ''}</div>
+        </div>
+      `).join('');
+    } catch (e) {
+      container.innerHTML = '<div class="loading">❌ Failed to load approved experiences</div>';
+    }
+  }
+
+  // ── Approve Experience ──
+  async function approveExperience(id) {
+    try {
+      const res = await fetch(`/api/experiences/approve/${id}`, { method: 'PUT' });
+      if (res.ok) {
+        showToast('✅ Experience approved and live!');
+        await loadExperiences();
+      } else {
+        showToast('❌ Failed to approve!');
+      }
+    } catch (e) {
+      showToast('❌ Error approving experience!');
+    }
+  }
+
+  // ── Reject/Delete Experience ──
+  async function rejectExperience(id) {
+    if (!confirm('Remove this experience permanently?')) return;
+    try {
+      const res = await fetch(`/api/experiences/reject/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        showToast('🗑️ Experience removed!');
+        await loadExperiences();
+      } else {
+        showToast('❌ Failed to remove!');
+      }
+    } catch (e) {
+      showToast('❌ Error removing experience!');
+    }
+  }
+
+  // ── Toast ──
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // ── Helpers ──
+  function showSuccess(id) {
+    const el = document.getElementById(id);
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3000);
+  }
+
+  function showMsg(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 3000);
+  }
 </script>
 </body>
 </html>
-

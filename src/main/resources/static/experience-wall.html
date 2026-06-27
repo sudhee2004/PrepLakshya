@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrepLakshya - Interview Experience Wall</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a56db;
+            --primary-light: #3b82f6;
+            --primary-dark: #1e3a8a;
+            --accent: #06b6d4;
+            --bg: #f0f4ff;
+            --white: #ffffff;
+            --text-dark: #0f172a;
+            --text-mid: #334155;
+            --text-light: #64748b;
+            --card-bg: rgba(255,255,255,0.92);
+            --shadow: 0 4px 24px rgba(26,86,219,0.08);
+            --shadow-lg: 0 12px 40px rgba(26,86,219,0.14);
+            --green: #22c55e;
+            --orange: #f97316;
+            --red: #ef4444;
+            --sidebar-w: 240px;
+            --border: rgba(26,86,219,0.07);
+            --input-bg: #f8faff;
+            --input-border: #e2e8f0;
+        }
+        [data-theme="dark"] {
+            --bg: #0f172a;
+            --white: #1e293b;
+            --text-dark: #f1f5f9;
+            --text-mid: #cbd5e1;
+            --text-light: #94a3b8;
+            --card-bg: rgba(30,41,59,0.95);
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.4);
+            --border: rgba(255,255,255,0.07);
+            --input-bg: #1e293b;
+            --input-border: #334155;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; transition: background 0.3s, color 0.3s; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-w); background: linear-gradient(180deg, #1e3a8a 0%, #1a56db 60%, #0369a1 100%); min-height: 100vh; display: flex; flex-direction: column; padding: 28px 16px; position: fixed; left: 0; top: 0; bottom: 0; z-index: 20; box-shadow: 4px 0 24px rgba(26,86,219,0.18); }
+        .sidebar-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 36px; padding: 0 8px; }
+        .sidebar-logo-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.15); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        .sidebar-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 17px; color: white; }
+        .sidebar-logo-sub { font-size: 9px; color: rgba(255,255,255,0.6); letter-spacing: 1px; text-transform: uppercase; }
+        .nav-section { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.45); letter-spacing: 1.5px; text-transform: uppercase; padding: 0 12px; margin-bottom: 8px; margin-top: 16px; }
+        .nav-item { display: flex; align-items: center; gap: 12px; padding: 11px 14px; border-radius: 12px; color: rgba(255,255,255,0.75); font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s; margin-bottom: 4px; text-decoration: none; }
+        .nav-item:hover { background: rgba(255,255,255,0.12); color: white; }
+        .nav-item.active { background: rgba(255,255,255,0.18); color: white; font-weight: 600; }
+        .nav-item .nav-icon { font-size: 18px; width: 22px; text-align: center; }
+        .sidebar-bottom { margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.12); }
+        .user-avatar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 12px; background: rgba(255,255,255,0.1); }
+        .avatar-circle { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, #06b6d4, #3b82f6); display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; font-size: 14px; }
+        .user-name { font-size: 13px; font-weight: 600; color: white; }
+        .user-role { font-size: 11px; color: rgba(255,255,255,0.55); }
+
+        /* Main */
+        .main { margin-left: var(--sidebar-w); flex: 1; padding: 28px 32px; overflow-x: hidden; }
+
+        /* Topbar */
+        .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+        .topbar-left { display: flex; align-items: center; gap: 14px; }
+        .mini-logo { display: flex; align-items: center; gap: 8px; background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 7px 12px; box-shadow: var(--shadow); text-decoration: none; }
+        .mini-logo-icon { width: 28px; height: 28px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+        .mini-logo-text { font-family: 'Sora', sans-serif; font-weight: 800; font-size: 14px; color: var(--primary-dark); }
+        .topbar-title { font-family: 'Sora', sans-serif; font-size: 22px; font-weight: 800; color: var(--text-dark); }
+        .topbar-sub { font-size: 13px; color: var(--text-light); margin-top: 2px; }
+        .theme-toggle { display: flex; align-items: center; gap: 8px; background: var(--card-bg); border: 1.5px solid var(--border); border-radius: 12px; padding: 8px 14px; cursor: pointer; box-shadow: var(--shadow); font-size: 13px; font-weight: 600; color: var(--text-mid); transition: all 0.2s; }
+        .theme-toggle:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* Cards */
+        .card { background: var(--card-bg); border-radius: 20px; padding: 24px; box-shadow: var(--shadow); border: 1.5px solid var(--border); transition: all 0.25s; }
+        .card-title { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 17px; color: var(--text-dark); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+
+        /* Stats Row */
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+        .stat-card { background: var(--card-bg); border-radius: 16px; padding: 20px; box-shadow: var(--shadow); border: 1.5px solid var(--border); text-align: center; }
+        .stat-val { font-family: 'Sora', sans-serif; font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-lbl { font-size: 12px; color: var(--text-light); margin-top: 4px; font-weight: 500; }
+
+        /* Filter Bar */
+        .filter-bar { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; align-items: center; }
+        .filter-input { flex: 1; min-width: 180px; padding: 10px 16px; border-radius: 12px; border: 1.5px solid var(--input-border); background: var(--input-bg); color: var(--text-dark); font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border 0.2s; }
+        .filter-input:focus { border-color: var(--primary); }
+        .filter-select { padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--input-border); background: var(--input-bg); color: var(--text-dark); font-size: 13px; font-family: 'Inter', sans-serif; outline: none; cursor: pointer; }
+        .share-btn { padding: 10px 20px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border: none; border-radius: 12px; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; box-shadow: 0 4px 12px rgba(26,86,219,0.25); transition: all 0.2s; }
+        .share-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(26,86,219,0.3); }
+
+        /* Experience Cards */
+        .experiences-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px; }
+        .exp-card { background: var(--card-bg); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); border: 1.5px solid var(--border); transition: all 0.25s; }
+        .exp-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        .exp-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; gap: 10px; }
+        .exp-company { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 800; color: var(--primary); }
+        .exp-role { font-size: 12px; color: var(--text-light); margin-top: 3px; }
+        .exp-badges { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .badge { padding: 3px 10px; border-radius: 8px; font-size: 11px; font-weight: 700; }
+        .badge-selected { background: #d1fae5; color: #065f46; }
+        .badge-rejected { background: #fee2e2; color: #991b1b; }
+        .badge-pending { background: #fff7ed; color: #92400e; }
+        .badge-easy { background: #d1fae5; color: #065f46; }
+        .badge-medium { background: #fff7ed; color: #92400e; }
+        .badge-hard { background: #fee2e2; color: #991b1b; }
+        .badge-type { background: #eff6ff; color: #1d4ed8; }
+        .exp-section { margin-bottom: 10px; }
+        .exp-section-title { font-size: 11px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .exp-section-text { font-size: 13px; color: var(--text-mid); line-height: 1.6; }
+        .exp-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+        .exp-author { font-size: 12px; color: var(--text-light); }
+        .exp-date { font-size: 11px; color: var(--text-light); }
+
+        /* Empty State */
+        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-light); }
+        .empty-state div { font-size: 3rem; margin-bottom: 16px; }
+        .empty-state p { font-size: 15px; }
+
+        /* Modal Overlay */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; align-items: center; justify-content: center; padding: 20px; }
+        .modal-overlay.open { display: flex; }
+        .modal { background: var(--card-bg); border-radius: 22px; padding: 32px; width: 100%; max-width: 580px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.25); }
+        .modal-title { font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 800; color: var(--text-dark); margin-bottom: 24px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+        .form-group label { font-size: 12px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        .form-group input, .form-group select, .form-group textarea { background: var(--input-bg); border: 1.5px solid var(--input-border); border-radius: 12px; color: var(--text-dark); padding: 11px 14px; font-size: 14px; font-family: 'Inter', sans-serif; outline: none; transition: border 0.2s; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+        .form-group textarea { min-height: 90px; resize: vertical; }
+        .modal-btns { display: flex; gap: 12px; margin-top: 20px; }
+        .submit-exp-btn { flex: 1; padding: 14px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border: none; border-radius: 13px; font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .submit-exp-btn:hover { transform: translateY(-2px); }
+        .cancel-btn { padding: 14px 24px; background: var(--input-bg); color: var(--text-light); border: 1.5px solid var(--input-border); border-radius: 13px; font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; }
+
+        /* Success Toast */
+        .toast { position: fixed; bottom: 28px; right: 28px; background: #0f172a; color: white; padding: 14px 22px; border-radius: 14px; font-size: 14px; font-weight: 600; z-index: 999; display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.25); }
+        .toast.show { display: block; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        @media (max-width: 900px) {
+            .sidebar { display: none; }
+            .main { margin-left: 0; padding: 16px; }
+            .stats-row { grid-template-columns: 1fr 1fr; }
+            .experiences-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<!-- Sidebar -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">🎯</div>
+        <div>
+            <div class="sidebar-logo-text">PrepLakshya</div>
+            <div class="sidebar-logo-sub">Track. Practice. Achieve.</div>
+        </div>
+    </div>
+    <div class="nav-section">Main</div>
+    <a href="PrepLakshyaDashboard.html" class="nav-item"><span class="nav-icon">📊</span> Dashboard</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Companies</a>
+    <a href="#" class="nav-item"><span class="nav-icon">📚</span> Topic Tracker</a>
+    <a href="PrepLakshyaRoadmap.html" class="nav-item"><span class="nav-icon">🤖</span> AI Roadmap</a>
+    <div class="nav-section">Practice</div>
+    <a href="dsa-problems.html" class="nav-item"><span class="nav-icon">💻</span> DSA Problems</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🧠</span> Aptitude</a>
+    <a href="#" class="nav-item"><span class="nav-icon">🎤</span> HR Questions</a>
+    <a href="interview.html" class="nav-item"><span class="nav-icon">🤖</span> AI Interview</a>
+    <a href="experience-wall.html" class="nav-item active"><span class="nav-icon">🏆</span> Experience Wall</a>
+    <div class="sidebar-bottom">
+        <div class="user-avatar">
+            <div class="avatar-circle" id="sidebarAvatar">SK</div>
+            <div>
+                <div class="user-name" id="sidebarName">Sudheer Kumar</div>
+                <div class="user-role">B.Tech IT • Final Year</div>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- Main -->
+<main class="main">
+
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <a href="PrepLakshyaDashboard.html" class="mini-logo">
+                <div class="mini-logo-icon">🎯</div>
+                <div class="mini-logo-text">PrepLakshya</div>
+            </a>
+            <div>
+                <div class="topbar-title">Experience Wall 🏆</div>
+                <div class="topbar-sub">Real interview experiences shared by students</div>
+            </div>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙 Dark Mode</button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="stat-val" id="totalCount">0</div>
+            <div class="stat-lbl">Total Experiences</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="companiesCount">0</div>
+            <div class="stat-lbl">Companies Covered</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-val" id="selectedCount">0</div>
+            <div class="stat-lbl">Selected Stories 🎉</div>
+        </div>
+    </div>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+        <input class="filter-input" id="searchInput" placeholder="🔍 Search company, role..." oninput="filterExperiences()">
+        <select class="filter-select" id="resultFilter" onchange="filterExperiences()">
+            <option value="">All Results</option>
+            <option value="Selected">✅ Selected</option>
+            <option value="Rejected">❌ Rejected</option>
+            <option value="Pending">⏳ Pending</option>
+        </select>
+        <select class="filter-select" id="diffFilter" onchange="filterExperiences()">
+            <option value="">All Difficulty</option>
+            <option value="Easy">🟢 Easy</option>
+            <option value="Medium">🟡 Medium</option>
+            <option value="Hard">🔴 Hard</option>
+        </select>
+        <select class="filter-select" id="typeFilter" onchange="filterExperiences()">
+            <option value="">All Types</option>
+            <option value="DSA">💻 DSA</option>
+            <option value="HR">🎤 HR</option>
+            <option value="Core CS">🖥️ Core CS</option>
+            <option value="Mixed">🔀 Mixed</option>
+        </select>
+        <button class="share-btn" onclick="openModal()">+ Share Experience</button>
+    </div>
+
+    <!-- Experiences Grid -->
+    <div class="experiences-grid" id="experiencesGrid">
+        <div class="empty-state" style="grid-column:1/-1;">
+            <div>⏳</div>
+            <p>Loading experiences...</p>
+        </div>
+    </div>
+
+</main>
+
+<!-- Submit Modal -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-title">🎤 Share Your Interview Experience</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Company Name *</label>
+                <input type="text" id="f-company" placeholder="e.g. TCS, Infosys, Google">
+            </div>
+            <div class="form-group">
+                <label>Role Applied *</label>
+                <input type="text" id="f-role" placeholder="e.g. Software Engineer">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Interview Type *</label>
+                <select id="f-type">
+                    <option value="">Select Type</option>
+                    <option value="DSA">💻 DSA / Coding</option>
+                    <option value="HR">🎤 HR Round</option>
+                    <option value="Core CS">🖥️ Core CS</option>
+                    <option value="Mixed">🔀 Mixed Rounds</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Difficulty</label>
+                <select id="f-difficulty">
+                    <option value="Medium">Medium</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Result *</label>
+                <select id="f-result">
+                    <option value="">Select Result</option>
+                    <option value="Selected">✅ Selected</option>
+                    <option value="Rejected">❌ Rejected</option>
+                    <option value="Pending">⏳ Awaiting Result</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" id="f-name" placeholder="Or leave blank for Anonymous">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Your Experience *</label>
+            <textarea id="f-experience" placeholder="Describe the interview process, rounds, atmosphere..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>Questions Asked</label>
+            <textarea id="f-questions" placeholder="List the questions you were asked..." style="min-height:70px;"></textarea>
+        </div>
+        <div class="form-group">
+            <label>Tips for Others 💡</label>
+            <input type="text" id="f-tips" placeholder="e.g. Focus on DP problems, practice SQL queries...">
+        </div>
+        <div class="modal-btns">
+            <button class="cancel-btn" onclick="closeModal()">Cancel</button>
+            <button class="submit-exp-btn" onclick="submitExperience()">🚀 Submit Experience</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+    // ── Theme Toggle ──
+    function toggleTheme() {
+        const html = document.documentElement;
+        const btn = document.getElementById('themeBtn');
+        if (html.getAttribute('data-theme') === 'light') {
+            html.setAttribute('data-theme', 'dark');
+            btn.textContent = '☀️ Light Mode';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            html.setAttribute('data-theme', 'light');
+            btn.textContent = '🌙 Dark Mode';
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    // Apply saved theme
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    document.getElementById('themeBtn').textContent = savedTheme === 'dark' ? '☀️ Light Mode' : '🌙 Dark Mode';
+
+    // ── Load User ──
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser) {
+        const name = currentUser.name || currentUser.email || 'User';
+        document.getElementById('sidebarName').textContent = name;
+        document.getElementById('sidebarAvatar').textContent = name.substring(0, 2).toUpperCase();
+    }
+
+    // ── State ──
+    let allExperiences = [];
+
+    // ── Load Experiences ──
+    function loadExperiences() {
+        fetch('/api/experiences/approved')
+            .then(res => res.json())
+            .then(data => {
+                allExperiences = data;
+                updateStats(data);
+                renderExperiences(data);
+            })
+            .catch(() => {
+                document.getElementById('experiencesGrid').innerHTML = `
+                    <div class="empty-state" style="grid-column:1/-1;">
+                        <div>⚠️</div>
+                        <p>Could not load experiences. Please try again.</p>
+                    </div>`;
+            });
+    }
+
+    // ── Update Stats ──
+    function updateStats(data) {
+        document.getElementById('totalCount').textContent = data.length;
+        const companies = new Set(data.map(e => e.company.toLowerCase()));
+        document.getElementById('companiesCount').textContent = companies.size;
+        const selected = data.filter(e => e.result === 'Selected').length;
+        document.getElementById('selectedCount').textContent = selected;
+    }
+
+    // ── Render Experiences ──
+    function renderExperiences(data) {
+        const grid = document.getElementById('experiencesGrid');
+        if (data.length === 0) {
+            grid.innerHTML = `
+                <div class="empty-state" style="grid-column:1/-1;">
+                    <div>📭</div>
+                    <p>No experiences found. Be the first to share!</p>
+                </div>`;
+            return;
+        }
+        grid.innerHTML = data.map(exp => {
+            const resultBadge = exp.result === 'Selected'
+                ? 'badge-selected' : exp.result === 'Rejected'
+                ? 'badge-rejected' : 'badge-pending';
+            const diffBadge = exp.difficulty === 'Easy'
+                ? 'badge-easy' : exp.difficulty === 'Hard'
+                ? 'badge-hard' : 'badge-medium';
+            const date = exp.createdAt
+                ? new Date(exp.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })
+                : '';
+            const author = exp.studentName && exp.studentName.trim()
+                ? exp.studentName : 'Anonymous';
+
+            return `
+                <div class="exp-card">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-company">${exp.company}</div>
+                            <div class="exp-role">${exp.role || 'Software Engineer'}</div>
+                        </div>
+                        <div class="badge ${resultBadge}">${exp.result}</div>
+                    </div>
+                    <div class="exp-badges">
+                        <span class="badge badge-type">${exp.interviewType || 'Mixed'}</span>
+                        <span class="badge ${diffBadge}">${exp.difficulty || 'Medium'}</span>
+                    </div>
+                    ${exp.experience ? `
+                    <div class="exp-section">
+                        <div class="exp-section-title">📝 Experience</div>
+                        <div class="exp-section-text">${truncate(exp.experience, 180)}</div>
+                    </div>` : ''}
+                    ${exp.questionsAsked ? `
+                    <div class="exp-section">
+                        <div class="exp-section-title">❓ Questions Asked</div>
+                        <div class="exp-section-text">${truncate(exp.questionsAsked, 120)}</div>
+                    </div>` : ''}
+                    ${exp.tips ? `
+                    <div class="exp-section">
+                        <div class="exp-section-title">💡 Tips</div>
+                        <div class="exp-section-text">${exp.tips}</div>
+                    </div>` : ''}
+                    <div class="exp-footer">
+                        <span class="exp-author">👤 ${author}</span>
+                        <span class="exp-date">${date}</span>
+                    </div>
+                </div>`;
+        }).join('');
+    }
+
+    // ── Filter ──
+    function filterExperiences() {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const result = document.getElementById('resultFilter').value;
+        const diff = document.getElementById('diffFilter').value;
+        const type = document.getElementById('typeFilter').value;
+
+        const filtered = allExperiences.filter(exp => {
+            const matchSearch = !search ||
+                exp.company.toLowerCase().includes(search) ||
+                (exp.role && exp.role.toLowerCase().includes(search)) ||
+                (exp.experience && exp.experience.toLowerCase().includes(search));
+            const matchResult = !result || exp.result === result;
+            const matchDiff = !diff || exp.difficulty === diff;
+            const matchType = !type || exp.interviewType === type;
+            return matchSearch && matchResult && matchDiff && matchType;
+        });
+
+        renderExperiences(filtered);
+    }
+
+    // ── Modal ──
+    function openModal() {
+        if (!currentUser) {
+            showToast('⚠️ Please login to share your experience!');
+            return;
+        }
+        document.getElementById('modalOverlay').classList.add('open');
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').classList.remove('open');
+        clearForm();
+    }
+
+    // Close modal on outside click
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+        if (e.target === this) closeModal();
+    });
+    function submitExperience() {
+        const company = document.getElementById('f-company').value.trim();
+        const role = document.getElementById('f-role').value.trim();
+        const type = document.getElementById('f-type').value;
+        const result = document.getElementById('f-result').value;
+        const experience = document.getElementById('f-experience').value.trim();
+
+        if (!company || !role || !type || !result || !experience) {
+            showToast('⚠️ Please fill all required fields!');
+            return;
+        }
+
+        const payload = {
+            company,
+            role,
+            interviewType: type,
+            difficulty: document.getElementById('f-difficulty').value,
+            result,
+            studentName: document.getElementById('f-name').value.trim() || 'Anonymous',
+            experience,
+            questionsAsked: document.getElementById('f-questions').value.trim(),
+            tips: document.getElementById('f-tips').value.trim(),
+            userId: currentUser ? currentUser.id : null
+        };
+
+        fetch('/api/experiences/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        })
+        .then(res => res.json())
+        .then(() => {
+            closeModal();
+            showToast('✅ Experience submitted! Waiting for admin approval.');
+        })
+        .catch(() => {
+            showToast('❌ Failed to submit. Please try again.');
+        });
+    }
+
+    // ── Helpers ──
+    function truncate(text, len) {
+        return text.length > len ? text.substring(0, len) + '...' : text;
+    }
+
+    function clearForm() {
+        ['f-company','f-role','f-type','f-difficulty','f-result',
+         'f-name','f-experience','f-questions','f-tips'].forEach(id => {
+            document.getElementById(id).value = '';
+        });
+    }
+
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // ── Init ──
+    loadExperiences();
+</script>
+</body>
+</html>
